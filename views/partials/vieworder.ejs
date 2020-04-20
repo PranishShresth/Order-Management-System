@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 class="text-center">List of all orders</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <% orders.forEach(order=>{ %>
+
+    <tbody>
+      <tr>
+        <td><%= order.name %></td>
+        <td><%= order.type %></td>
+        <td><%= order.description %></td>
+        <td><%= order.price %></td>
+        <td><%= order.amount %></td>
+        <td><%= order.status %></td>
+      </tr>
+
+      <% }) %>
+    </tbody>
+  </table>
+</div>

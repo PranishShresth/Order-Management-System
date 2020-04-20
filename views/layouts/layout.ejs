@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <style>
+    .row {
+      min-height: 100vh;
+    }
+  </style>
+  <body>
+    <div class="container-fluid">
+      <div class="row flex-column flex-md-row">
+        <aside class="col-12 col-md-2 p-0 bg-dark flex-shrink-1">
+          <nav
+            class="navbar navbar-expand navbar-dark bg-dark align-items-start py-2"
+          >
+            <div class="collapse navbar-collapse">
+              <ul
+                class="flex-md-column flex-row navbar-nav w-100 justify-content-between"
+              >
+                <div id="no-accordion">
+                  <ul class="nav nav-item flex-column">
+                    <li class="active">
+                      <a href="/dashboard" class="nav-link pl-0 text-nowrap"
+                        ><i class="fab fa-dashcube"></i>Dashboard</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+
+                <div id="accordion" class="panel-group">
+                  <div class="panel">
+                    <div class="panel-heading">
+                      <li class="active">
+                        <a
+                          href="#panelBodyTwo"
+                          class="accordion-toggle nav-link pl-0 text-nowrap"
+                          data-toggle="collapse"
+                          data-parent="#accordion"
+                          >Orders</a
+                        >
+                      </li>
+                    </div>
+                    <div id="panelBodyTwo" class="panel-collapse collapse in">
+                      <div class="panel-body">
+                        <ul class="nav nav-item flex-column">
+                          <li>
+                            <a
+                              href="/orders/vieworder"
+                              class="nav-link pl-0 text-nowrap"
+                              ><i class="fab fa-dashcube"></i> View Order</a
+                            >
+                          </li>
+
+                          <li>
+                            <a
+                              href="/addorder"
+                              class="nav-link pl-0 text-nowrap"
+                              ><i class="fa fa-users"></i> Add Order</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="accordion" class="panel-group">
+                  <div class="panel">
+                    <div class="panel-heading">
+                      <li class="active">
+                        <a
+                          href="#panelBodyThree"
+                          class="accordion-toggle nav-link pl-0 text-nowrap"
+                          data-toggle="collapse"
+                          data-parent="#accordion"
+                          >Customers</a
+                        >
+                      </li>
+                    </div>
+                    <div id="panelBodyThree" class="panel-collapse collapse in">
+                      <div class="panel-body">
+                        <ul class="nav nav-item flex-column">
+                          <li>
+                            <a
+                              href="#viewcustomers"
+                              class="nav-link pl-0 text-nowrap"
+                              ><i class="fab fa-dashcube"></i> View Customers</a
+                            >
+                          </li>
+
+                          <li>
+                            <a
+                              href="#addcustomers"
+                              data-toggle="tab"
+                              class="nav-link pl-0 text-nowrap"
+                              ><i class="fa fa-users"></i> Add Customers</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="no-accordion">
+                  <ul class="nav nav-item flex-column">
+                    <li class="active">
+                      <a href="#ecommerce" class="nav-link pl-0 text-nowrap"
+                        ><i class="fab fa-dashcube"></i>Ecommerce</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div id="no-accordion">
+                  <ul class="nav nav-item flex-column">
+                    <li class="active">
+                      <a href="#charts" class="nav-link pl-0 text-nowrap"
+                        ><i class="fab fa-dashcube"></i>Charts</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </ul>
+            </div>
+          </nav>
+        </aside>
+        <main class="col bg-faded py-3 flex-grow-1">
+          <%- body %>
+        </main>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
