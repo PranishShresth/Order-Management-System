@@ -4,20 +4,18 @@ const router = express.Router();
 const { body } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const { forwardAuthenticated } = require("../config/auth");
 
-router.get("/login", (req, res) => {
-  User.find(function (err, users) {
-    if (err) res.send(err);
-
-    res.json(users);
-  });
+router.get("/login", forwardAuthenticated, (req, res) => {
+  res.render("/");
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/dashboard",
     failureRedirect: "/",
-  });
+    failureFlash: true,
+  })(req, res, next);
 });
 
 router.post("/signup", (req, res, next) => {

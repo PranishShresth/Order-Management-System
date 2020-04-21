@@ -1,0 +1,91 @@
+<style>
+  .statistics {
+    margin-top: 25px;
+    color: #ccc;
+  }
+  .statistics .box {
+    background-color: #313348;
+    padding: 15px;
+    overflow: hidden;
+  }
+  .statistics .box > i {
+    float: left;
+    color: #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 22px;
+  }
+  .statistics .box .info {
+    float: left;
+    width: auto;
+    margin-left: 10px;
+  }
+  .statistics .box .info h3 {
+    margin: 5px 0 5px;
+    display: inline-block;
+  }
+  .statistics .box .info p {
+    color: #bbb;
+  }
+
+  /* End statistics */
+  /* Start charts */
+  .charts {
+    margin-top: 25px;
+    color: #bbb;
+  }
+  .charts .chart-container {
+    background-color: #313348;
+    padding: 15px;
+  }
+  .charts .chart-container h3 {
+    margin: 0 0 10px;
+    font-size: 17px;
+  }
+</style>
+<div class="container">
+  <section class="statistics">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="box">
+            <i class="fa fa-envelope fa-fw bg-primary"></i>
+            <div class="info">
+              <h3>20</h3>
+              <span>Products</span>
+              <p>Needs to be stocked</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="box">
+            <i
+              class="fa fa-file fa-fw danger"
+              style="background-color: red;"
+            ></i>
+            <div class="info">
+              <h3>1000</h3>
+              <span>Total Stock</span>
+              <p>Stock details</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="box">
+            <i
+              class="fa fa-users fa-fw success"
+              style="background-color: green;"
+            ></i>
+            <div class="info">
+              <h3>500</h3>
+              <span>Customers</span>
+              <p>Adding 5 customers daily</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

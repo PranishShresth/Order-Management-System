@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
   });
   try {
     const newOrder = await order.save();
-    res.redirect("dashboards");
+    res.redirect("dashboard");
   } catch (err) {
     if (err) throw err;
     res.status(500).json({

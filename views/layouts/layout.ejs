@@ -10,10 +10,19 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+      rel="stylesheet"
+    />
   </head>
   <style>
     .row {
       min-height: 100vh;
+    }
+    .fab,
+    .fas,
+    .fa {
+      padding: 0 3px;
     }
   </style>
   <body>
@@ -36,6 +45,15 @@
                     </li>
                   </ul>
                 </div>
+                <div id="no-accordion">
+                  <ul class="nav nav-item flex-column">
+                    <li class="active">
+                      <a href="/inventory" class="nav-link pl-0 text-nowrap"
+                        ><i class="fas fa-warehouse"></i>Inventory</a
+                      >
+                    </li>
+                  </ul>
+                </div>
 
                 <div id="accordion" class="panel-group">
                   <div class="panel">
@@ -46,7 +64,7 @@
                           class="accordion-toggle nav-link pl-0 text-nowrap"
                           data-toggle="collapse"
                           data-parent="#accordion"
-                          >Orders</a
+                          ><i class="fab fa-salesforce"></i>Orders</a
                         >
                       </li>
                     </div>
@@ -82,7 +100,7 @@
                           class="accordion-toggle nav-link pl-0 text-nowrap"
                           data-toggle="collapse"
                           data-parent="#accordion"
-                          >Customers</a
+                          ><i class="fas fa-users"></i>Customers</a
                         >
                       </li>
                     </div>
@@ -114,7 +132,7 @@
                   <ul class="nav nav-item flex-column">
                     <li class="active">
                       <a href="#ecommerce" class="nav-link pl-0 text-nowrap"
-                        ><i class="fab fa-dashcube"></i>Ecommerce</a
+                        ><i class="fas fa-shopping-cart"></i>Ecommerce</a
                       >
                     </li>
                   </ul>
@@ -123,7 +141,7 @@
                   <ul class="nav nav-item flex-column">
                     <li class="active">
                       <a href="#charts" class="nav-link pl-0 text-nowrap"
-                        ><i class="fab fa-dashcube"></i>Charts</a
+                        ><i class="fas fa-chart-pie"></i>Charts</a
                       >
                     </li>
                   </ul>
@@ -132,8 +150,8 @@
             </div>
           </nav>
         </aside>
-        <main class="col bg-faded py-3 flex-grow-1">
-          <%- body %>
+        <main class="col p-0 bg-faded flex-grow-1 w-100">
+          <%- include("../partials/navbar") %> <%- body %>
         </main>
       </div>
     </div>
