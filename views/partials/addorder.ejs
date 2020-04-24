@@ -1,4 +1,9 @@
 <div class="container flex justify-content-center align-items-center">
+  <form action="">
+    <h1><%if(user.type === "admin"){ %></h1>
+    <button>Edit order</button>
+  </form>
+  <%} %>
   <h1 class="text-center">Add your order</h1>
   <form action="/orders" method="POST">
     <div class="form-group">

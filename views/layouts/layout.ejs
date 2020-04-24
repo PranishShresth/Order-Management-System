@@ -14,7 +14,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="/static/stylesheets/style.css" />
   </head>
+
   <style>
     .row {
       min-height: 100vh;
@@ -23,6 +25,9 @@
     .fas,
     .fa {
       padding: 0 3px;
+    }
+    main {
+      background-color: #f6faef;
     }
   </style>
   <body>
@@ -81,7 +86,7 @@
 
                           <li>
                             <a
-                              href="/addorder"
+                              href="/orders/addorder"
                               class="nav-link pl-0 text-nowrap"
                               ><i class="fa fa-users"></i> Add Order</a
                             >
@@ -154,6 +159,24 @@
           <%- include("../partials/navbar") %> <%- body %>
         </main>
       </div>
+      <div class="feedbackform">
+        <button id="feedbackBTN">
+          <i class="fa fa-envelope" aria-hidden="true"></i> SEND US FEEDBACK
+        </button>
+      </div>
+      <div class="social-container">
+        <form>
+          <legend class="text-center">Send feedback</legend>
+          <div class="d-flex flex-column bd-highlight mb-3">
+            <div class="p-2 bd-highlight">
+              <input type="text" class="text w-100" style="height: 100px;" />
+            </div>
+            <div class="p-2 bd-highlight">
+              <button type="submit" class="w-100">Send</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -170,5 +193,6 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <script src="/static/js/script.js"></script>
   </body>
 </html>

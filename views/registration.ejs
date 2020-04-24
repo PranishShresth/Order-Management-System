@@ -17,6 +17,13 @@
     />
   </head>
   <body>
+    <% if (locals.errors) { %>
+    <ul>
+      <% Object.values(errors).forEach(function(error){ %>
+      <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+    <% } %>
     <div class="main-container">
       <div class="tab-container">
         <ul class="nav nav-pills">

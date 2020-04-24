@@ -2,7 +2,7 @@ body {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
   line-height: 1.5em;
-  background-color: #eeeeee;
+  background-color: #f6faef;
 }
 a {
   width: inherit;
@@ -17,9 +17,6 @@ a {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   color: white;
-
-  box-shadow: 0 12px 20px -10px rgba(112, 151, 173, 0.28),
-    0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(112, 151, 173, 0.2);
   margin: 8px 0;
   line-height: 40px;
   font-size: 14px;
@@ -32,3 +29,69 @@ a {
   color: black;
 }
 /* add order */
+.feedbackform {
+  position: fixed;
+  top: 96vh;
+  left: 50%;
+  bottom: 0%;
+  width: 115px;
+  text-align: right;
+  z-index: 9999;
+  margin-top: -15px;
+}
+
+/* If you want to hide this on devices smaller than the iPad */
+
+/* 		@media (max-width:768px) {
+    .feedbackform {
+      display:none;
+    }
+  } */
+
+#feedbackBTN {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: rgb(202, 55, 55);
+  border: none;
+  color: #000000;
+  text-align: center;
+  font-size: 0.7rem;
+  height: 3rem;
+  padding: 1rem;
+  width: 12rem;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+#feedbackBTN:hover {
+  background-color: rgba(25, 245, 237, 0.55);
+}
+
+.social-container {
+  width: 300px;
+  min-height: 200px;
+  background-color: #eee;
+  position: absolute;
+  bottom: 10%;
+  left: 0%;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease-out;
+}
+
+.social-container a:hover {
+  background-color: #add8e6;
+  transform: Scale(1.2);
+}
+
+.button-container {
+  position: fixed;
+  top: 50%;
+  left: 50vw;
+}
+.social-container p {
+  text-align: center;
+  font-weight: bold;
+}
+.social-container.visible {
+  transform: translateX(20px);
+}

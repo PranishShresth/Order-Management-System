@@ -1,23 +1,50 @@
 const express = require("express");
 const router = express.Router();
-const { ensureAuthenticated, forwardAuthenticated } = require("../config/auth");
 
-router.get("/", forwardAuthenticated, (req, res) => {
+router.get("/", (req, res) => {
+  var sessiondata = req.session;
+
   res.render("registration", { layout: "layouts/registration-layout" });
 });
-router.get("/dashboard", ensureAuthenticated, (req, res) => {
+router.get("/dashboard", (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).send("Access Denied");
+  }
+
   res.render("dashboards", {
-    user: req.user,
+    user: req.session.user,
   });
 });
-router.get("/addorder", (req, res) => {
-  res.render("partials/addorder");
+router.get("/orders/addorder", (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).send("Access Denied");
+  }
+
+  res.render("partials/addorder", {
+    user: req.session.user,
+  });
 });
-router.get("order/vieworder", (req, res) => {
-  res.render("partials/vieworder");
-});
+
 router.get("/inventory", (req, res) => {
-  res.render("partials/inventory");
+  if (!req.session.user) {
+    return res.status(401).send("Access Denied");
+  }
+  res.render("partials/inventory", {
+    user: req.session.user,
+  });
+});
+
+router.get("/logout", function (req, res, next) {
+  if (req.session) {
+    // delete session object
+    req.session.destroy(function (err) {
+      if (err) {
+        return next(err);
+      } else {
+        return res.redirect("/");
+      }
+    });
+  }
 });
 
 module.exports = router;

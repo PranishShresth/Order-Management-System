@@ -1,5 +1,8 @@
 <div class="container">
   <h1 class="text-center">List of all orders</h1>
+  <form>
+    <button>Edit order</button>
+  </form>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -8,7 +11,7 @@
         <th scope="col">Description</th>
         <th scope="col">Price</th>
         <th scope="col">Amount</th>
-        <th scope="col">Status</th>
+        <th scope="col">Delivery Status</th>
       </tr>
     </thead>
     <% orders.forEach(order=>{ %>

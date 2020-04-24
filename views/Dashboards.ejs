@@ -1,1 +1,113 @@
-Welcome <%= user.name %>
+<style>
+  .charts {
+    margin-top: 25px;
+    color: #bbb;
+  }
+  .charts .chart-container {
+    background-color: #313348;
+    padding: 15px;
+  }
+  .charts .chart-container h3 {
+    margin: 0 0 10px;
+    font-size: 17px;
+  }
+</style>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Welcome</h1>
+    <p class="lead">
+      Here is your updated dashboard
+    </p>
+  </div>
+</div>
+<section class="charts">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="chart-container">
+          <h3>Bar Chart</h3>
+          <canvas id="first-grid"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="chart-container">
+          <h3>Line Chart</h3>
+          <canvas id="second-grid"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="chart-container">
+          <h3>Notification panel</h3>
+          <div class="alert alert-success" role="alert">
+            One order has been created
+          </div>
+          <div class="alert alert-success" role="alert">
+            Delivery for Chandelier is completed
+          </div>
+          <div class="alert alert-success" role="alert">
+            Added one customer.
+          </div>
+          <div class="alert alert-success" role="alert">
+            Inventory Updated
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+<script>
+  let mychart = document.getElementById("first-grid").getContext("2d");
+  let mybarchart = new Chart(mychart, {
+    type: "bar",
+    data: {
+      labels: ["Bulbs", "Chandelier", "Led Lights", "Solar Light"],
+      datasets: [
+        {
+          label: "Sales",
+          barPercentage: 0.5,
+          barThickness: 6,
+          maxBarThickness: 8,
+          minBarLength: 2,
+          labels: "Price",
+          data: [100, 20, 12, 12, 43, 12, 60],
+          backgroundColor: [
+            "rgba(255,99,132,0.6)",
+            "rgba(255,99,132,0.6)",
+            "rgba(255,99,132,0.6)",
+            "rgba(255,99,132,0.6)",
+          ],
+        },
+      ],
+    },
+    options: {},
+  });
+
+  let mysecondchart = document.getElementById("second-grid").getContext("2d");
+  let mylinechart = new Chart(mysecondchart, {
+    type: "line",
+    data: {
+      labels: ["Bulbs", "Chandelier", "Led Lights", "Solar Light"],
+      datasets: [
+        {
+          label: "Lights",
+          barPercentage: 0.5,
+          barThickness: 6,
+          maxBarThickness: 8,
+          minBarLength: 2,
+          labels: "Price",
+          data: [100, 20, 12, 12, 43, 12, 60],
+          backgroundColor: [
+            "rgba(255,99,132,0.6)",
+            "rgba(255,99,132,0.6)",
+            "rgba(255,99,132,0.6)",
+            "rgba(255,99,132,0.6)",
+          ],
+        },
+      ],
+    },
+    options: {},
+  });
+</script>

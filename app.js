@@ -7,6 +7,7 @@ const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
 const passport = require("passport");
+
 const flash = require("connect-flash");
 
 const expressLayouts = require("express-ejs-layouts");
@@ -14,6 +15,10 @@ const expressSession = require("express-session")({
   secret: "secret",
   resave: true,
   saveUninitialized: false,
+  cookie: {
+    maxAge: 2 * 86400,
+    sameSite: true,
+  },
 });
 //routes
 const urlRoutes = require("./routes/urlRoutes");
