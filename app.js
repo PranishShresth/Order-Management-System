@@ -15,8 +15,10 @@ const expressSession = require("express-session")({
   secret: "secret",
   resave: true,
   saveUninitialized: false,
+  rolling: true,
   cookie: {
-    maxAge: 2 * 86400,
+    httpOnly: true,
+    maxAge: 1 * 60 * 60 * 1000,
     sameSite: true,
   },
 });
@@ -62,6 +64,8 @@ mongoose.connect(
     console.log("Connected to DB");
   }
 );
+mongoose.set("useCreateIndex", true);
+
 //urlRoutes
 
 app.use("/", urlRoutes);

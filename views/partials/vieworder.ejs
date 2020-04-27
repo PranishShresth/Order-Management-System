@@ -1,6 +1,20 @@
 <div class="container">
   <h1 class="text-center">List of all orders</h1>
- 
+  <form action="/orders/search">
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search"
+        aria-describedby="basic-addon2"
+        name="search"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+
   <table class="table table-striped">
     <thead>
       <tr>

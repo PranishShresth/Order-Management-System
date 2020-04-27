@@ -1,0 +1,38 @@
+<div class="container">
+  <h1 class="text-center">List of all Customers</h1>
+  <form action="/customer/search">
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search"
+        aria-describedby="basic-addon2"
+        name="search"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Customer ID</th>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Customer Ph no.</th>
+      </tr>
+    </thead>
+    <% if(customers){ %> <% customers.forEach(customer=>{ %>
+
+    <tbody>
+      <tr>
+        <td><%= customer.CustomerID %></td>
+        <td><%= customer.CustomerName %></td>
+        <td><%= customer.CustPhone %></td>
+      </tr>
+
+      <% })} %>
+    </tbody>
+  </table>
+</div>

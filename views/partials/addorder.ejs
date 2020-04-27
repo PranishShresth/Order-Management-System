@@ -1,10 +1,29 @@
-<div class="container flex justify-content-center align-items-center">
+<style>
+  .container {
+    width: 50%;
+    margin: auto;
+    padding-top: 20px;
+  }
+  .container h1 {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: tomato;
+  }
+  .container h1 span {
+    font-weight: lighter;
+  }
+  .input-group {
+    margin: 20px;
+  }
+</style>
+<div class="container">
   <form action="">
     <h1><%if(user.type === "admin"){ %></h1>
     <button type="submit" id="edit-order">Edit order</button>
   </form>
   <%} %>
-  <h1 class="text-center">Add your order</h1>
+  <h1>Add <span>Order</span></h1>
   <form action="/orders" method="POST">
     <div class="form-group">
       <label for="name">Order Name</label>
@@ -59,7 +78,11 @@
       </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="input-group">
+      <button type="submit" class="btn btn-outline-success w-75 m-auto">
+        Add Order
+      </button>
+    </div>
   </form>
 </div>
 

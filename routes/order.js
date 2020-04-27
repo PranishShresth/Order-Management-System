@@ -13,6 +13,22 @@ router.get("/vieworder", async (req, res) => {
   res.render("partials/vieworder", { orders: orders });
 });
 
+//Searching order
+router.get("/search", async (req, res) => {
+  if (req.query.search) {
+    const userRegex = new RegExp(req.query.search, "i");
+
+    Order.find({ name: userRegex }, function (err, orders) {
+      if (err) {
+        res.send("error");
+      } else {
+        res.render("partials/vieworder", { orders: orders });
+      }
+    });
+  }
+});
+
+//
 router.post("/", async (req, res) => {
   const order = new Order({
     id: uuidv4(),

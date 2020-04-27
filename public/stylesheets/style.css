@@ -9,7 +9,7 @@ a {
 }
 #no-accordion,
 #accordion {
-  padding-left: 80px;
+  padding-left: 20px;
   text-decoration: none;
   display: block;
   margin-block-start: 1.5em;
@@ -31,9 +31,9 @@ a {
 /* add order */
 .feedbackform {
   position: fixed;
-  top: 96vh;
-  left: 50%;
-  bottom: 0%;
+  top: 92vh;
+  left: 1%;
+  bottom: 3%;
   width: 115px;
   text-align: right;
   z-index: 9999;

@@ -23,6 +23,7 @@ const userSchema = mongoose.Schema({
     default: "ServiceUser",
   },
 });
+userSchema.index({ "$**": "text" });
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
