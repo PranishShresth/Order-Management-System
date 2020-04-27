@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-const passport = require("passport");
+const nodemailer = require("nodemailer");
 
 router.get("/login", (req, res) => {
   res.render("/");
@@ -74,7 +74,40 @@ router.post(
         });
         try {
           const newUser = await user.save();
-          res.redirect("/");
+          // create reusable transporter object using the default SMTP transport
+          let transporter = nodemailer.createTransport({
+            service: "Gmail",
+            secure: false, // true for 465, false for other ports
+            auth: {
+              user: "ordermanagementsystem2@gmail.com", // generated ethereal user
+              pass: process.env.GMAIL_PASS, // generated ethereal password
+            },
+            tls: {
+              rejectUnauthorized: false,
+            },
+          });
+          output = `<h4>Dear ${req.body.username}.<h4><br>
+          <p>You have succesfully created an account for Order Management System<p>
+          <p>You can now sign in to get full features of Order Management System<p>
+          `;
+          // setup email data with unicode symbols
+          let mailOptions = {
+            from: '"Order Management System" <noreply@oms.com>', // sender address
+            to: req.body.email, // list of receivers
+            subject: "User registration", // Subject line
+            text: "Successful registration", // plain text body
+            html: output, // html body
+          };
+
+          // send mail with defined transport object
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              return console.log(error);
+            }
+            console.log("Message sent: %s", info.messageId);
+            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+            res.redirect("/");
+          });
         } catch (err) {
           if (err) throw err;
           res.status(500).json({ message: err.message });

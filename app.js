@@ -25,6 +25,7 @@ const urlRoutes = require("./routes/urlRoutes");
 const orderRoutes = require("./routes/order");
 const registrationRoutes = require("./routes/registration");
 const inventoryRoutes = require("./routes/inventory");
+const customerRoutes = require("./routes/customer");
 
 //passport config
 require("./config/passport")(passport);
@@ -51,6 +52,7 @@ app.use(flash());
 app.use("/orders", orderRoutes);
 app.use("/registration", registrationRoutes);
 app.use("/inventory", inventoryRoutes);
+app.use("/customer", customerRoutes);
 
 //Database connection
 mongoose.connect(
