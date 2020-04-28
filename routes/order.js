@@ -5,12 +5,9 @@ const { v4: uuidv4 } = require("uuid");
 
 //Getting all orders
 
-router.get("/vieworder", async (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).send("<h1>Access Denied</h1>");
-  }
+router.get("/api/viewOrder", async (req, res) => {
   const orders = await Order.find({});
-  res.render("partials/vieworder", { orders: orders });
+  res.json(orders);
 });
 
 //Searching order

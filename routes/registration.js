@@ -4,10 +4,7 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
-
-router.get("/login", (req, res) => {
-  res.render("/");
-});
+const jwt = require("jsonwebtoken");
 
 router.post("/login", async (req, res, next) => {
   User.findOne({
@@ -18,7 +15,6 @@ router.post("/login", async (req, res, next) => {
     if (!user) {
       console.log("error");
     }
-
     // Match password
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
       if (err) throw err;
@@ -29,41 +25,32 @@ router.post("/login", async (req, res, next) => {
       }
     });
   });
-  // User.findOne({ name: req.body.username }, function (user) {
-  //   if (user) {
-  //     console.log("found");
-  //     bcrypt.compare(password, user.password, (err, isMatch) => {
-  //       if (err) throw err;
-  //       if (isMatch) {
-  //         return res.redirect("/dashboard");
-  //       } else {
-  //         rs;
-  //         console.log("not match");
-  //       }
-  //       return res.redirect("/dashboard");
-  //     });
-  //   }
-  // });
 });
 
+// signup and email send
 router.post(
   "/signup",
   [
-    check("email", "email is required").isEmail(),
-    check("username", "name is required").not().isEmpty(),
-    check("password", "password is required").not().isEmpty(),
+    // username must be an email
+    check("email").isEmail().normalizeEmail(),
+
+    check("username", "Username must not be empty").notEmpty(),
+    // password must be at least 5 chars long
+    check("password", "Password must be atleast 5 character long").isLength({
+      min: 5,
+    }),
   ],
-  (req, res, next) => {
-    const result = validationResult(req);
-    var errors = result.errors;
-    for (var key in errors) {
-      console.log(errors[key].value);
-    }
-    if (!result.isEmpty()) {
-      //response validate data to register.ejs
-      res.redirect("/", {
-        errors: errors,
-      });
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+
+    if (!errors.isEmpty()) {
+      var validationerror = errors.array();
+      console.log(validationerror);
+      req.session.errors = validationerror;
+      res.redirect("/");
+
+      return;
     }
     bcrypt.genSalt(10, function (err, salt) {
       bcrypt.hash(req.body.password, salt, async function (err, hash) {
@@ -72,50 +59,61 @@ router.post(
           name: req.body.username,
           password: hash,
         });
+
         try {
           const newUser = await user.save();
-          // create reusable transporter object using the default SMTP transport
-          let transporter = nodemailer.createTransport({
-            service: "Gmail",
-            secure: false, // true for 465, false for other ports
-            auth: {
-              user: "ordermanagementsystem2@gmail.com", // generated ethereal user
-              pass: process.env.GMAIL_PASS, // generated ethereal password
-            },
-            tls: {
-              rejectUnauthorized: false,
-            },
-          });
-          output = `<h4>Dear ${req.body.username}.<h4><br>
-          <p>You have succesfully created an account for Order Management System<p>
-          <p>You can now sign in to get full features of Order Management System<p>
-          `;
-          // setup email data with unicode symbols
-          let mailOptions = {
-            from: '"Order Management System" <noreply@oms.com>', // sender address
-            to: req.body.email, // list of receivers
-            subject: "User registration", // Subject line
-            text: "Successful registration", // plain text body
-            html: output, // html body
-          };
-
-          // send mail with defined transport object
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              return console.log(error);
-            }
-            console.log("Message sent: %s", info.messageId);
-            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-            res.redirect("/");
-          });
+          sendmail(req.body.username, req.body.email);
+          res.redirect("/");
         } catch (err) {
           if (err) throw err;
-          res.status(500).json({ message: err.message });
           return;
         }
       });
     });
   }
 );
+
+//sending email function
+const sendmail = (username, email) => {
+  let transporter = nodemailer.createTransport({
+    service: "Gmail",
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "ordermanagementsystem2@gmail.com", // generated ethereal user
+      pass: process.env.GMAIL_PASS, // generated ethereal password
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+  output = `
+    <p>Dear ${username},<p>
+    <p>Thank you for registering with Revenant Dawn - Order Management System<p>
+    <p>You can now sign in to get full features. If you have any queries, please reply back to this email and we will get back to you as soon as we can.<p>
+    <br>
+    <footer>
+    <p>Kind Regards,<p>
+    <p>Revenant Dawn Team</p>
+    <p>Sydney, NSW</p
+    </footer>
+    `;
+  // setup email data with unicode symbols
+  let mailOptions = {
+    from: '"Order Management System" <noreply@oms.com>', // sender address
+    to: email, // list of receivers
+    subject: "User registration", // Subject line
+    text: "Successful registration", // plain text body
+    html: output, // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log("Message sent: %s", info.messageId);
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  });
+};
 
 module.exports = router;

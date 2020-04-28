@@ -7,6 +7,7 @@ const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 
 const flash = require("connect-flash");
 
@@ -18,7 +19,7 @@ const expressSession = require("express-session")({
   rolling: true,
   cookie: {
     httpOnly: true,
-    maxAge: 1 * 60 * 60 * 1000,
+    maxAge: 30 * 24 * 60 * 60 * 1000,
     sameSite: true,
   },
 });
@@ -28,6 +29,8 @@ const orderRoutes = require("./routes/order");
 const registrationRoutes = require("./routes/registration");
 const inventoryRoutes = require("./routes/inventory");
 const customerRoutes = require("./routes/customer");
+const ecommerceRoutes = require("./routes/e-commerce");
+const paymentRoutes = require("./routes/payment");
 
 //passport config
 require("./config/passport")(passport);
@@ -55,6 +58,8 @@ app.use("/orders", orderRoutes);
 app.use("/registration", registrationRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/customer", customerRoutes);
+app.use("/e-commerce", ecommerceRoutes);
+app.use("/", paymentRoutes);
 
 //Database connection
 mongoose.connect(
