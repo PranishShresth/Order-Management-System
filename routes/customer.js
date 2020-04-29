@@ -64,3 +64,21 @@ router.put("/api/:customerid", async (req, res, next) => {
     if (err) throw err;
   }
 });
+
+//detete a customer by id
+
+router.delete("/api/:customerid", async (req, res, next) => {
+  let customer;
+  try {
+    customer = Customer.findOneAndDelete(
+      { _id: req.params.customerid },
+      (err) => {
+        if (!err) {
+          return res.redirect("/customer/viewCustomers");
+        }
+      }
+    );
+  } catch (err) {
+    if (err) return res.status(401).send("Delete request failed");
+  }
+});

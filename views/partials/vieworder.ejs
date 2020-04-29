@@ -1,19 +1,33 @@
 <div class="container">
-  <h1 class="text-center">List of all orders</h1>
-  <form action="/orders/search">
-    <div class="input-group mb-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search"
-        aria-describedby="basic-addon2"
-        name="search"
-      />
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="submit">Search</button>
-      </div>
+  <div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+  >
+    <h2>Orders</h2>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <form action="/orders/search">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search"
+            aria-describedby="basic-addon2"
+            name="search"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">
+              Search
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="btn-group mb-4 px-2"></div>
+      <form method="GET" action="/api/orders/backup">
+        <button type="submit" class="btn btn-sm btn-outline-secondary">
+          Export
+        </button>
+      </form>
     </div>
-  </form>
+  </div>
 
   <table class="table table-striped">
     <thead>
@@ -25,6 +39,7 @@
         <th scope="col">Amount</th>
         <th scope="col">Delivery Status</th>
         <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <% orders.forEach(order=>{ %>
@@ -34,12 +49,16 @@
         <td><%= order.name %></td>
         <td><%= order.type %></td>
         <td><%= order.description %></td>
-        <td><%= order.price %></td>
+        <td>$<%= order.price %></td>
         <td><%= order.totalAmount %></td>
         <td><%= order.status %></td>
         <td>
           <%- include("Editform",{ url: `/orders/api/${order._id}/?_method=GET`
           }) %>
+        </td>
+        <td>
+          <%- include("deleteForm",{ url:
+          `/orders/api/${order._id}/?_method=DELETE` }) %>
         </td>
       </tr>
 

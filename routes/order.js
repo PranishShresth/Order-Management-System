@@ -81,5 +81,18 @@ router.put("/api/:orderid", async (req, res, next) => {
     }
   }
 });
+
+//Delete order
+
+router.delete("/api/:orderid", async (req, res, next) => {
+  let order;
+  try {
+    order = Order.findOneAndDelete({ _id: req.params.orderid }, (err) => {
+      if (!err) res.redirect("/orders/viewOrder");
+    });
+  } catch (err) {
+    if (err) throw err;
+  }
+});
 //export module
 module.exports = router;

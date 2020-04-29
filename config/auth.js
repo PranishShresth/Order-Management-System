@@ -1,10 +1,5 @@
 const loginRequired = (req, res, next) => {
-  if (!req.session.user)
-    return res
-      .status(401)
-      .send(
-        "<h4 style='text-align:center'>Please log in to access the resource</h4>"
-      );
+  if (!req.session.user) return res.redirect("/");
   return next();
 };
 

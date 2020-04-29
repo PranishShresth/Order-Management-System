@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 const csv = require("csv-express");
 
 Router.get("/api/orders/backup", async (req, res, next) => {
-  var filename = "products.csv";
+  var filename = "orders.csv";
   res.statusCode = 200;
   res.setHeader("Content-Type", "text/csv");
   res.setHeader("Content-Disposition", "attachment; filename=" + filename);

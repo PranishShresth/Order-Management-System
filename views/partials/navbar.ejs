@@ -1,4 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<style>
+  .bg-unique {
+    background-color: #3f51b5 !important;
+  }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-unique">
   <a class="navbar-brand" href="#">Order Management System</a>
   <button
     class="navbar-toggler"
@@ -14,8 +19,38 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <span class="navbar-text"> </span>
   </div>
+  <ul class="navbar-nav ml-auto nav-flex-icons">
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-light"
+        ><i class="fas fa-cog"></i
+      ></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-light"
+        ><i class="fas fa-shopping-cart"></i
+      ></a>
+    </li>
+    <li class="nav-item dropdown">
+      <a
+        class="nav-link dropdown-toggle"
+        id="navbarDropdownMenuLink"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+        ><i class="fa fa-user"></i>
+      </a>
+      <div
+        class="dropdown-menu dropdown-menu-right dropdown-unique"
+        aria-labelledby="navbarDropdownMenuLink"
+      >
+        <a class="dropdown-item" href="#">Welcome %></a>
+        <a class="dropdown-item" href="#">Shopping cart</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    </li>
+  </ul>
   <form action="/logout" method="GET">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit">
       Log out
     </button>
   </form>
