@@ -21,6 +21,7 @@
         <th scope="col">Customer ID</th>
         <th scope="col">Customer Name</th>
         <th scope="col">Customer Ph no.</th>
+        <th scope="col">Edit</th>
       </tr>
     </thead>
     <% if(customers){ %> <% customers.forEach(customer=>{ %>
@@ -30,6 +31,9 @@
         <td><%= customer.CustomerID %></td>
         <td><%= customer.CustomerName %></td>
         <td><%= customer.CustPhone %></td>
+        <td>
+          <%- include("Editform",{ url:`/customer/api/${customer._id}` }) %>
+        </td>
       </tr>
 
       <% })} %>

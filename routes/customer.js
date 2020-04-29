@@ -24,9 +24,6 @@ router.get("/api/viewCustomers", async (req, res) => {
 });
 
 // get addCustomer page
-router.get("/addCustomers", (req, res) => {
-  res.render("partials/addCustomer");
-});
 
 // add new Customer
 router.post("/addCustomer", async (req, res) => {
@@ -40,3 +37,30 @@ router.post("/addCustomer", async (req, res) => {
   res.status(201).send("<h1> Customer Added to the Database </h1>");
 });
 module.exports = router;
+
+//get one customer
+router.get("/api/:customerid", async (req, res, next) => {
+  try {
+    const customer = await Customer.findById(req.params.customerid);
+    res.render("partials/editCustomer", {
+      customer: customer,
+    });
+  } catch (err) {
+    if (err) throw err;
+  }
+});
+
+//update a customer
+
+router.put("/api/:customerid", async (req, res, next) => {
+  let customer;
+  try {
+    customer = await Customer.findById(req.params.customerid);
+    customer.CustomerName = req.body.custname;
+    customer.CustPhone = req.body.phonenumber;
+    await customer.save();
+    res.redirect("/customer/viewCustomers");
+  } catch (err) {
+    if (err) throw err;
+  }
+});

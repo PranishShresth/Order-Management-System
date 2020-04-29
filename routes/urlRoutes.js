@@ -1,18 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fetch = require("node-fetch");
-const loginRequired = (req, res, next) => {
-  if (!req.session.user)
-    return res.status(401).json({ status: "Please log in" });
-  return next();
-};
-
-const StayLoggedin = (req, res, next) => {
-  if (req.session.user) {
-    return res.redirect("/dashboard");
-  }
-  return next();
-};
+const { loginRequired, StayLoggedin } = require("../config/auth");
 
 //View the customer
 router.get("/customer/viewCustomers", loginRequired, async (req, res) => {
@@ -63,6 +52,11 @@ router.get("/inventory", loginRequired, (req, res) => {
   res.render("partials/inventory", {
     user: req.session.user,
   });
+});
+
+//Ecommerce
+router.get("/ecommerce", loginRequired, (req, res) => {
+  res.render("Ecommerce");
 });
 
 //Logout

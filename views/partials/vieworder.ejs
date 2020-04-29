@@ -24,6 +24,7 @@
         <th scope="col">Price</th>
         <th scope="col">Amount</th>
         <th scope="col">Delivery Status</th>
+        <th scope="col">Edit</th>
       </tr>
     </thead>
     <% orders.forEach(order=>{ %>
@@ -36,6 +37,10 @@
         <td><%= order.price %></td>
         <td><%= order.totalAmount %></td>
         <td><%= order.status %></td>
+        <td>
+          <%- include("Editform",{ url: `/orders/api/${order._id}/?_method=GET`
+          }) %>
+        </td>
       </tr>
 
       <% }) %>

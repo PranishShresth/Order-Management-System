@@ -46,5 +46,40 @@ router.post("/", async (req, res) => {
     });
   }
 });
+
+//get one order
+
+router.get("/api/:orderid", async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.orderid);
+
+    res.render("partials/editOrder", {
+      order: order,
+    });
+  } catch {
+    res.redirect("/orders/viewOrder");
+  }
+});
+
+//Edit or update the error
+router.put("/api/:orderid", async (req, res, next) => {
+  let order;
+  try {
+    order = await Order.findById(req.params.orderid);
+
+    order.name = req.body.name;
+    order.type = req.body.type;
+    order.description = req.body.description;
+    order.status = req.body.status;
+    order.price = req.body.price;
+    order.totalAmount = req.body.amount;
+    await order.save();
+    res.redirect("/orders/viewOrder");
+  } catch {
+    if (order === null) {
+      res.redirect("/dashboard");
+    }
+  }
+});
 //export module
 module.exports = router;

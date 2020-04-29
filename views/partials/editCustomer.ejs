@@ -1,0 +1,53 @@
+<style>
+  .container {
+    width: 50%;
+    margin: auto;
+    padding-top: 20px;
+  }
+  .container h1 {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: tomato;
+  }
+  .container h1 span {
+    font-weight: lighter;
+  }
+  .input-group {
+    margin: 20px;
+  }
+</style>
+
+<div class="container">
+  <form action="/customer/api/<%= customer._id %>?_method=PUT" method="POST">
+    <h1>Edit <span>Customer</span></h1>
+
+    <div class="input-group">
+      <span class="input-group-addon"><i class="fas fa-user"></i> </span>
+      <input
+        id="text"
+        type="text"
+        class="form-control"
+        name="custname"
+        placeholder="Customer Name"
+        value="<%= customer.CustomerName %> "
+      />
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="fas fa-phone"></i> </span>
+      <input
+        id="password"
+        type="number"
+        class="form-control"
+        name="phonenumber"
+        placeholder="Phone number"
+        value="<%= customer.CustPhone%>"
+      />
+    </div>
+    <div class="input-group">
+      <button type="submit" class="btn btn-outline-success w-75 m-auto">
+        Update
+      </button>
+    </div>
+  </form>
+</div>
