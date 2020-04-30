@@ -67,7 +67,9 @@ mongoose.connect(
 mongoose.set("useCreateIndex", true);
 
 //urlRoutes
-
+app.get("/demo", (req, res) => {
+  res.render("demo", { layout: "layouts/registration-layout" });
+});
 app.use("/", urlRoutes);
 
 //globalvariables

@@ -59,6 +59,14 @@ router.get("/ecommerce", loginRequired, (req, res) => {
   res.render("Ecommerce");
 });
 
+//reset Password
+router.get("/registration/resetPassword", (req, res, next) => {
+  res.render("resetPasswordf", {
+    layout: "layouts/registration-layout",
+    errors: req.session.reseterrors,
+  });
+});
+
 //Logout
 router.get("/logout", function (req, res, next) {
   if (req.session) {

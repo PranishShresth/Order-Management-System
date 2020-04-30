@@ -60,8 +60,10 @@ router.put("/api/:customerid", async (req, res, next) => {
     customer.CustPhone = req.body.phonenumber;
     await customer.save();
     res.redirect("/customer/viewCustomers");
-  } catch (err) {
-    if (err) throw err;
+  } catch {
+    if (customer === null) {
+      res.send("Cannot find such customer");
+    }
   }
 });
 

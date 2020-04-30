@@ -4,8 +4,39 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
-const jwt = require("jsonwebtoken");
 
+//reset pasword route
+router.post("/reset", async (req, res, next) => {
+  const user = await User.findOne({ name: req.body.username });
+  if (user) {
+    return res.render("resetPassword", {
+      layout: "layouts/registration-layout",
+      user: user,
+    });
+  } else {
+    req.session.reseterrors = {
+      message: "Error. Such user doesn't exist",
+    };
+    res.redirect("/registration/resetPassword");
+  }
+});
+router.put("/reset/:user", async (req, res, next) => {
+  bcrypt.genSalt(10, function (err, salt) {
+    bcrypt.hash(req.body.newPassword, salt, async function (err, hash) {
+      let user;
+      try {
+        user = await User.findById(req.params.user);
+        user.password = hash;
+        await user.save();
+        res.redirect("/");
+      } catch (err) {
+        if (err) throw err;
+      }
+    });
+  });
+});
+
+//login route
 router.post("/login", async (req, res, next) => {
   User.findOne({
     name: req.body.username,

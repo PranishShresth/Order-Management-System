@@ -4,7 +4,7 @@
   >
     <h2>Customers</h2>
     <div class="btn-toolbar mb-2 mb-md-0">
-      <form action="/customer/search">
+      <form action="/customer/search" class="searchform">
         <div class="input-group mb-3">
           <input
             type="text"
@@ -28,36 +28,41 @@
       </form>
     </div>
   </div>
+  <div class="table-responsive-md">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Customer ID</th>
+          <th scope="col">Company Name</th>
+          <th scope="col">Customer Ph no.</th>
+        </tr>
+      </thead>
+      <% if(customers){ %> <% customers.forEach(customer=>{ %>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Customer ID</th>
-        <th scope="col">Customer Name</th>
-        <th scope="col">Customer Ph no.</th>
-        <th scope="col">Edit</th>
-        <th scope="col">
-          Delete
-        </th>
-      </tr>
-    </thead>
-    <% if(customers){ %> <% customers.forEach(customer=>{ %>
+      <tbody>
+        <tr>
+          <td><%= customer.CustomerID %></td>
+          <td><%= customer.CustomerName %></td>
+          <td><%= customer.CustPhone %></td>
+          <td class="d-flex justify-content-around">
+            <%- include("Editform",{ url:`/customer/api/${customer._id}` }) %>
+            <%- include("deleteForm",{
+            url:`/customer/api/${customer._id}?_method=DELETE` }) %>
+          </td>
+        </tr>
 
-    <tbody>
-      <tr>
-        <td><%= customer.CustomerID %></td>
-        <td><%= customer.CustomerName %></td>
-        <td><%= customer.CustPhone %></td>
-        <td>
-          <%- include("Editform",{ url:`/customer/api/${customer._id}` }) %>
-        </td>
-        <td>
-          <%- include("deleteForm",{
-          url:`/customer/api/${customer._id}?_method=DELETE` }) %>
-        </td>
-      </tr>
-
-      <% })} %>
-    </tbody>
-  </table>
+        <% })} %>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<script>
+  var searchtext = document.querySelector(".form-control");
+  var form = document.querySelector(".searchform");
+  form.addEventListener("submit", (e) => {
+    if (searchtext.value == "") {
+      e.preventDefault();
+    }
+  });
+</script>
