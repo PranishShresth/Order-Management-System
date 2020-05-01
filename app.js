@@ -29,6 +29,7 @@ const customerRoutes = require("./routes/customer");
 const ecommerceRoutes = require("./routes/e-commerce");
 const paymentRoutes = require("./routes/payment");
 const backupUtilRoutes = require("./routes/utils/backup");
+const notificationRoutes = require("./routes/api/notification");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -55,6 +56,7 @@ app.use("/customer", customerRoutes);
 app.use("/e-commerce", ecommerceRoutes);
 app.use("/", paymentRoutes);
 app.use("/", backupUtilRoutes);
+app.use("/", notificationRoutes);
 
 //Database connection
 mongoose.connect(

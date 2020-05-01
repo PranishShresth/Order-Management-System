@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Customer = require("../models/customerModel");
-
+const Notification = require("../models/notificationModel");
 //search
 router.get("/search", async (req, res) => {
   if (req.query.search) {
@@ -34,7 +34,12 @@ router.post("/addCustomer", async (req, res) => {
   });
 
   const newCustomer = await customer.save();
-  res.status(201).send("<h1> Customer Added to the Database </h1>");
+  const notification = new Notification({
+    eventName: req.body.custname,
+    eventType: "added",
+  });
+  await notification.save();
+  res.redirect("/customer/ViewCustomers");
 });
 module.exports = router;
 
@@ -59,6 +64,11 @@ router.put("/api/:customerid", async (req, res, next) => {
     customer.CustomerName = req.body.custname;
     customer.CustPhone = req.body.phonenumber;
     await customer.save();
+    const notification = new Notification({
+      eventName: req.body.custname,
+      eventType: "updated",
+    });
+    await notification.save();
     res.redirect("/customer/viewCustomers");
   } catch {
     if (customer === null) {
@@ -76,6 +86,10 @@ router.delete("/api/:customerid", async (req, res, next) => {
       { _id: req.params.customerid },
       (err) => {
         if (!err) {
+          const notification = new Notification({
+            eventName: req.body.custname,
+            eventType: "updated",
+          });
           return res.redirect("/customer/viewCustomers");
         }
       }

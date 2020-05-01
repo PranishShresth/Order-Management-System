@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../models/orderModel");
 const { v4: uuidv4 } = require("uuid");
+const Notification = require("./../models/notificationModel");
 
 //Getting all orders
 
@@ -38,6 +39,11 @@ router.post("/", async (req, res) => {
   });
   try {
     const newOrder = await order.save();
+    const notification = new Notification({
+      eventName: req.body.name,
+      eventType: "Added",
+    });
+    await notification.save();
     res.redirect("dashboard");
   } catch (err) {
     if (err) throw err;
@@ -74,6 +80,11 @@ router.put("/api/:orderid", async (req, res, next) => {
     order.price = req.body.price;
     order.totalAmount = req.body.amount;
     await order.save();
+    const notification = new Notification({
+      eventName: req.body.name,
+      eventType: "Added",
+    });
+    await notification.save();
     res.redirect("/orders/viewOrder");
   } catch {
     if (order === null) {

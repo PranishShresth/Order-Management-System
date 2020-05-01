@@ -9,7 +9,9 @@
   }
   .charts .chart-container h3 {
     margin: 0 0 10px;
+    min-height: 100px;
     font-size: 17px;
+    overflow: auto;
   }
 </style>
 <div class="container">
@@ -67,20 +69,15 @@
           </div>
         </div>
         <div class="col-md-6">
-          <div class="chart-container">
+          <div class="chart-container overflow-auto">
             <h3>Notification panel</h3>
+            <%if(notifications) {%> <% notifications.forEach(notification=> {%>
             <div class="alert alert-success" role="alert">
-              One order has been created
+              <%= notification.eventType %> <%= notification.eventName %> on <%
+              let date = new Date (notification.logged); %> <%=
+              date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(); %>
             </div>
-            <div class="alert alert-success" role="alert">
-              Delivery for Chandelier is completed
-            </div>
-            <div class="alert alert-success" role="alert">
-              Added one customer.
-            </div>
-            <div class="alert alert-success" role="alert">
-              Inventory Updated
-            </div>
+            <% })}; %>
           </div>
         </div>
       </div>

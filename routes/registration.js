@@ -103,9 +103,19 @@ router.post(
     });
   }
 );
+output = `
+    <p>Thank you for registering with Revenant Dawn - Order Management System<p>
+    <p>You can now sign in to get full features. If you have any queries, please reply back to this email and we will get back to you as soon as we can.<p>
+    <br>
+    <footer>
+    <p>Kind Regards,<p>
+    <p>Revenant Dawn Team</p>
+    <p>Sydney, NSW</p
+    </footer>
+    `;
 
 //sending email function
-const sendmail = (username, email) => {
+const sendmail = (username, email, output) => {
   let transporter = nodemailer.createTransport({
     service: "Gmail",
     secure: false, // true for 465, false for other ports
@@ -117,24 +127,14 @@ const sendmail = (username, email) => {
       rejectUnauthorized: false,
     },
   });
-  output = `
-    <p>Dear ${username},<p>
-    <p>Thank you for registering with Revenant Dawn - Order Management System<p>
-    <p>You can now sign in to get full features. If you have any queries, please reply back to this email and we will get back to you as soon as we can.<p>
-    <br>
-    <footer>
-    <p>Kind Regards,<p>
-    <p>Revenant Dawn Team</p>
-    <p>Sydney, NSW</p
-    </footer>
-    `;
+
   // setup email data with unicode symbols
   let mailOptions = {
-    from: '"Order Management System" <noreply@oms.com>', // sender address
+    from: '"Order Management System" <ordermanagementsystem2@gmail.com>', // sender address
     to: email, // list of receivers
     subject: "User registration", // Subject line
     text: "Successful registration", // plain text body
-    html: output, // html body
+    html: `<p>Dear ${username},<p><br>` + output, // html body
   };
 
   // send mail with defined transport object
