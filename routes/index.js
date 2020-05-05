@@ -154,17 +154,3 @@ router.get("/cart/checkout", async (req, res) => {
   const cartitems = await response.json();
   res.render("checkout", { title: "Checkout", carts: cartitems });
 });
-
-router.get("/cart/invoice", async (req, res) => {
-  const document = invoiceIt.create(recipient);
-
-  invoice
-    .getInvoice()
-    .toHTML()
-    .toFile("./invoice.html")
-    .then(async () => {
-      await res.sendFile(
-        "D:/Programming/Order Management System/routes/utils/invoice.html"
-      );
-    });
-});
