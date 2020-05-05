@@ -20,7 +20,10 @@ router.get("/search", async (req, res) => {
       if (err) {
         res.send("error");
       } else {
-        res.render("partials/vieworder", { orders: orders });
+        res.render("partials/order/vieworder", {
+          title: "Edit order",
+          orders: orders,
+        });
       }
     });
   }
@@ -59,7 +62,8 @@ router.get("/api/:orderid", async (req, res, next) => {
   try {
     const order = await Order.findById(req.params.orderid);
 
-    res.render("partials/editOrder", {
+    res.render("partials/order/editOrder", {
+      title: "Edit order",
       order: order,
     });
   } catch {

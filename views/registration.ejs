@@ -31,6 +31,7 @@
         </ul>
       </div>
       <div class="registration-container">
+        <% if(locals.failure_msg) {%> <%= failure_msg %><% } %>
         <div class="tab-content">
           <!-- Login form -->
           <div id="login" class="tab-pane active">

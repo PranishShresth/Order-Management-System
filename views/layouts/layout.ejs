@@ -3,12 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title><%= title%></title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
     />
     <!-- Font Awesome -->
     <link
@@ -26,7 +24,7 @@
   </head>
 
   <style>
-    .row {
+    .layout {
       min-height: 100vh;
     }
     .fab,
@@ -40,7 +38,7 @@
   </style>
   <body>
     <div class="container-fluid">
-      <div class="row flex-column flex-md-row">
+      <div class="row layout flex-column flex-md-row">
         <aside class="col-12 col-md-2 p-0 bg-dark flex-shrink-1">
           <nav
             class="navbar navbar-expand navbar-dark bg-dark align-items-start py-2"
@@ -53,7 +51,7 @@
                   <ul class="nav nav-item flex-column">
                     <li class="active">
                       <a href="/dashboard" class="nav-link pl-0 text-nowrap"
-                        ><i class="fab fa-dashcube"></i>Dashboard</a
+                        ><i class="fas fa-tachometer-alt"></i>Dashboard</a
                       >
                     </li>
                   </ul>
@@ -147,17 +145,19 @@
                 <div id="no-accordion">
                   <ul class="nav nav-item flex-column">
                     <li class="active">
-                      <a href="/ecommerce" class="nav-link pl-0 text-nowrap"
-                        ><i class="fas fa-shopping-cart"></i>Ecommerce</a
+                      <a
+                        href="/products/addProduct"
+                        class="nav-link pl-0 text-nowrap"
+                        ><i class="fas fa-chart-pie"></i>Products</a
                       >
                     </li>
                   </ul>
                 </div>
                 <div id="no-accordion">
                   <ul class="nav nav-item flex-column">
-                    <li>
-                      <a href="/settings" class="nav-link pl-0 text-nowrap"
-                        ><i class="fas fa-chart-pie"></i>Settings</a
+                    <li class="active">
+                      <a href="/ecommerce" class="nav-link pl-0 text-nowrap"
+                        ><i class="fas fa-shopping-cart"></i>Ecommerce</a
                       >
                     </li>
                   </ul>
@@ -166,7 +166,7 @@
             </div>
           </nav>
         </aside>
-        <main class="col p-0 bg-faded flex-grow-1 w-100">
+        <main class="col p-0 bg-faded w-100">
           <%- include("../partials/navbar") %> <%- body %>
         </main>
       </div>
@@ -213,7 +213,6 @@
             <option value="1" selected>Feedback</option>
             <option value="2">Report a bug</option>
             <option value="3">Feature request</option>
-            <option value="4">Feature request</option>
           </select>
 
           <!-- Message -->

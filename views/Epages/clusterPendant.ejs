@@ -1,0 +1,70 @@
+<style>
+  .card-product:after {
+    content: "";
+    display: table;
+    clear: both;
+    visibility: hidden;
+  }
+  .card-product .price-new,
+  .card-product .price {
+    margin-right: 5px;
+  }
+
+  .card-product .img-wrap {
+    border-radius: 3px 3px 0 0;
+    overflow: hidden;
+    position: relative;
+    height: 220px;
+    text-align: center;
+  }
+  .card-product .img-wrap img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  .card-product .info-wrap {
+    overflow: hidden;
+    padding: 15px;
+    border-top: 1px solid #eee;
+  }
+  .card-product .action-wrap {
+    padding-top: 4px;
+    margin-top: 4px;
+  }
+  .card-product .bottom-wrap {
+    padding: 15px;
+    border-top: 1px solid #eee;
+  }
+  .card-product .title {
+    margin-top: 0;
+  }
+</style>
+
+<div class="container">
+  <% if(products){ products.forEach(manyproduct=> {%>
+  <div class="row" style="height: 300px;">
+    <% manyproduct.forEach(product=>{%>
+    <a href="/ecommerce/product/viewDetail/<%= product._id %> ">
+      <div class="col-lg-4 col-sm-6">
+        <figure class="card card-product">
+          <div class="img-wrap">
+            <img src="<%= product.productThumbnail %>" />
+          </div>
+          <figcaption class="info-wrap">
+            <h6 class="title text-dots">
+              <a href="#"><%=product.productName %></a>
+            </h6>
+            <div class="action-wrap">
+              <div class="price-wrap h5">
+                <span class="price-new">$<%=product.productPrice %></span>
+              </div>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </a>
+    <% }) %>
+  </div>
+  <% })} %>
+</div>

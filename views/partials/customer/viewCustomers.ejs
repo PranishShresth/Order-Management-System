@@ -45,8 +45,8 @@
           <td><%= customer.CustomerName %></td>
           <td><%= customer.CustPhone %></td>
           <td class="d-flex justify-content-around">
-            <%- include("Editform",{ url:`/customer/api/${customer._id}` }) %>
-            <%- include("deleteForm",{
+            <%- include("../Editform",{ url:`/customer/api/${customer._id}` })
+            %> <%- include("../deleteForm",{
             url:`/customer/api/${customer._id}?_method=DELETE` }) %>
           </td>
         </tr>

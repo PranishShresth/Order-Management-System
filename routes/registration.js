@@ -51,8 +51,8 @@ router.post("/login", async (req, res, next) => {
       if (err) throw err;
       if (isMatch) {
         res.redirect("/dashboard");
-      } else {
-        console.log("not match");
+      } else if (!isMatch) {
+        res.send("Username or password error");
       }
     });
   });
@@ -103,16 +103,6 @@ router.post(
     });
   }
 );
-output = `
-    <p>Thank you for registering with Revenant Dawn - Order Management System<p>
-    <p>You can now sign in to get full features. If you have any queries, please reply back to this email and we will get back to you as soon as we can.<p>
-    <br>
-    <footer>
-    <p>Kind Regards,<p>
-    <p>Revenant Dawn Team</p>
-    <p>Sydney, NSW</p
-    </footer>
-    `;
 
 //sending email function
 const sendmail = (username, email, output) => {
@@ -127,6 +117,16 @@ const sendmail = (username, email, output) => {
       rejectUnauthorized: false,
     },
   });
+  var output = `
+  <p>Thank you for registering with Revenant Dawn - Order Management System<p>
+  <p>You can now sign in to get full features. If you have any queries, please reply back to this email and we will get back to you as soon as we can.<p>
+  <br>
+  <footer>
+  <p>Kind Regards,<p>
+  <p>Revenant Dawn Team</p>
+  <p>Sydney, NSW</p
+  </footer>
+  `;
 
   // setup email data with unicode symbols
   let mailOptions = {

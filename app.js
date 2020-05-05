@@ -21,7 +21,7 @@ const expressSession = require("express-session")({
 require("dotenv").config();
 
 //routes
-const urlRoutes = require("./routes/urlRoutes");
+const urlRoutes = require("./routes/index");
 const orderRoutes = require("./routes/order");
 const registrationRoutes = require("./routes/registration");
 const inventoryRoutes = require("./routes/inventory");
@@ -30,7 +30,9 @@ const ecommerceRoutes = require("./routes/e-commerce");
 const paymentRoutes = require("./routes/payment");
 const backupUtilRoutes = require("./routes/utils/backup");
 const notificationRoutes = require("./routes/api/notification");
-
+const productRoutes = require("./routes/api/products");
+const cartRoutes = require("./routes/cart");
+const invoiceRoutes = require("./routes/utils/invoice");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -53,10 +55,13 @@ app.use("/orders", orderRoutes);
 app.use("/registration", registrationRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/customer", customerRoutes);
-app.use("/e-commerce", ecommerceRoutes);
+app.use("/ecommerce", ecommerceRoutes);
 app.use("/", paymentRoutes);
 app.use("/", backupUtilRoutes);
 app.use("/", notificationRoutes);
+app.use("/api", productRoutes);
+app.use("/cart", cartRoutes);
+app.use("/", invoiceRoutes);
 
 //Database connection
 mongoose.connect(
@@ -76,7 +81,7 @@ app.use("/", urlRoutes);
 
 //globalvariables
 app.use(function (req, res, next) {
-  res.locals.success_msg = req.flash("success_msg");
+  res.locals.failure_msg = req.flash("failure");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
   next();

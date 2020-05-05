@@ -11,7 +11,10 @@ router.get("/search", async (req, res) => {
       if (err) {
         res.send("error");
       } else {
-        res.render("partials/viewCustomers", { customers: customers });
+        res.render("partials/customer/viewCustomers", {
+          title: "Edit customer",
+          customers: customers,
+        });
       }
     });
   }
@@ -47,7 +50,8 @@ module.exports = router;
 router.get("/api/:customerid", async (req, res, next) => {
   try {
     const customer = await Customer.findById(req.params.customerid);
-    res.render("partials/editCustomer", {
+    res.render("partials/customer/editCustomer", {
+      title: "Edit customer",
       customer: customer,
     });
   } catch (err) {
@@ -86,10 +90,6 @@ router.delete("/api/:customerid", async (req, res, next) => {
       { _id: req.params.customerid },
       (err) => {
         if (!err) {
-          const notification = new Notification({
-            eventName: req.body.custname,
-            eventType: "updated",
-          });
           return res.redirect("/customer/viewCustomers");
         }
       }

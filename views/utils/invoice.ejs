@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      Invoice
+      <strong>01/01/01/2018</strong>
+      <span class="float-right"> <strong>Status:</strong> Pending</span>
+    </div>
+    <div class="card-body">
+      <div class="row mb-4">
+        <div class="col-sm-6">
+          <h6 class="mb-3">From:</h6>
+          <div>
+            <strong>Pranish Shrestha</strong>
+          </div>
+          <div>Lightosphere Company</div>
+          <div>71-101 Szczecin, Poland</div>
+          <div>Email: info@webz.com.pl</div>
+          <div>Phone: +48 444 666 3333</div>
+        </div>
+
+        <div class="col-sm-6">
+          <h6 class="mb-3">To:</h6>
+          <div>
+            <strong><%=user.name%> </strong>
+          </div>
+          <div>Attn: Daniel Marek</div>
+          <div>43-190 Mikolow, Poland</div>
+          <div>Email: marek@daniel.com</div>
+          <div>Phone: +48 123 456 789</div>
+        </div>
+      </div>
+
+      <div class="table-responsive-sm">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th class="center">#</th>
+              <th>Item</th>
+
+              <th class="right">Unit Cost</th>
+              <th class="center">Qty</th>
+              <th class="right">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% cart.forEach(product=>{ %>
+            <tr>
+              <td class="center">
+                <% for(var i =1;i<=product.length;i++){ %> <%= i %> <% } %>
+              </td>
+              <td class="left strong"><%=product.Product.productName %></td>
+
+              <td class="right">$<%=product.Product.productPrice %></td>
+              <td class="center"><%=product.Quantity %></td>
+              <td class="right">
+                $<%=product.Product.productPrice *product.Quantity%>
+              </td>
+            </tr>
+            <%}) %>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-sm-5"></div>
+
+        <div class="col-lg-4 col-sm-5 ml-auto">
+          <table class="table table-clear">
+            <tbody>
+              <tr>
+                <td class="left">
+                  <strong>Subtotal</strong>
+                </td>
+                <td class="right">
+                  $<%var prices=[];
+                  cart.forEach(product=>{prices.push(product.Quantity
+                  *product.Product.productPrice) ;%> <%
+                  total=prices.reduce((a,b)=>a+b,0)} )%><%= total%>
+                </td>
+              </tr>
+              <tr>
+                <td class="left">
+                  <strong>Discount (20%)</strong>
+                </td>
+                <td class="right">$<%=0.02*total %></td>
+              </tr>
+              <tr>
+                <td class="left">
+                  <strong>VAT (10%)</strong>
+                </td>
+                <td class="right">$<%=0.01*total %></td>
+              </tr>
+              <tr>
+                <td class="left">
+                  <strong>Total</strong>
+                </td>
+                <td class="right">
+                  <strong>$<%=total-0.02*total+0.01*total %></strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
