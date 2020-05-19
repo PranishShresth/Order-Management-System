@@ -1,0 +1,12 @@
+<div
+  class="container d-flex justify-content-center align-items-center flex-column"
+>
+  <h2>Watch it Later Section</h2>
+  <ol>
+    <% watch.forEach(watches=>{%>
+
+    <li><a href="<%=watches.link %>"><%=watches.name%></a></li>
+
+    <%}) %>
+  </ol>
+</div>

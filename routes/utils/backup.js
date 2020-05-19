@@ -19,7 +19,7 @@ Router.get("/api/customers/backup", async (req, res, next) => {
   res.statusCode = 200;
   res.setHeader("Content-Type", "text/csv");
   res.setHeader("Content-Disposition", "attachment; filename=" + filename);
-  const url = "http://localhost:3010/customer/api/viewCustomers";
+  const url = `${process.env.SERVER}/customer/api/viewCustomers`;
   let response = await fetch(url);
   let customers = await response.json();
   res.csv(customers, true);

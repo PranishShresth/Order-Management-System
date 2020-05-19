@@ -2,7 +2,10 @@
   <div class="card">
     <div class="card-header">
       Invoice
-      <strong>01/01/01/2018</strong>
+      <strong
+        ><%let date = new Date;%><%=
+        date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate() %>
+      </strong>
       <span class="float-right"> <strong>Status:</strong> Pending</span>
     </div>
     <div class="card-body">
@@ -23,9 +26,9 @@
           <div>
             <strong><%=user.name%> </strong>
           </div>
-          <div>Attn: Daniel Marek</div>
-          <div>43-190 Mikolow, Poland</div>
-          <div>Email: marek@daniel.com</div>
+          <div><%=bill.name%></div>
+          <div><%=bill.address%></div>
+          <div><%=bill.email%></div>
           <div>Phone: +48 123 456 789</div>
         </div>
       </div>

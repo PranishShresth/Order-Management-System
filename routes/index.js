@@ -4,6 +4,7 @@ const fetch = require("node-fetch");
 const { loginRequired, StayLoggedin } = require("../config/auth");
 const invoice = require("./utils/invoice");
 const invoiceIt = require("@rimiti/invoice-it").default;
+const watchitModel = require("../models/watchModel");
 
 //View the customer
 router.get("/customer/viewCustomers", loginRequired, async (req, res) => {
@@ -153,4 +154,28 @@ router.get("/cart/checkout", async (req, res) => {
   const response = await fetch(url);
   const cartitems = await response.json();
   res.render("checkout", { title: "Checkout", carts: cartitems });
+});
+
+//Watch it later
+
+router.post("/product/cart/save", async (req, res) => {
+  const { productname, link } = req.body;
+  const pname = await watchitModel.find({ name: productname });
+
+  if (pname.length == 0) {
+    const Watch = new watchitModel({
+      name: productname,
+      link: `${process.env.SERVER}/ecommerce/product/viewDetail/${link}`,
+    });
+    await Watch.save();
+    res.redirect("/ecommerce/pendantlights");
+  } else {
+    res.redirect("/ecommerce/pendantlights");
+  }
+});
+
+router.get("/products/cart/save", async (req, res) => {
+  const watch = await watchitModel.find({});
+
+  res.render("watchitLater", { watch: watch, title: "Watch it Later" });
 });

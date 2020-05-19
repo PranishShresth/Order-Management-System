@@ -41,8 +41,6 @@ router.post("/login", async (req, res, next) => {
   User.findOne({
     name: req.body.username,
   }).then((user) => {
-    var sessionData = req.session;
-    sessionData.user = user;
     if (!user) {
       console.log("error");
     }
@@ -50,6 +48,8 @@ router.post("/login", async (req, res, next) => {
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
       if (err) throw err;
       if (isMatch) {
+        var sessionData = req.session;
+        sessionData.user = user;
         res.redirect("/dashboard");
       } else if (!isMatch) {
         res.send("Username or password error");

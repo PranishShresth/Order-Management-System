@@ -18,11 +18,23 @@
 
         <h5>Category: <span> <%=products.productCategory %> </span></h5>
         <br />
+        <form action="/product/cart/save" method="POST">
+          <input type="hidden" name="link" value="<%= products._id %> " />
+          <input
+            type="hidden"
+            name="productname"
+            value="<%= products.productName%>"
+          />
+          <h4>
+            <button class="btn btn-secondary">
+              <i class="fas fa-heart"></i>Watch it later
+            </button>
+          </h4>
+        </form>
         <form action="/cart/list/<%=products._id %> " method="POST">
           <div>
             <label for="quantity">Quantity</label>
             <input type="number" name="quantity" placeholder="0" />
-
             <button class="btn-primary btn" type="submit">
               Add to cart
             </button>

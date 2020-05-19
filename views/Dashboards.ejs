@@ -19,8 +19,23 @@
       </div>
     </div>
   </div>
+  <div class="row mt-3">
+    <div class="col">
+      <h3>Notification panel</h3>
+
+      <div class="card-body" style="overflow-y: scroll; max-height: 254px;">
+        <%if(notifications) {%> <% notifications.forEach(notification=> {%>
+        <div class="alert alert-success" role="alert">
+          <%= notification.eventType %> <%= notification.eventName %> on <% let
+          date = new Date (notification.logged); %> <%=
+          date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(); %>
+        </div>
+        <% })}; %>
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
 </div>
-\
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 

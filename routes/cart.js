@@ -16,7 +16,9 @@ router.post("/list/:productid", async (req, res) => {
   res.redirect("/ecommerce");
 });
 router.get("/list", async (req, res) => {
-  const cart = await Cart.find({})
+  const userid = req.session.user;
+  console.log(userid);
+  const cart = await Cart.find({ User: userid })
     .populate("User Product")
     .exec((err, result) => {
       if (result) {
