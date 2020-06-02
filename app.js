@@ -66,7 +66,7 @@ app.use("/", invoiceRoutes);
 
 //Database connection
 mongoose.connect(
-  process.env.DB_CONNECTION,
+  process.env.DB,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => {
     console.log("Connected to DB");
@@ -79,7 +79,16 @@ app.get("/demo", (req, res) => {
   res.render("demo", { layout: "layouts/registration-layout" });
 });
 app.use("/", urlRoutes);
+app.get("/times", (req, res) => res.send(showTimes()));
 
+showTimes = () => {
+  let result = "";
+  const times = process.env.TIMES || 5;
+  for (i = 0; i < times; i++) {
+    result += i + " ";
+  }
+  return result;
+};
 //globalvariables
 app.use(function (req, res, next) {
   res.locals.failure_msg = req.flash("failure");
