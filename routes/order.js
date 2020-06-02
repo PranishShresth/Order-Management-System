@@ -38,6 +38,7 @@ router.post("/", async (req, res) => {
     description: req.body.description,
     status: req.body.status,
     price: req.body.price,
+    customer: req.body.customer,
     totalAmount: req.body.amount,
   });
   try {
@@ -80,6 +81,7 @@ router.put("/api/:orderid", async (req, res, next) => {
     order.name = req.body.name;
     order.type = req.body.type;
     order.description = req.body.description;
+    order.customer = req.body.customer;
     order.status = req.body.status;
     order.price = req.body.price;
     order.totalAmount = req.body.amount;
@@ -107,6 +109,21 @@ router.delete("/api/:orderid", async (req, res, next) => {
     });
   } catch (err) {
     if (err) throw err;
+  }
+});
+
+//order details
+router.get("/approve/:id", async (req, res) => {
+  const { id } = req.params;
+  let order;
+  try {
+    order = await Order.findById(id);
+    await res.render("partials/order/orderDetails", {
+      title: "Approve Order",
+      order: order,
+    });
+  } catch (err) {
+    if (err) throw new Error("Error for details");
   }
 });
 //export module

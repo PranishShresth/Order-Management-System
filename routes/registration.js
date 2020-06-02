@@ -48,8 +48,9 @@ router.post("/login", async (req, res, next) => {
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
       if (err) throw err;
       if (isMatch) {
-        var sessionData = req.session;
-        sessionData.user = user;
+        req.session.user = user;
+        req.session.WatchList = [];
+
         res.redirect("/dashboard");
       } else if (!isMatch) {
         res.send("Username or password error");

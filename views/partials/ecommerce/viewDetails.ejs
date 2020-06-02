@@ -18,14 +18,11 @@
 
         <h5>Category: <span> <%=products.productCategory %> </span></h5>
         <br />
-        <form action="/product/cart/save" method="POST">
-          <input type="hidden" name="link" value="<%= products._id %> " />
-          <input
-            type="hidden"
-            name="productname"
-            value="<%= products.productName%>"
-          />
-          <h4>
+        <form
+          action="/product/viewlater/<%=products.productName %>&<%=products._id%>"
+          method="GET"
+        >
+        
             <button class="btn btn-secondary">
               <i class="fas fa-heart"></i>Watch it later
             </button>

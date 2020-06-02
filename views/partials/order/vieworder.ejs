@@ -2,7 +2,7 @@
   <div
     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
   >
-    <h2>Orders</h2>
+    <h2>Pending Orders</h2>
     <div class="btn-toolbar mb-2 mb-md-0">
       <form action="/orders/search">
         <div class="input-group mb-3">
@@ -28,41 +28,55 @@
       </form>
     </div>
   </div>
+  <div class="row mt-5">
+    <table class="table display table-striped" id="ordertable">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Customer</th>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Type</th>
-        <th scope="col">Description</th>
-        <th scope="col">Price</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Delivery Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
-      </tr>
-    </thead>
-    <% orders.forEach(order=>{ %>
+          <th scope="col">Type</th>
+          <th scope="col">Description</th>
+          <th scope="col">Price</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Delivery Status</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+          <th scope="col">Approve</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr>
-        <td><%= order.name %></td>
-        <td><%= order.type %></td>
-        <td><%= order.description %></td>
-        <td>$<%= order.price %></td>
-        <td><%= order.totalAmount %></td>
-        <td><%= order.status %></td>
-        <td>
-          <%- include("../Editform",{ url:
-          `/orders/api/${order._id}/?_method=GET` }) %>
-        </td>
-        <td>
-          <%- include("../deleteForm",{ url:
-          `/orders/api/${order._id}/?_method=DELETE` }) %>
-        </td>
-      </tr>
+      <tbody>
+        <% orders.forEach(order=>{ %>
 
-      <% }) %>
-    </tbody>
-  </table>
+        <tr>
+          <td><%= order.name %></td>
+          <td><%= order.customer %></td>
+          <td><%= order.type %></td>
+          <td><%= order.description %></td>
+          <td>$<%= order.price %></td>
+          <td><%= order.totalAmount %></td>
+          <td><%= order.status %></td>
+          <td>
+            <%- include("../Editform",{ url:
+            `/orders/api/${order._id}/?_method=GET` }) %>
+          </td>
+          <td>
+            <%- include("../deleteForm",{ url:
+            `/orders/api/${order._id}/?_method=DELETE` }) %>
+          </td>
+          <td>
+            <a href="/orders/approve/<%= order._id %> "
+              ><i class="fas fa-check"></i
+            ></a>
+          </td>
+        </tr>
+
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <div class="row mt-5">
+    <h2>Pending order Approval</h2>
+  </div>
 </div>

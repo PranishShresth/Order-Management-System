@@ -9,7 +9,6 @@ const orderSchema = mongoose.Schema({
   name: {
     type: String,
     trim: true,
-    lowercase: true,
     required: true,
   },
   type: {
@@ -20,6 +19,11 @@ const orderSchema = mongoose.Schema({
   description: {
     type: String,
     trim: true,
+  },
+  customer: {
+    type: String,
+    trim: true,
+    required: true,
   },
   status: {
     type: String,

@@ -70,7 +70,7 @@ router.put("/api/:customerid", async (req, res, next) => {
     await customer.save();
     const notification = new Notification({
       eventName: req.body.custname,
-      eventType: "updated",
+      eventType: "Updated",
     });
     await notification.save();
     res.redirect("/customer/viewCustomers");

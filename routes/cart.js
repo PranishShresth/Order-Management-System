@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Cart = require("../models/cartModel");
-const { loginRequired, StayLoggedin } = require("../config/auth");
 
 router.post("/list/:productid", async (req, res) => {
+  
   const productid = req.params.productid;
-  const userid = req.session.user._id;
   const quantity = req.body.quantity;
   const cart = new Cart({
     User: userid,
@@ -15,10 +14,10 @@ router.post("/list/:productid", async (req, res) => {
   await cart.save();
   res.redirect("/ecommerce");
 });
+
 router.get("/list", async (req, res) => {
-  const userid = req.session.user;
-  console.log(userid);
-  const cart = await Cart.find({ User: userid })
+  console.log(req.session);
+  const cart = await Cart.find({})
     .populate("User Product")
     .exec((err, result) => {
       if (result) {

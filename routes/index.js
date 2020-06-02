@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const fetch = require("node-fetch");
 const { loginRequired, StayLoggedin } = require("../config/auth");
-const invoice = require("./utils/invoice");
-const invoiceIt = require("@rimiti/invoice-it").default;
-const watchitModel = require("../models/watchModel");
 
 //View the customer
 router.get("/customer/viewCustomers", loginRequired, async (req, res) => {
@@ -75,7 +72,7 @@ router.get("/inventory", loginRequired, (req, res) => {
 
 //Ecommerce
 router.get("/ecommerce", loginRequired, (req, res) => {
-  res.render("Ecommerce", { title: "E-commerce" });
+  res.render("Ecommerce", { title: "E-commerce", layout: "layouts/blank" });
 });
 
 //reset Password
@@ -96,6 +93,8 @@ router.get("/profile", loginRequired, (req, res) => {
 
 //product
 router.get("/products/addProduct", loginRequired, (req, res) => {
+  console.log(req.session);
+
   res.render("partials/product/addProduct", {
     user: req.session.user,
     title: "Add product",
@@ -132,16 +131,18 @@ router.get("/ecommerce/pendantlights", async (req, res, next) => {
   res.render("Epages/clusterPendant", {
     products: productchunks,
     title: "Pendant Lights",
+    layout: "layouts/blank",
   });
 });
 
 //cart routes
 
-router.get("/cart", async (req, res) => {
+router.get("/cart", loginRequired, async (req, res) => {
+  console.log(req.session);
   const url = process.env.SERVER + "/cart/list";
   const response = await fetch(url);
   const cartitems = await response.json();
-  res.render("shoppingcart", {
+  await res.render("shoppingcart", {
     title: "Cart",
     products: cartitems,
   });
@@ -149,7 +150,7 @@ router.get("/cart", async (req, res) => {
 
 //checkout
 
-router.get("/cart/checkout", async (req, res) => {
+router.get("/cart/checkout", loginRequired, async (req, res) => {
   const url = process.env.SERVER + "/cart/list";
   const response = await fetch(url);
   const cartitems = await response.json();
@@ -158,24 +159,24 @@ router.get("/cart/checkout", async (req, res) => {
 
 //Watch it later
 
-router.post("/product/cart/save", async (req, res) => {
-  const { productname, link } = req.body;
-  const pname = await watchitModel.find({ name: productname });
-
-  if (pname.length == 0) {
-    const Watch = new watchitModel({
-      name: productname,
-      link: `${process.env.SERVER}/ecommerce/product/viewDetail/${link}`,
-    });
-    await Watch.save();
-    res.redirect("/ecommerce/pendantlights");
+router.get("/product/viewlater/:name&:id", async (req, res) => {
+  const { name, id } = req.params;
+  const wishList = req.session.WatchList;
+  const nameCheck = wishList.filter((item) => item.name == name);
+  if (nameCheck.length == 0) {
+    const viewitlater = {
+      name: name,
+      link: `${process.env.SERVER}/ecommerce/product/viewDetail/${id}`,
+    };
+    await wishList.push(viewitlater);
+    await res.redirect("/ecommerce/pendantlights");
   } else {
     res.redirect("/ecommerce/pendantlights");
   }
 });
 
-router.get("/products/cart/save", async (req, res) => {
-  const watch = await watchitModel.find({});
+router.get("/product/viewlater", loginRequired, async (req, res) => {
+  const wishList = req.session.WatchList;
 
-  res.render("watchitLater", { watch: watch, title: "Watch it Later" });
+  res.render("watchitLater", { watch: wishList, title: "Watch it Later" });
 });
