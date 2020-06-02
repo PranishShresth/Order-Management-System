@@ -36,7 +36,7 @@ router.get("/", StayLoggedin, (req, res) => {
 router.get("/dashboard", loginRequired, async (req, res) => {
   const response = await fetch(process.env.SERVER + "api/notification");
   const notifications = await response.json();
-  res.render("dashboards", {
+  res.render("Dashboards", {
     user: req.session.user,
     notifications: notifications,
     title: "Dashboard",
