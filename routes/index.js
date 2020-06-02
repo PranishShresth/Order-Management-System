@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const fetch = require("node-fetch");
 const { loginRequired, StayLoggedin } = require("../config/auth");
-
+const User = require("./../models/userModel");
 //View the customer
 router.get("/customer/viewCustomers", loginRequired, async (req, res) => {
-  const url = process.env.SERVER + "/customer/api/viewCustomers";
+  const url = process.env.SERVER + "customer/api/viewCustomers";
   let response = await fetch(url);
   let customers = await response.json();
   res.render("partials/customer/viewCustomers", {
@@ -53,7 +53,7 @@ router.get("/orders/addorder", loginRequired, (req, res) => {
 
 //View the order
 router.get("/orders/vieworder", loginRequired, async (req, res) => {
-  const url = process.env.SERVER + "/orders/api/viewOrder";
+  const url = process.env.SERVER + "orders/api/viewOrder";
   let response = await fetch(url);
   let orders = await response.json();
   res.render("partials/order/vieworder", {
@@ -120,7 +120,7 @@ module.exports = router;
 //Ecommerce pages
 
 router.get("/ecommerce/pendantlights", async (req, res, next) => {
-  const url = process.env.SERVER + "/api/products";
+  const url = process.env.SERVER + "api/products";
   let response = await fetch(url);
   let products = await response.json();
   let productchunks = [];
@@ -139,7 +139,7 @@ router.get("/ecommerce/pendantlights", async (req, res, next) => {
 
 router.get("/cart", loginRequired, async (req, res) => {
   console.log(req.session);
-  const url = process.env.SERVER + "/cart/list";
+  const url = process.env.SERVER + "cart/list";
   const response = await fetch(url);
   const cartitems = await response.json();
   await res.render("shoppingcart", {
@@ -151,7 +151,7 @@ router.get("/cart", loginRequired, async (req, res) => {
 //checkout
 
 router.get("/cart/checkout", loginRequired, async (req, res) => {
-  const url = process.env.SERVER + "/cart/list";
+  const url = process.env.SERVER + "cart/list";
   const response = await fetch(url);
   const cartitems = await response.json();
   res.render("checkout", { title: "Checkout", carts: cartitems });
@@ -166,7 +166,7 @@ router.get("/product/viewlater/:name&:id", async (req, res) => {
   if (nameCheck.length == 0) {
     const viewitlater = {
       name: name,
-      link: `${process.env.SERVER}/ecommerce/product/viewDetail/${id}`,
+      link: `${process.env.SERVER}ecommerce/product/viewDetail/${id}`,
     };
     await wishList.push(viewitlater);
     await res.redirect("/ecommerce/pendantlights");
@@ -179,4 +179,16 @@ router.get("/product/viewlater", loginRequired, async (req, res) => {
   const wishList = req.session.WatchList;
 
   res.render("watchitLater", { watch: wishList, title: "Watch it Later" });
+});
+
+router.get("/resource", loginRequired, async (req, res) => {
+  const user = await User.find({});
+  const url = process.env.SERVER + "customer/api/viewCustomers";
+  const response = await fetch(url);
+  const cust = await response.json();
+  await res.render("partials/resource/resource", {
+    onlineAccounts: user.length,
+    title: "Resource",
+    cust: cust,
+  });
 });

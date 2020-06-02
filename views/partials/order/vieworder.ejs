@@ -66,9 +66,72 @@
             `/orders/api/${order._id}/?_method=DELETE` }) %>
           </td>
           <td>
-            <a href="/orders/approve/<%= order._id %> "
-              ><i class="fas fa-check"></i
-            ></a>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#exampleModal"
+            >
+              Approve
+            </button>
+
+            <!-- Modal -->
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Send Email
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="/orders/approve">
+                      <input
+                        type="text"
+                        placeholder="Name of the customer"
+                        style="width: 100%;"
+                        name="custname"
+                        class="form-control mb-3"
+                      />
+                      <input
+                        type="email"
+                        placeholder="Email address"
+                        style="width: 100%;"
+                        name="oemail"
+                        class="form-control mb-3"
+                      />
+                      <button type="submit" class="btn btn-primary">
+                        Send Email
+                      </button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
 
