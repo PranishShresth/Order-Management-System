@@ -9,4 +9,6 @@ MongoDb as a Database
 Express as a middleware
 Ejs as template engine
 
+npm install cmd to install all dependencies
+
 Please find the dependencies required at package.json
