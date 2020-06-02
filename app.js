@@ -66,7 +66,7 @@ app.use("/", invoiceRoutes);
 
 //Database connection
 mongoose.connect(
-  process.env.DB,
+  process.env.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => {
     console.log("Connected to DB");
