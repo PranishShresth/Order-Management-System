@@ -25,225 +25,111 @@
     />
     <link rel="stylesheet" href="/static/stylesheets/style.css" />
   </head>
-
   <style>
-    .layout {
-      min-height: 100vh;
-    }
-    .fab,
-    .fas,
-    .fa {
-      padding: 0 3px;
-    }
-    main {
-      background-color: #f6faef;
+    .nav-link {
+      color: aliceblue;
+      text-decoration: none;
     }
   </style>
+
   <body>
+    <%- include("../partials/navbar") %>
+
     <div class="container-fluid">
-      <div class="row layout flex-column flex-md-row">
-        <aside class="col-12 main-body col-md-2 p-0 bg-dark flex-shrink-1">
-          <nav
-            class="navbar navbar-expand child-body navbar-dark bg-dark align-items-start py-2"
-          >
-            <div class="collapse navbar-collapse">
-              <ul
-                class="flex-md-column flex-row navbar-nav w-100 justify-content-between"
-              >
-                <div id="no-accordion">
-                  <ul class="nav nav-item flex-column">
-                    <li class="active">
-                      <a href="/dashboard" class="nav-link pl-0 text-nowrap"
-                        ><i class="fas fa-tachometer-alt"></i>Dashboard</a
-                      >
-                    </li>
-                  </ul>
-                </div>
-                <div id="no-accordion">
-                  <ul class="nav nav-item flex-column">
-                    <li class="active">
-                      <a href="/inventory" class="nav-link pl-0 text-nowrap"
-                        ><i class="fas fa-warehouse"></i>Inventory</a
-                      >
-                    </li>
-                  </ul>
-                </div>
-
-                <div id="accordion" class="panel-group">
-                  <div class="panel">
-                    <div class="panel-heading">
-                      <li class="active">
-                        <a
-                          href="#panelBodyTwo"
-                          class="accordion-toggle nav-link pl-0 text-nowrap"
-                          data-toggle="collapse"
-                          data-parent="#accordion"
-                          ><i class="fab fa-salesforce"></i>Orders</a
-                        >
-                      </li>
-                    </div>
-                    <div id="panelBodyTwo" class="panel-collapse collapse in">
-                      <div class="panel-body">
-                        <ul class="nav nav-item flex-column">
-                          <li>
-                            <a
-                              href="/orders/vieworder"
-                              class="nav-link pl-0 text-nowrap"
-                            >
-                              View Order</a
-                            >
-                          </li>
-
-                          <li>
-                            <a
-                              href="/orders/addorder"
-                              class="nav-link pl-0 text-nowrap"
-                            >
-                              Add Order</a
-                            >
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="accordion" class="panel-group">
-                  <div class="panel">
-                    <div class="panel-heading">
-                      <li class="active">
-                        <a
-                          href="#panelBodyThree"
-                          class="accordion-toggle nav-link pl-0 text-nowrap"
-                          data-toggle="collapse"
-                          data-parent="#accordion"
-                          ><i class="fas fa-users"></i>Customers</a
-                        >
-                      </li>
-                    </div>
-                    <div id="panelBodyThree" class="panel-collapse collapse in">
-                      <div class="panel-body">
-                        <ul class="nav nav-item flex-column">
-                          <li>
-                            <a
-                              href="/customer/viewCustomers"
-                              class="nav-link pl-0 text-nowrap"
-                            >
-                              View Customers</a
-                            >
-                          </li>
-
-                          <li>
-                            <a
-                              href="/customer/addCustomers"
-                              class="nav-link pl-0 text-nowrap"
-                            >
-                              Add Customers</a
-                            >
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="no-accordion">
-                  <ul class="nav nav-item flex-column">
-                    <li class="active">
-                      <a
-                        href="/products/addProduct"
-                        class="nav-link pl-0 text-nowrap"
-                        ><i class="fas fa-chart-pie"></i>Products</a
-                      >
-                    </li>
-                  </ul>
-                </div>
-                <div id="no-accordion">
-                  <ul class="nav nav-item flex-column">
-                    <li class="active">
-                      <a href="/ecommerce" class="nav-link pl-0 text-nowrap"
-                        ><i class="fas fa-shopping-cart"></i>Ecommerce</a
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </ul>
-            </div>
-          </nav>
-        </aside>
-        <main class="col p-0 bg-faded w-100">
-          <%- include("../partials/navbar") %> <%- body %>
-        </main>
-      </div>
-      <div class="feedbackform">
-        <button id="feedbackBTN">
-          <i class="fa fa-envelope" aria-hidden="true"></i> SEND US FEEDBACK
-        </button>
-      </div>
-      <div class="social-container">
-        <!-- Default form contact -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path
-            fill="#0099ff"
-            fill-opacity="22.22"
-            d="M0,32L20,74.7C40,117,80,203,120,208C160,213,200,139,240,117.3C280,96,320,128,360,144C400,160,440,160,480,144C520,128,560,96,600,106.7C640,117,680,171,720,176C760,181,800,139,840,106.7C880,75,920,53,960,90.7C1000,128,1040,224,1080,245.3C1120,267,1160,213,1200,170.7C1240,128,1280,96,1320,80C1360,64,1400,64,1420,64L1440,64L1440,0L1420,0C1400,0,1360,0,1320,0C1280,0,1240,0,1200,0C1160,0,1120,0,1080,0C1040,0,1000,0,960,0C920,0,880,0,840,0C800,0,760,0,720,0C680,0,640,0,600,0C560,0,520,0,480,0C440,0,400,0,360,0C320,0,280,0,240,0C200,0,160,0,120,0C80,0,40,0,20,0L0,0Z"
-          ></path>
-        </svg>
-        <form
-          class="text-center border border-light p-5"
-          action="/api/feedback"
+      <div class="row" style="height: 100vh;">
+        <nav
+          id="sidebarMenu"
+          class="col-md-3 col-lg-2 h-100 d-md-block bg-dark sidebar collapse"
         >
-          <p class="h4 mb-4">Contact us</p>
+          <div class="sidebar-sticky pt-3">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a href="/dashboard" class="nav-link pl-0 text-nowrap"
+                  ><i class="fas fa-tachometer-alt"></i>Dashboard</a
+                >
+              </li>
+              <li class="nav-item" style="color: white;">
+                <i class="fab fa-salesforce"></i>
+                Order
+              </li>
 
-          <!-- Name -->
-          <input
-            type="text"
-            id="defaultContactFormName"
-            class="form-control mb-4"
-            placeholder="Name"
-          />
+              <li class="nav-item">
+                <a
+                  href="/orders/vieworder"
+                  class="nav-link mx-4 pl-0 text-nowrap"
+                >
+                  View Order</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/orders/addorder"
+                  class="nav-link mx-4 pl-0 text-nowrap"
+                >
+                  Add Order</a
+                >
+              </li>
 
-          <!-- Email -->
-          <input
-            type="email"
-            id="defaultContactFormEmail"
-            class="form-control mb-4"
-            placeholder="E-mail"
-          />
+              <li class="nav-item" style="color: white;">
+                <i class="fas fa-users"></i>
+                Customers
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/customer/viewCustomers"
+                  class="nav-link pl-0 mx-4 text-nowrap"
+                >
+                  View Customers</a
+                >
+              </li>
 
-          <!-- Subject -->
-          <label>Subject</label>
-          <select class="browser-default custom-select mb-4">
-            <option value="" disabled>Choose option</option>
-            <option value="1" selected>Feedback</option>
-            <option value="2">Report a bug</option>
-            <option value="3">Feature request</option>
-          </select>
+              <li>
+                <a
+                  href="/customer/addCustomers"
+                  class="nav-link pl-0 mx-4 text-nowrap"
+                >
+                  Add Customers</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="/products/addProduct" class="nav-link pl-0 text-nowrap"
+                  ><i class="fas fa-chart-pie"></i>Products</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="/ecommerce" class="nav-link pl-0 text-nowrap"
+                  ><i class="fas fa-shopping-cart"></i>Ecommerce</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Reports
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Integrations
+                </a>
+              </li>
+            </ul>
 
-          <!-- Message -->
-          <div class="form-group">
-            <textarea
-              class="form-control rounded-0"
-              id="exampleFormControlTextarea2"
-              rows="3"
-              placeholder="Message"
-            ></textarea>
-          </div>
-
-          <!-- Copy -->
-          <div class="custom-control custom-checkbox mb-4">
-            <input
-              type="checkbox"
-              class="custom-control-input"
-              id="defaultContactFormCopy"
-            />
-            <label class="custom-control-label" for="defaultContactFormCopy"
-              >Send me a copy of this message</label
+            <h6
+              class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
             >
+              <span>Saved reports</span>
+              <a
+                class="d-flex align-items-center text-muted"
+                href="#"
+                aria-label="Add a new report"
+              >
+              </a>
+            </h6>
           </div>
+        </nav>
 
-          <!-- Send button -->
-          <button class="btn btn-info btn-block" type="submit">Send</button>
-        </form>
-        <!-- Default form contact -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+          <%-body-%>
+        </main>
       </div>
     </div>
     <script
