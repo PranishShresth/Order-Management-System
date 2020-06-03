@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
 
 //reset pasword route
 router.post("/reset", async (req, res, next) => {
@@ -94,7 +94,7 @@ router.post(
 
         try {
           const newUser = await user.save();
-          sendmail(req.body.username, req.body.email);
+          await sendEmail(req.body.email, req.body.user);
           res.redirect("/");
         } catch (err) {
           if (err) throw err;
@@ -104,48 +104,33 @@ router.post(
     });
   }
 );
-
-//sending email function
-const sendmail = (username, email, output) => {
-  let transporter = nodemailer.createTransport({
-    service: "Gmail",
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: "ordermanagementsystem2@gmail.com", // generated ethereal user
-      pass: process.env.GMAIL_PASS, // generated ethereal password
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
-  });
-  var output = `
-  <p>Thank you for registering with Revenant Dawn - Order Management System<p>
-  <p>You can now sign in to get full features. If you have any queries, please reply back to this email and we will get back to you as soon as we can.<p>
-  <br>
-  <footer>
-  <p>Kind Regards,<p>
-  <p>Revenant Dawn Team</p>
-  <p>Sydney, NSW</p
-  </footer>
-  `;
-
-  // setup email data with unicode symbols
-  let mailOptions = {
-    from: '"Order Management System" <ordermanagementsystem2@gmail.com>', // sender address
-    to: email, // list of receivers
-    subject: "User registration", // Subject line
-    text: "Successful registration", // plain text body
-    html: `<p>Dear ${username},<p><br>` + output, // html body
+const sendEmail = (touser, user) => {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const msg = {
+    to: touser,
+    from: "ordermanagementsystem2@gmail.com",
+    subject: "User registration",
+    html: `
+    Dear ${user}
+    <p>Thank you for registering with Revenant Dawn - Order Management System<p>
+    <p>You can now sign in to get full features. If you have any queries, please reply back to this email and we will get back to you as soon as we can.<p>
+    <br>
+    <footer>
+    <p>Kind Regards,<p>
+    <p>Revenant Dawn Team</p>
+    <p>Sydney, NSW</p
+    </footer>
+    `,
   };
-
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  });
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log("Message sent");
+    })
+    .catch((error) => {
+      console.log(error.response.body);
+      // console.log(error.response.body.errors[0].message)
+    });
 };
 
 module.exports = router;

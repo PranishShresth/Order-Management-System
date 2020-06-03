@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../models/orderModel");
 const { v4: uuidv4 } = require("uuid");
-const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
 
 const Notification = require("./../models/notificationModel");
 
@@ -119,52 +119,39 @@ router.post("/approve", async (req, res) => {
   const oemail = req.body.oemail;
   const custname = req.body.custname;
   try {
-    sendmail(custname, oemail);
+    await sendEmail(oemail);
     res.redirect("/orders/viewOrder");
   } catch (err) {
     if (err) throw new Error("Error for details");
   }
 });
+
 //export module
-const sendmail = (username, email) => {
-  let transporter = nodemailer.createTransport({
-    service: "Gmail",
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: "ordermanagementsystem2@gmail.com", // generated ethereal user
-      pass: process.env.GMAIL_PASS, // generated ethereal password
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
-  });
-  var output = `
-  <p>Thank you for ordering with Revenant Dawn - Order Management System<p>
+const sendEmail = (touser) => {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const msg = {
+    to: touser,
+    from: "ordermanagementsystem2@gmail.com",
+    subject: "User registration",
+    html: `
+    <p>Thank you for ordering with Revenant Dawn - Order Management System<p>
   <p>Your order has been confirmed. When it ships, we will let you know<p>
   <br>
   <footer>
   <p>Kind Regards,<p>
   <p>Revenant Dawn Team</p>
   <p>Sydney, NSW</p
-  </footer>
-  `;
-
-  // setup email data with unicode symbols
-  let mailOptions = {
-    from: '"Order Management System" <ordermanagementsystem2@gmail.com>', // sender address
-    to: email, // list of receivers
-    subject: "User registration", // Subject line
-    text: "Successful registration", // plain text body
-    html: `<p>Dear ${username},<p><br>` + output, // html body
+  </footer></p>
+    `,
   };
-
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  });
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log("Message sent");
+    })
+    .catch((error) => {
+      console.log(error.response.body);
+      // console.log(error.response.body.errors[0].message)
+    });
 };
 module.exports = router;
