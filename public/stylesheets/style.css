@@ -105,14 +105,13 @@ a {
   clear: both;
 }
 
-.card {
-  border-radius: 8px;
+.dashboard-card {
   color: white;
+  border-radius: 8px;
   padding: 10px;
   position: relative;
 }
-.card .zmdi {
-  color: white;
+.card .fas {
   font-size: 28px;
   opacity: 0.3;
   position: absolute;
@@ -147,43 +146,4 @@ a {
 }
 .card.red {
   background-color: #d65b4a;
-}
-
-/* Start users */
-
-.admins {
-  margin-top: 25px;
-}
-.admins .box {
-}
-.admins .box > h3 {
-  color: #ccc;
-  font-family: Calibri;
-  font-weight: 300;
-  margin-top: 0;
-}
-.admins .box .admin {
-  margin-bottom: 20px;
-  overflow: hidden;
-  background-color: #313348;
-  padding: 10px;
-}
-.admins .box .admin .img {
-  width: 20%;
-  margin-right: 5%;
-  float: left;
-}
-.admins .box .admin .img img {
-  border-radius: 50%;
-}
-.admins .box .info {
-  width: 75%;
-  color: #eee;
-  float: left;
-}
-.admins .box .info h3 {
-  font-size: 19px;
-}
-.admins .box .info p {
-  color: #bbb;
 }

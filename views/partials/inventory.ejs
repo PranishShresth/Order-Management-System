@@ -46,16 +46,16 @@
   }
 </style>
 <div class="container">
-  <section class="statistics">
+  <section class="statistics mb-4">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-4">
           <div class="box">
             <i class="fa fa-envelope fa-fw bg-primary"></i>
             <div class="info">
-              <h3>20</h3>
+              <h3><%=inventory.length %></h3>
               <span>Products</span>
-              <p>Needs to be stocked</p>
+              <p>In stock</p>
             </div>
           </div>
         </div>
@@ -81,11 +81,138 @@
             <div class="info">
               <h3>500</h3>
               <span>Customers</span>
-              <p>Adding 5 customers daily</p>
+              <p>Customer</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+  <div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+  >
+    <h2>Inventory</h2>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group row mb-4 px-2"></div>
+      <div class="button-controls">
+        <button
+          type="submit"
+          data-toggle="modal"
+          data-target="#addInventory"
+          class="btn btn-sm btn-outline-secondary"
+        >
+          Add
+        </button>
+      </div>
+      <div class="button-controls">
+        <button type="submit" class="btn btn-sm mx-2 btn-outline-secondary">
+          Edit
+        </button>
+      </div>
+      <div class="button-controls">
+        <form method="GET" action="">
+          <button type="submit" class="btn btn-sm btn-outline-secondary">
+            Export
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!--Table-->
+  <div class="row w-100">
+    <table
+      id="inventory-table"
+      style="width: 100%;"
+      class="table display table-striped"
+    >
+      <!--Table head-->
+      <thead>
+        <tr>
+          <th>ProductID</th>
+          <th>ProductName</th>
+          <th>Quantity Available</th>
+          <th>Manufacture Date</th>
+          <th>QuantiyPrice</th>
+        </tr>
+      </thead>
+      <!--Table head-->
+
+      <!--Table body-->
+      <tbody>
+        <% inventory.forEach(products=>{ %>
+        <tr>
+          <td><%= products.ProductID %></td>
+          <td><%= products.ProductName %></td>
+          <td><%= products.ProductPrice %></td>
+          <td><%= products.ManufactureDate %></td>
+          <td><%= products.Quantity%></td>
+        </tr>
+        <% }) %>
+      </tbody>
+      <!--Table body-->
+    </table>
+    <!--Table-->
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="addInventory"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="addInventoryLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addInventoryLabel">Add to Inventory</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form method="POST" action="/inventory/addInventory">
+            <div class="form-group row">
+              <label for="ProductID">ProductID</label>
+              <input type="text" class="mx-3" name="p_id" />
+            </div>
+            <div class="form-group row">
+              <label for="ProductName">ProductName</label>
+              <input type="text" class="mx-3" name="p_name" />
+            </div>
+            <div class="form-group row">
+              <label for="qty">QuantityAvailable</label>
+              <input type="number" class="mx-3" name="p_qty" />
+            </div>
+            <div class="form-group row">
+              <label for="m_date">Manufacture date</label>
+              <input type="date" class="mx-3" name="m_date" />
+            </div>
+            <div class="form-group row">
+              <label for="p_price">Price(per piece)</label>
+              <input type="number" class="mx-3" name="p_price" />
+            </div>
+            <div class="form-group w-100">
+              <button type="submit" class="btn mx-5 btn-secondary">
+                Add to inventory
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -64,16 +64,20 @@ router.get("/orders/vieworder", loginRequired, async (req, res) => {
 });
 
 //Get inventory
-router.get("/inventory", loginRequired, (req, res) => {
+router.get("/inventory", loginRequired, async (req, res) => {
+  const url = process.env.SERVER + "inventory/inventoryDetails";
+  let response = await fetch(url);
+  let inventory = await response.json();
   res.render("partials/inventory", {
     user: req.session.user,
     title: "Inventory",
+    inventory: inventory,
   });
 });
 
 //Ecommerce
 router.get("/ecommerce", loginRequired, (req, res) => {
-  res.render("Ecommerce", { title: "E-commerce", layout: "layouts/blank" });
+  res.render("Ecommerce", { title: "E-commerce" });
 });
 
 //reset Password
@@ -132,7 +136,6 @@ router.get("/ecommerce/pendantlights", async (req, res, next) => {
   res.render("Epages/clusterPendant", {
     products: productchunks,
     title: "Pendant Lights",
-    layout: "layouts/blank",
   });
 });
 

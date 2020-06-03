@@ -7,7 +7,6 @@ router.get("/product/viewDetail/:id", async (req, res) => {
   res.render("partials/ecommerce/viewDetails", {
     title: "Product Details",
     products: products,
-    layout: "layouts/blank",
   });
 });
 
