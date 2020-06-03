@@ -36,9 +36,10 @@ router.get("/", StayLoggedin, (req, res) => {
 router.get("/dashboard", loginRequired, async (req, res) => {
   const response = await fetch(process.env.SERVER + "api/notification");
   const notifications = await response.json();
+  const notification = await notifications.splice(notifications.length - 5);
   res.render("Dashboards", {
     user: req.session.user,
-    notifications: notifications,
+    notifications: notification,
     title: "Dashboard",
   });
 });
@@ -181,6 +182,7 @@ router.get("/product/viewlater", loginRequired, async (req, res) => {
   res.render("watchitLater", { watch: wishList, title: "Watch it Later" });
 });
 
+//Resource section
 router.get("/resource", loginRequired, async (req, res) => {
   const user = await User.find({});
   const url = process.env.SERVER + "customer/api/viewCustomers";

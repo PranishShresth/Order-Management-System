@@ -1,94 +1,95 @@
 <style></style>
 <div class="container mb-5">
-  <div class="row">
-    <div class="col">
-      <div class="jumbotron">
-        <h5>List of Active accounts</h5>
-        <p><%=onlineAccounts %></p>
+  <div class="card-deck-wrapper mt-5 mb-3">
+    <div class="card-deck">
+      <div class="card card-inverse alert-success text-center">
+        <div class="card-block">
+          <blockquote class="card-blockquote">
+            <p>
+              <h5>List of Active accounts</h5>
+              <p><%=onlineAccounts %></p>
+            </p>
+           
+          </blockquote>
+        </div>
       </div>
-    </div>
-    <div class="col d-flex justify-content-center align-items-center">
-      <button
-        type="button"
-        class="btn btn-primary"
-        data-toggle="modal"
-        data-target="#exampleModal"
-      >
-        Issue a refund
-      </button>
-
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Refund</h5>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="text">Customer</label>
-
-                  <select name[]="cust" id="cust">
-                    <% cust.forEach(option=>{%>
-
-                    <option value="<%=option.CustomerName%>"
-                      ><%=option.CustomerName%></option
-                    >
-                    <%})%>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="pwd">Refund amount:</label>
-                  <input
-                    type="number"
-                    name="refundAmt"
-                    class="form-control"
-                    id="pwd"
-                  />
-                </div>
-
+      <div class="card card-inverse alert-success text-center">
+        <div class="card-block">
+          <h5>Refund a customer</h5>
+          <button
+          type="button"
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          Issue a refund
+        </button>
+  
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Refund</h5>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="text">Customer</label>
+  
+                    <select name[]="cust" id="cust">
+                      <% cust.forEach(option=>{%>
+  
+                      <option value="<%=option.CustomerName%>"
+                        ><%=option.CustomerName%></option
+                      >
+                      <%})%>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="pwd">Refund amount:</label>
+                    <input
+                      type="number"
+                      name="refundAmt"
+                      class="form-control"
+                      id="pwd"
+                    />
+                  </div>
+  
+                  <button
+                    class="btn btn-secondary"
+                    type="submit"
+                    class="btn btn-default"
+                  >
+                    Submit
+                  </button>
+                </form>
+              </div>
+              <div class="modal-footer">
                 <button
+                  type="button"
                   class="btn btn-secondary"
-                  type="submit"
-                  class="btn btn-default"
+                  data-dismiss="modal"
                 >
-                  Submit
+                  Close
                 </button>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
+              </div>
             </div>
           </div>
         </div>
+      
+        </div>
       </div>
-    </div>
+     
   </div>
-  <div class="row">
-    <div class="col d-flex justify-content-center align-items-center">
-      <div class="jumbotron">
-        
-      </div>
-    </div>
-    <div class="col d-flex justify-content-center align-items-center">
-      <div class="jumbotron">
-        <h5>List of Active accounts</h5>
-        <p><%=onlineAccounts %></p>
-      </div>
-    </div>
+</div>
+ 
   </div>
 </div>

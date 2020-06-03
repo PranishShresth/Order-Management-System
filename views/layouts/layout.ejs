@@ -30,16 +30,20 @@
       color: aliceblue;
       text-decoration: none;
     }
+    .sidebar-sticky {
+      position: sticky;
+    }
   </style>
 
   <body>
     <%- include("../partials/navbar") %>
 
     <div class="container-fluid">
-      <div class="row" style="height: 100vh;">
+      <div class="row">
         <nav
           id="sidebarMenu"
-          class="col-md-3 col-lg-2 h-100 d-md-block bg-dark sidebar collapse"
+          style="height: 100vh;"
+          class="col-md-3 col-lg-2 d-md-block bg-dark sidebar navs collapse"
         >
           <div class="sidebar-sticky pt-3">
             <ul class="nav flex-column">

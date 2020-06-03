@@ -2,98 +2,188 @@ body {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
   line-height: 1.5em;
+  font-size: 0.875rem;
+
   background-color: #e0deda;
 }
 
 a {
   width: inherit;
 }
-#no-accordion,
-#accordion {
-  padding-left: 20px;
-  text-decoration: none;
-  display: block;
-  margin-block-start: 1.5em;
-  margin-block-end: 1.5em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+.nav-item i {
+  margin-right: 10px;
+  margin-left: 5px;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
+  }
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Welcome dashboard */
+
+.welcome .content {
+  padding: 15px;
+  margin-top: 25px;
+}
+.welcome h2 {
+  font-weight: 400;
+  margin-top: 0;
+}
+
+/* Cards in dashboards */
+.card-list {
+  width: 100%;
+}
+.card-list:before,
+.card-list:after {
+  content: " ";
+  display: table;
+}
+.card-list:after {
+  clear: both;
+}
+
+.card {
+  border-radius: 8px;
   color: white;
-  margin: 8px 0;
-  line-height: 40px;
-  font-size: 14px;
+  padding: 10px;
+  position: relative;
 }
-
-.nav h2::after {
-  box-sizing: border-box;
-  display: block;
-  height: 2px;
-  color: black;
-}
-/* add order */
-.feedbackform {
-  position: fixed;
-  top: 92vh;
-  left: 1%;
-  bottom: 3%;
-  width: 115px;
-  text-align: right;
-  z-index: 9999;
-  margin-top: -15px;
-}
-
-/* If you want to hide this on devices smaller than the iPad */
-
-/* 		@media (max-width:768px) {
-    .feedbackform {
-      display:none;
-    }
-  } */
-
-#feedbackBTN {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: rgb(202, 55, 55);
-  border: none;
-  color: #000000;
-  text-align: center;
-  font-size: 0.7rem;
-  height: 3rem;
-  padding: 1rem;
-  width: 12rem;
-  transition: all 0.5s;
-  cursor: pointer;
-}
-
-#feedbackBTN:hover {
-  background-color: rgba(25, 245, 237, 0.55);
-}
-
-.social-container {
-  width: 400px;
-  min-height: 200px;
+.card .zmdi {
+  color: white;
+  font-size: 28px;
+  opacity: 0.3;
   position: absolute;
-  background: #f6faef;
-  background-size: 100px 82px;
-  bottom: 15%;
-  left: 0%;
-  transform: translateX(-100%);
-  transition: transform 0.4s ease-out;
+  right: 13px;
+  top: 13px;
+}
+.card .stat {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 8px;
+  margin-top: 25px;
+  padding: 10px 10px 0;
+  text-transform: uppercase;
+}
+.card .title {
+  display: inline-block;
+  font-size: 8px;
+  padding: 10px 10px 0;
+  text-transform: uppercase;
+}
+.card .value {
+  font-size: 28px;
+  padding: 0 10px;
+}
+.card.blue {
+  background-color: #2298f1;
+}
+.card.green {
+  background-color: #66b92e;
+}
+.card.orange {
+  background-color: #da932c;
+}
+.card.red {
+  background-color: #d65b4a;
 }
 
-.social-container a:hover {
-  background-color: #add8e6;
-  transform: Scale(1.2);
-}
+/* Start users */
 
-.button-container {
-  position: fixed;
-  top: 50%;
-  left: 50vw;
+.admins {
+  margin-top: 25px;
 }
-.social-container p {
-  text-align: center;
-  font-weight: bold;
+.admins .box {
 }
-.social-container.visible {
-  transform: translateX(20px);
+.admins .box > h3 {
+  color: #ccc;
+  font-family: Calibri;
+  font-weight: 300;
+  margin-top: 0;
+}
+.admins .box .admin {
+  margin-bottom: 20px;
+  overflow: hidden;
+  background-color: #313348;
+  padding: 10px;
+}
+.admins .box .admin .img {
+  width: 20%;
+  margin-right: 5%;
+  float: left;
+}
+.admins .box .admin .img img {
+  border-radius: 50%;
+}
+.admins .box .info {
+  width: 75%;
+  color: #eee;
+  float: left;
+}
+.admins .box .info h3 {
+  font-size: 19px;
+}
+.admins .box .info p {
+  color: #bbb;
 }
