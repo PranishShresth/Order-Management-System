@@ -21,19 +21,26 @@ router.post("/reset", async (req, res, next) => {
   }
 });
 router.put("/reset/:user", async (req, res, next) => {
-  bcrypt.genSalt(10, function (err, salt) {
-    bcrypt.hash(req.body.newPassword, salt, async function (err, hash) {
-      let user;
-      try {
-        user = await User.findById(req.params.user);
-        user.password = hash;
-        await user.save();
-        res.redirect("/");
-      } catch (err) {
-        if (err) throw err;
-      }
+  if (req.body.newPassword.length >= 6) {
+    bcrypt.genSalt(10, function (err, salt) {
+      bcrypt.hash(req.body.newPassword, salt, async function (err, hash) {
+        let user;
+        try {
+          user = await User.findById(req.params.user);
+          user.password = hash;
+          await user.save();
+          res.redirect("/");
+        } catch (err) {
+          if (err) throw err;
+        }
+      });
     });
-  });
+  } else {
+    req.session.reseterrors = {
+      message: "Password must be more than 5 chars",
+    };
+    res.redirect("/registration/resetPassword");
+  }
 });
 
 //login route

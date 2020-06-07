@@ -1,7 +1,5 @@
 <div class="container">
-  <div class="py-5 text-center">
-    <h2>Checkout</h2>
-  </div>
+  
 
   <div class="row">
     <div class="col-md-4 order-md-2 mb-4">
@@ -46,7 +44,7 @@
       </form>
     </div>
     <div class="col-md-8 order-md-1">
-      <h4 class="mb-3">Billing address</h4>
+      <!-- <h4 class="mb-3">Billing address</h4>
       <form
         class="needs-validation"
         method="POST"
@@ -155,13 +153,15 @@
               Zip code required.
             </div>
           </div>
-        </div>
+        </div> -->
         <hr class="mb-4" />
 
         <h4 class="mb-3">Payment</h4>
         <!-- Set up a container element for the button -->
+        
         <div id="paypal-button-container"></div>
-
+        
+    </div>
         <!-- Include the PayPal JavaScript SDK -->
         <script src="https://www.paypal.com/sdk/js?client-id=AQdoPlxkyEb2bb1LLfw0IrcciWlV4HYDG0l4lXG7td1O2CNiStvNNz3Y9Ng4B1QWZVjFvDkhiZqOd-8z&currency=USD"></script>
 
@@ -169,6 +169,13 @@
           // Render the PayPal button into #paypal-button-container
           paypal
             .Buttons({
+              style: {
+              shape: 'rect',
+              color: 'gold',
+              layout: 'vertical',
+              label: 'checkout',
+              
+             },
               // Set up the transaction
               createOrder: function (data, actions) {
                 return actions.order.create({
@@ -196,7 +203,8 @@
             })
             .render("#paypal-button-container");
         </script>
-      </form>
+        
+      <!-- </form> -->
       <div class="mb-5"></div>
     </div>
   </div>

@@ -154,6 +154,12 @@ router.get("/cart", loginRequired, async (req, res) => {
   });
 });
 
+//troubleshoot
+router.get("/troubleshoot", (req, res, next) => {
+  const report = process.resourceUsage();
+  res.json(report);
+});
+
 //checkout
 
 router.get("/cart/checkout", loginRequired, async (req, res) => {
