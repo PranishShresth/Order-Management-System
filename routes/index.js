@@ -3,6 +3,7 @@ const router = express.Router();
 const fetch = require("node-fetch");
 const { loginRequired, StayLoggedin } = require("../config/auth");
 const User = require("./../models/userModel");
+const Cart = require("./../models/cartModel");
 //View the customer
 router.get("/customer/viewCustomers", loginRequired, async (req, res) => {
   const url = process.env.SERVER + "customer/api/viewCustomers";
@@ -142,35 +143,40 @@ router.get("/ecommerce/pendantlights", async (req, res, next) => {
 //cart routes
 
 router.get("/cart", loginRequired, async (req, res) => {
-  console.log(req.session);
-  const url = process.env.SERVER + "cart/list";
-  const response = await fetch(url);
-  const cartitems = await response.json();
-  await res.render("shoppingcart", {
+  if (!req.session.cart) {
+    return res.render("shoppingcart", { title: "Cart", products: null });
+  }
+  var cart = new Cart(req.session.cart);
+  res.render("shoppingcart", {
     title: "Cart",
-    products: cartitems,
+    products: cart.generateArray(),
+    totalPrice: cart.totalPrice,
   });
 });
 
 //checkout
 
 router.get("/cart/checkout", loginRequired, async (req, res) => {
-  const url = process.env.SERVER + "cart/list";
-  const response = await fetch(url);
-  const cartitems = await response.json();
-  res.render("checkout", { title: "Checkout", carts: cartitems });
+  var cart = new Cart(req.session.cart);
+
+  res.render("checkout", {
+    title: "Checkout",
+    carts: cart.generateArray(),
+    totalPrice: cart.totalPrice,
+  });
 });
 
 //Watch it later
 
-router.get("/product/viewlater/:name&:id", async (req, res) => {
-  const { name, id } = req.params;
+router.get("/product/viewlater/:name&:id&:price", async (req, res) => {
+  const { name, id, price } = req.params;
   const wishList = req.session.WatchList;
   const nameCheck = wishList.filter((item) => item.name == name);
   if (nameCheck.length == 0) {
     const viewitlater = {
       name: name,
       link: `${process.env.SERVER}ecommerce/product/viewDetail/${id}`,
+      price: price,
     };
     await wishList.push(viewitlater);
     await res.redirect("/ecommerce/pendantlights");

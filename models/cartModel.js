@@ -1,30 +1,41 @@
-const mongoose = require("mongoose");
+module.exports = function Cart(oldCart) {
+  this.items = oldCart.items || {};
+  this.totalQty = oldCart.totalQty || 0;
+  this.totalPrice = oldCart.totalPrice || 0;
 
-const cartSchema = new mongoose.Schema(
-  {
-    User: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    Product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-    Quantity: {
-      type: Number,
-    },
-    active: {
-      type: Boolean,
-      default: true,
-    },
-    modifiedOn: {
-      type: Date,
-      default: Date.now(),
-    },
-  },
-  { timestamps: true }
-);
+  this.add = function (item, id) {
+    var storedItem = this.items[id];
+    if (!storedItem) {
+      storedItem = this.items[id] = { item: item, qty: 0, price: 0 };
+    }
+    storedItem.qty++;
+    storedItem.price = storedItem.item.productPrice * storedItem.qty;
+    this.totalQty++;
+    this.totalPrice += storedItem.item.productPrice;
+  };
 
-const Cart = mongoose.model("Cart", cartSchema);
+  this.reduceByOne = function (id) {
+    this.items[id].qty--;
+    this.items[id].price -= this.items[id].item.price;
+    this.totalQty--;
+    this.totalPrice -= this.items[id].item.price;
 
-module.exports = Cart;
+    if (this.items[id].qty <= 0) {
+      delete this.items[id];
+    }
+  };
+
+  this.removeItem = function (id) {
+    this.totalQty -= this.items[id].qty;
+    this.totalPrice -= this.items[id].price;
+    delete this.items[id];
+  };
+
+  this.generateArray = function () {
+    var arr = [];
+    for (var id in this.items) {
+      arr.push(this.items[id]);
+    }
+    return arr;
+  };
+};

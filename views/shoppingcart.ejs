@@ -1,48 +1,43 @@
 <div class="container">
   <h1><%=title %></h1>
+  <% if (products!=null) { %>
+
   <table class="table table-hover">
     <tbody>
       <%products.forEach(product=>{%>
-
       <tr>
         <td>
           <img
-            src="<%= product.Product.productThumbnail%>"
+            src="<%= product.item.productThumbnail%>"
             style="height: 80px; width: 80px;"
           />
         </td>
-        <td><%= product.Product.productName %></td>
+        <td><%= product.item.productName %></td>
 
-        <td><%= product.Product.productPrice %></td>
-
-        <td><%= product.Quantity %></td>
-        <td><%= product.Quantity *product.Product.productPrice%></td>
+        <td>$<%= product.price %></td>
+        <td>Quantity: <%= product.qty %></td>
+        <td>
+          <a href="/cart/remove/<%=product.item._id %>"
+            ><i class="fas fa-trash"></i
+          ></a>
+        </td>
       </tr>
-      <%}) %>
+      <% }) %>
     </tbody>
     <tfoot>
       <tr>
         <td></td>
-
         <td></td>
-        <td></td>
-
         <td>
-          <div class="row">
-            <div class="col">
-              Total: $<%var prices=[];
-              products.forEach(product=>{prices.push(product.Quantity
-              *product.Product.productPrice)} )%> <%=
-              prices.reduce((a,b)=>a+b,0) %>
-            </div>
-            <div class="col">
-              <form action="/cart/checkout" method="GET">
-                <button type="submit" class="btn btn-primary">Checkout</button>
-              </form>
-            </div>
-          </div>
+          <a href="/cart/checkout" class="btn btn-default btn-blue" type="submit">
+            CHECKOUT
+          </button>
         </td>
+        <td>Total Price: $<%= totalPrice %></td>
       </tr>
     </tfoot>
   </table>
+  <% } else{ %>
+  <h5>No products in shopping cart</h5>
+  <% } %>
 </div>

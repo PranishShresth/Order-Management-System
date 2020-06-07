@@ -1,12 +1,53 @@
-<div
-  class="container d-flex justify-content-center align-items-center flex-column"
->
-  <h2>Watch it Later Section</h2>
-  <ol>
-    <% watch.forEach(watches=>{%>
+<div class="padding-top-2x mt-2 hidden-lg-up"></div>
+<h6>Wishlist</h6>
+<!-- Wishlist Table-->
 
-    <li><a href="<%=watches.link %>"><%=watches.name%></a></li>
+<div class="table-responsive wishlist-table margin-bottom-none">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th class="text-center">
+          <a class="btn btn-sm btn-outline-danger" href="#">Clear Wishlist</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% watch.forEach(wishlist=>{%>
 
-    <%}) %>
-  </ol>
+      <tr>
+        <td>
+          <div class="product-item">
+            <a class="product-thumb" href="#"
+              ><img src="<%=wishlist.thumbnail%>" alt="Product"
+            /></a>
+            <div class="product-info">
+              <h4 class="product-title">
+                <a href="<%=wishlist.link %>"><%=wishlist.name%></a>
+              </h4>
+              <div class="text-lg text-medium text-muted">
+                <%=wishlist.price%>
+              </div>
+              <div>
+                Availability:
+                <div class="d-inline text-success">In Stock</div>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="text-center">
+          <a
+            class="remove-from-cart"
+            href="#"
+            data-toggle="tooltip"
+            title=""
+            data-original-title="Remove item"
+            ><i class="icon-cross"></i
+          ></a>
+        </td>
+      </tr>
+      <%}) %>
+    </tbody>
+  </table>
 </div>
+<hr class="mb-4" />
