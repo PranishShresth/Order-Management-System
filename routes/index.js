@@ -4,6 +4,7 @@ const fetch = require("node-fetch");
 const { loginRequired, StayLoggedin } = require("../config/auth");
 const User = require("./../models/userModel");
 const Cart = require("./../models/cartModel");
+
 //View the customer
 router.get("/customer/viewCustomers", loginRequired, async (req, res) => {
   const url = process.env.SERVER + "customer/api/viewCustomers";
@@ -15,7 +16,7 @@ router.get("/customer/viewCustomers", loginRequired, async (req, res) => {
   });
 });
 // Add the customer
-router.get("/customer/addCustomers", loginRequired, (req, res) => {
+router.get("/customer/addCustomers", loginRequired, async (req, res) => {
   res.render("partials/customer/addCustomer", {
     title: "Add customer",
   });
@@ -46,10 +47,14 @@ router.get("/dashboard", loginRequired, async (req, res) => {
 });
 
 //Add order page
-router.get("/orders/addorder", loginRequired, (req, res) => {
+router.get("/orders/addorder", loginRequired, async (req, res) => {
+  const customerurl = process.env.SERVER + "customer/api/viewCustomers";
+  let custresponse = await fetch(customerurl);
+  let customers = await custresponse.json();
   res.render("partials/order/addorder", {
     user: req.session.user,
     title: "Add Order",
+    customers: customers,
   });
 });
 
@@ -69,10 +74,15 @@ router.get("/inventory", loginRequired, async (req, res) => {
   const url = process.env.SERVER + "inventory/inventoryDetails";
   let response = await fetch(url);
   let inventory = await response.json();
+
+  const categoryurl = process.env.SERVER + "category/getCategory";
+  let categoryresponse = await fetch(categoryurl);
+  let categories = await categoryresponse.json();
   res.render("partials/inventory", {
     user: req.session.user,
     title: "Inventory",
     inventory: inventory,
+    category: categories,
   });
 });
 
@@ -98,12 +108,14 @@ router.get("/profile", loginRequired, (req, res) => {
 });
 
 //product
-router.get("/products/addProduct", loginRequired, (req, res) => {
-  console.log(req.session);
-
+router.get("/products/addProduct", loginRequired, async (req, res) => {
+  const url = process.env.SERVER + "category/getCategory";
+  let response = await fetch(url);
+  let categories = await response.json();
   res.render("partials/product/addProduct", {
     user: req.session.user,
     title: "Add product",
+    category: categories,
   });
 });
 

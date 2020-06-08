@@ -13,6 +13,7 @@ router.post("/addInventory", async (req, res, next) => {
     Quantity: req.body.p_qty,
     ManufactureDate: req.body.m_date,
     ProductPrice: req.body.p_price,
+    Category: req.body.category,
   });
   try {
     await inventory.save();

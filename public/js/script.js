@@ -12,6 +12,7 @@ $(document).ready(function () {
   });
   $("#ordertable").DataTable();
   $("#inventory-table").DataTable();
+  $("#completedorder").DataTable();
 
   $("#customertable").DataTable({
     buttons: [
@@ -22,5 +23,26 @@ $(document).ready(function () {
       "excel",
       "pdf",
     ],
+  });
+  $('[data-toggle="popover-phone"]').popover({
+    container: "body",
+    title: "Update your profile",
+    html: true,
+    placement: "bottom",
+    sanitize: false,
+    content: function () {
+      return $("#profile-phone").html();
+    },
+  });
+
+  $('[data-toggle="popover-bio"]').popover({
+    container: "body",
+    title: "Update your profile",
+    html: true,
+    placement: "bottom",
+    sanitize: false,
+    content: function () {
+      return $("#profile-bio").html();
+    },
   });
 });

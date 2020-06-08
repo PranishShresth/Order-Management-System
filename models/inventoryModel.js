@@ -13,6 +13,9 @@ const inventorySchema = mongoose.Schema({
   ManufactureDate: {
     type: String,
   },
+  Category: {
+    type: String,
+  },
   ProductPrice: {
     type: Number,
   },

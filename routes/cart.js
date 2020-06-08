@@ -26,7 +26,7 @@ function countMiddleware(req, res, next) {
 }
 
 router.post("/promocode", countMiddleware, function (req, res, next) {
-  if (count == 1) {
+  if (count < 2) {
     const { promo } = req.body;
 
     var cart = new Cart(req.session.cart ? req.session.cart : {});
@@ -48,9 +48,8 @@ router.post("/promocode", countMiddleware, function (req, res, next) {
     } else {
       res.redirect("/cart/checkout");
     }
-  } else {
-    res.redirect("/cart/checkout");
   }
+  res.redirect("/cart/checkout");
 });
 router.get("/reduce/:id", function (req, res, next) {
   var productId = req.params.id;

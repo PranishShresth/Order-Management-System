@@ -33,7 +33,10 @@ const backupUtilRoutes = require("./routes/utils/backup");
 const notificationRoutes = require("./routes/api/notification");
 const productRoutes = require("./routes/api/products");
 const cartRoutes = require("./routes/cart");
+const categoryRoutes = require("./routes/category");
 const invoiceRoutes = require("./routes/utils/invoice");
+const feedbackRoutes = require("./routes/api/feedback");
+const userRoutes = require("./routes/user");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -58,11 +61,15 @@ app.use("/inventory", inventoryRoutes);
 app.use("/customer", customerRoutes);
 app.use("/ecommerce", ecommerceRoutes);
 app.use("/", paymentRoutes);
+app.use("/", feedbackRoutes);
+app.use("/user", userRoutes);
+
 app.use("/", backupUtilRoutes);
 app.use("/", notificationRoutes);
 app.use("/api", productRoutes);
 app.use("/cart", cartRoutes);
 app.use("/", invoiceRoutes);
+app.use("/category", categoryRoutes);
 
 //Database connection
 mongoose.connect(

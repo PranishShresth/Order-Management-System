@@ -15,8 +15,16 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     trim: true,
-    require: true,
+    required: true,
     min: [6, "Password must be atleast 6 character long"],
+  },
+  phone: {
+    type: Number,
+    default: "123456789",
+  },
+  bio: {
+    type: String,
+    default: "I am new user",
   },
   type: {
     type: String,

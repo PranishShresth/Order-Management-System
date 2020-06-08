@@ -32,13 +32,19 @@
     </div>
     <div class="form-group">
       <label for="customer">Customer</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Customer"
+      <select
+        class="custom-select mr-sm-2"
         name="customer"
-        value="<%= order.customer%> "
-      />
+        id="inlineFormCustomSelect"
+      >
+        <option selected>Choose...</option>
+        <% customers.forEach(cust=>{ %>
+        <option value="<%=cust.CustomerName %> "
+          ><%=cust.CustomerName %></option
+        >
+
+        <% }) %>
+      </select>
     </div>
     <div class="form-group">
       <label for="type">Order type</label>
@@ -90,8 +96,14 @@
         name="status"
         value="<%= order.status %> "
       >
-        <option selected>Not Completed</option>
-        <option value="1">Completed</option>
+        <option selected>Select..</option>
+        <option value="Pending Payment">Pending Payment</option>
+        <option value="Processing">Processing</option>
+        <option value="On Hold">On hold</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+        <option value="Refunded">Refunded</option>
+        <option value="Failed">Failed</option>
       </select>
     </div>
 

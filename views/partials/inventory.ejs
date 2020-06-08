@@ -130,6 +130,7 @@
         <tr>
           <th>ProductID</th>
           <th>ProductName</th>
+          <th>Category</th>
           <th>Quantity Available</th>
           <th>Manufacture Date</th>
           <th>QuantiyPrice</th>
@@ -143,6 +144,8 @@
         <tr>
           <td><%= products.ProductID %></td>
           <td><%= products.ProductName %></td>
+          <td><%= products.Category %></td>
+
           <td><%= products.ProductPrice %></td>
           <td><%= products.ManufactureDate %></td>
           <td><%= products.Quantity%></td>
@@ -191,6 +194,18 @@
             <div class="form-group row">
               <label for="qty">QuantityAvailable</label>
               <input type="number" class="mx-3" name="p_qty" />
+            </div>
+            <div class="form-group row">
+              <label for="qty">Category</label>
+              <select class="mx-2" name="category" id="inlineFormCustomSelect">
+                <option selected>Choose...</option>
+                <% category.forEach(name=>{ %>
+                <option value="<%=name.categoryName %> "
+                  ><%=name.categoryName %></option
+                >
+
+                <% }) %>
+              </select>
             </div>
             <div class="form-group row">
               <label for="m_date">Manufacture date</label>

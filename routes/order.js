@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const fetch = require("node-fetch");
 const Order = require("../models/orderModel");
 const { v4: uuidv4 } = require("uuid");
 const sgMail = require("@sendgrid/mail");
@@ -64,12 +65,17 @@ router.post("/", async (req, res) => {
 router.get("/api/:orderid", async (req, res, next) => {
   try {
     const order = await Order.findById(req.params.orderid);
+    const customerurl = process.env.SERVER + "customer/api/viewCustomers";
+    let custresponse = await fetch(customerurl);
+    let customers = await custresponse.json();
 
     res.render("partials/order/editOrder", {
       title: "Edit order",
       order: order,
+      customers: customers,
     });
-  } catch {
+  } catch (err) {
+    if (err) throw err;
     res.redirect("/orders/viewOrder");
   }
 });

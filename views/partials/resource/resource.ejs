@@ -54,15 +54,50 @@
             id="resource-category"
             type="button"
             class="btn btn-primary btn-default"
-            data-toggle="popover"
+            data-toggle="modal"
+            data-target="#category-modal"
           >
             Create a category
           </button>
         </div>
       </div>
 
-      <!--  -->
-
+      <!-- Category Modal -->
+      <div id="category-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+              <h4 class="modal-title">Create a category</h4>
+            </div>
+            <div class="modal-body">
+              <form method="POST" action="/category/add">
+                <input
+                  class="form-control mb-2"
+                  type="text"
+                  name="category"
+                  placeholder="Create a category"
+                />
+                <button type="submit" class="btn btn-warning mt-2">
+                  Create
+                </button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- Modal -->
       <div
         class="modal fade"
@@ -158,8 +193,11 @@
                           <div>
                             <h2>CONTACT US</h2>
                           </div>
-                          <form method="post" data-form-title="CONTACT US">
-                            <input type="hidden" data-form-email="true" />
+                          <form
+                            method="post"
+                            action="/resource/feedback"
+                            data-form-title="CONTACT US"
+                          >
                             <div class="form-group">
                               <input
                                 type="text"

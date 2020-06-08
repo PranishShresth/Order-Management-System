@@ -1,6 +1,6 @@
 <div class="container">
   <h1><%=title %></h1>
-  <% if (products!=null) { %>
+  <% if (products!=null ) { %>
 
   <table class="table table-hover">
     <tbody>
@@ -30,7 +30,7 @@
         <td></td>
         <td>
           <a href="/cart/checkout" class="btn btn-default btn-blue" type="submit">
-            BUY NOW
+            CHECKOUT
           </button>
         </td>
         <td>Total Price: $<%= totalPrice %></td>

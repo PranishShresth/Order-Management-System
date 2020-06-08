@@ -16,7 +16,76 @@
     </tr>
     <tr>
       <th>Phone number</th>
-      <td></td>
+      <td>
+        <%= user.phone %>
+        <span class="mx-3"
+          ><a
+            style="color: #007bff;"
+            data-placement="bottom"
+            data-html="true"
+            data-title="Update phone"
+            data-toggle="popover-phone"
+            ><i class="fas fa-edit"></i> </a
+        ></span>
+        <div id="profile-phone" class="d-none">
+          <form
+            method="POST"
+            action="user/profile/phone/<%= user._id %>?_method=PUT"
+          >
+            <div class="form-row align-items-center">
+              <div class="col-auto my-1">
+                <label class="sr-only" for="inlineFormInputName">Phone</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Phone"
+                  name="phone"
+                />
+              </div>
+              <div class="col-auto my-1">
+                <button type="submit" class="btn btn-warning">Update</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>Bio</th>
+      <td>
+        <%= user.bio %>
+
+        <span class="mx-3"
+        ><a
+          style="color: #007bff;"
+          data-placement="bottom"
+          data-html="true"
+          data-title="Update bio"
+          data-toggle="popover-bio"
+          ><i class="fas fa-edit"></i> </a
+      ></span>
+      <div id="profile-bio" class="d-none">
+        <form
+          method="POST"
+          action="user/profile/bio/<%= user._id %>?_method=PUT"
+        >
+          <div class="form-row align-items-center">
+            <div class="col-auto my-1">
+              <label class="sr-only" for="inlineFormInputName">Bio</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Bio"
+                name="bio"
+              />
+            </div>
+            <div class="col-auto my-1">
+              <button type="submit" class="btn btn-warning">Update</a>
+            </div>
+          </div>
+        </form>
+      </div>
+      </td>
     </tr>
   </table>
 </div>
