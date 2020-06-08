@@ -92,11 +92,13 @@
                   Add Customers</a
                 >
               </li>
+              <% if(user.type=="admin"){ %>
               <li class="nav-item">
                 <a href="/products/addProduct" class="nav-link pl-0 text-nowrap"
                   ><i class="fas fa-chart-pie"></i>Products</a
                 >
               </li>
+              <% } %>
               <li class="nav-item">
                 <a href="/ecommerce" class="nav-link pl-0 text-nowrap"
                   ><i class="fas fa-shopping-cart"></i>Ecommerce</a
@@ -109,7 +111,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/resource">
+                <a class="nav-link pl-0 text-nowrap" href="/resource">
                   <i class="fa fa-cog"></i> Resource
                 </a>
               </li>

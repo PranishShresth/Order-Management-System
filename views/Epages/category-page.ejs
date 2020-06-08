@@ -42,10 +42,10 @@
 </style>
 
 <div class="container">
-  <% console.log(products);if(products){ products.forEach(manyproduct=> {%>
+  <% if(products){ products.forEach(manyproduct=> {%>
   <div class="row" style="height: 300px;">
-    <% manyproduct.forEach(product=>{console.log(product.productCategory);
-    if(product.productCategory===type){%>
+    <% manyproduct.forEach(product=>{if(product.productCategory.trim() ==
+    type.trim()){%>
     <a href="/ecommerce/product/viewDetail/<%= product._id %> ">
       <div class="col-lg-4 col-sm-6">
         <figure class="card card-product">

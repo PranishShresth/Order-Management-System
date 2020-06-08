@@ -38,6 +38,8 @@
         </div>
       </div>
     </div>
+    <% if(user.type=="admin"){ %>
+
     <div class="col-xs-12 col-sm-4">
       <div class="resource-box alert-success">
         <div class="card-block">
@@ -47,6 +49,8 @@
         </div>
       </div>
     </div>
+    <% } %> <% if(user.type=="admin"||user.type=="ordermgmtU"){ %>
+
     <div class="col-xs-12 col-sm-4">
       <div class="resource-box alert-success">
         <div class="card-block">
@@ -61,6 +65,7 @@
           </button>
         </div>
       </div>
+      <% } %>
 
       <!-- Category Modal -->
       <div id="category-modal" class="modal fade" role="dialog">

@@ -34,13 +34,15 @@
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Customer</th>
-          <th scope="col">Type</th>
-          <th scope="col">Description</th>
+
+          <th scope="col">Product</th>
           <th scope="col">Price</th>
           <th scope="col">Amount</th>
           <th scope="col">Order Status</th>
+          <% if(user.type=="admin"||user.type=="ordermgmtU"){ %>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
+          <% } %>
           <th scope="col">Approve</th>
         </tr>
       </thead>
@@ -51,11 +53,11 @@
         <tr>
           <td><%= order.name %></td>
           <td><%= order.customer %></td>
-          <td><%= order.type %></td>
-          <td><%= order.description %></td>
+          <td><%= order.productName %></td>
           <td>$<%= order.price %></td>
           <td><%= order.totalAmount %></td>
           <td><%= order.status %></td>
+          <% if(user.type=="admin"||user.type=="ordermgmtU"){ %>
           <td>
             <%- include("../Editform",{ url:
             `/orders/api/${order._id}/?_method=GET` }) %>
@@ -64,6 +66,7 @@
             <%- include("../deleteForm",{ url:
             `/orders/api/${order._id}/?_method=DELETE` }) %>
           </td>
+          <% } %>
           <td>
             <button
               type="button"
@@ -150,8 +153,8 @@
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Customer</th>
-          <th scope="col">Type</th>
-          <th scope="col">Description</th>
+
+          <th scope="col">Product</th>
           <th scope="col">Price</th>
           <th scope="col">Amount</th>
           <th scope="col">Order Status</th>
@@ -164,8 +167,7 @@
         <tr>
           <td><%= order.name %></td>
           <td><%= order.customer %></td>
-          <td><%= order.type %></td>
-          <td><%= order.description %></td>
+          <td><%= order.productName %></td>
           <td>$<%= order.price %></td>
           <td><%= order.totalAmount %></td>
           <td><%= order.status %></td>

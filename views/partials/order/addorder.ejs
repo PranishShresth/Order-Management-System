@@ -50,18 +50,16 @@
         <% }) %>
       </select>
     </div>
+
     <div class="form-group">
-      <label for="type">Order type</label>
-      <input type="text" class="form-control" placeholder="Type" name="type" />
-    </div>
-    <div class="form-group">
-      <label for="type">Order Description</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Please enter a order description"
-        name="description"
-      />
+      <label for="type">Product Name</label>
+      <select class="custom-select product mr-sm-2" name="pname" id="pname">
+        <option selected>Choose...</option>
+        <% products.forEach(prod=>{ %>
+        <option value="<%=prod.ProductName %> "><%=prod.ProductName %></option>
+
+        <% }) %>
+      </select>
     </div>
 
     <div class="form-group">
@@ -69,7 +67,9 @@
       <input
         type="number"
         class="form-control"
-        placeholder="Please enter a price"
+        id="orderprice"
+        placeholder="Please enter a
+      price"
         name="price"
       />
     </div>
@@ -109,5 +109,19 @@
 </div>
 
 <script>
-  var editOrder = document.getElementById("edit-order");
+  // var product = document.getElementById("pname").value;
+  // var orderprice = document.getElementById("orderprice");
+  // orderprice.value = 12312;
+  // var products = getinventory();
+  // var filter = products.filter((x) => {
+  //   return x.ProductName == product;
+  // });
+  // console.log(products);
+  // async function getinventory() {
+  //   const url =
+  //     "http://" + window.location.host + "/inventory/inventoryDetails";
+  //   let response = await fetch(url);
+  //   let products = await response.json();
+  //   return await products;
+  // }
 </script>

@@ -22,4 +22,10 @@ router.post("/addInventory", async (req, res, next) => {
     if (err) throw new Error("Something is wrong");
   }
 });
+
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  await Inventory.findByIdAndDelete(id);
+  res.redirect("/inventory");
+});
 module.exports = router;

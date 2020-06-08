@@ -13,12 +13,14 @@ router.get("/customer/viewCustomers", loginRequired, async (req, res) => {
   res.render("partials/customer/viewCustomers", {
     customers: customers,
     title: "View Customer",
+    user: req.session.user,
   });
 });
 // Add the customer
 router.get("/customer/addCustomers", loginRequired, async (req, res) => {
   res.render("partials/customer/addCustomer", {
     title: "Add customer",
+    user: req.session.user,
   });
 });
 router.get("/flash", function (req, res) {
@@ -38,7 +40,9 @@ router.get("/", StayLoggedin, (req, res) => {
 router.get("/dashboard", loginRequired, async (req, res) => {
   const response = await fetch(process.env.SERVER + "api/notification");
   const notifications = await response.json();
-  const notification = await notifications.splice(notifications.length - 5);
+  const notification = await notifications
+    .splice(notifications.length - 5)
+    .reverse();
   res.render("Dashboards", {
     user: req.session.user,
     notifications: notification,
@@ -51,10 +55,17 @@ router.get("/orders/addorder", loginRequired, async (req, res) => {
   const customerurl = process.env.SERVER + "customer/api/viewCustomers";
   let custresponse = await fetch(customerurl);
   let customers = await custresponse.json();
+
+  //product
+  const url = process.env.SERVER + "inventory/inventoryDetails";
+  let response = await fetch(url);
+  let products = await response.json();
   res.render("partials/order/addorder", {
     user: req.session.user,
     title: "Add Order",
     customers: customers,
+    products: products,
+    user: req.session.user,
   });
 });
 
@@ -66,6 +77,7 @@ router.get("/orders/vieworder", loginRequired, async (req, res) => {
   res.render("partials/order/vieworder", {
     orders: orders,
     title: "View Order",
+    user: req.session.user,
   });
 });
 
@@ -88,7 +100,7 @@ router.get("/inventory", loginRequired, async (req, res) => {
 
 //Ecommerce
 router.get("/ecommerce", loginRequired, (req, res) => {
-  res.render("Ecommerce", { title: "E-commerce" });
+  res.render("Ecommerce", { title: "E-commerce", user: req.session.user });
 });
 
 //reset Password
@@ -148,10 +160,11 @@ router.get("/ecommerce/:type", async (req, res, next) => {
   for (let i = 0; i < products.length; i += chunksize) {
     productchunks.push(products.slice(i, i + chunksize));
   }
-  res.render("Epages/clusterPendant", {
+  res.render("Epages/category-page", {
     products: productchunks,
-    title: "Pendant Lights",
+    title: type,
     type: type,
+    user: req.session.user,
   });
 });
 
@@ -159,13 +172,18 @@ router.get("/ecommerce/:type", async (req, res, next) => {
 
 router.get("/cart", loginRequired, async (req, res) => {
   if (!req.session.cart) {
-    return res.render("shoppingcart", { title: "Cart", products: null });
+    return res.render("shoppingcart", {
+      title: "Cart",
+      products: null,
+      user: req.session.user,
+    });
   }
   var cart = new Cart(req.session.cart);
   res.render("shoppingcart", {
     title: "Cart",
     products: cart.generateArray(),
     totalPrice: cart.totalPrice,
+    user: req.session.user,
   });
 });
 
@@ -184,6 +202,7 @@ router.get("/cart/checkout", loginRequired, async (req, res) => {
     title: "Checkout",
     carts: cart.generateArray(),
     totalPrice: cart.totalPrice,
+    user: req.session.user,
   });
 });
 
@@ -209,7 +228,11 @@ router.get("/product/viewlater/:name&:id&:price", async (req, res) => {
 router.get("/product/viewlater", loginRequired, async (req, res) => {
   const wishList = req.session.WatchList;
 
-  res.render("watchitLater", { watch: wishList, title: "Watch it Later" });
+  res.render("watchitLater", {
+    watch: wishList,
+    title: "Watch it Later",
+    user: req.session.user,
+  });
 });
 
 //Resource section
@@ -222,5 +245,6 @@ router.get("/resource", loginRequired, async (req, res) => {
     onlineAccounts: user.length,
     title: "Resource",
     cust: cust,
+    user: req.session.user,
   });
 });

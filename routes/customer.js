@@ -14,6 +14,7 @@ router.get("/search", async (req, res) => {
         res.render("partials/customer/viewCustomers", {
           title: "Edit customer",
           customers: customers,
+          user: req.session.user,
         });
       }
     });
@@ -53,6 +54,7 @@ router.get("/api/:customerid", async (req, res, next) => {
     res.render("partials/customer/editCustomer", {
       title: "Edit customer",
       customer: customer,
+      user: req.session.user,
     });
   } catch (err) {
     if (err) throw err;

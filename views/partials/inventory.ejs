@@ -105,7 +105,12 @@
         </button>
       </div>
       <div class="button-controls">
-        <button type="submit" class="btn btn-sm mx-2 btn-outline-secondary">
+        <button
+          type="submit"
+          data-toggle="modal"
+          data-target="#editInventory"
+          class="btn btn-sm mx-2 btn-outline-secondary"
+        >
           Edit
         </button>
       </div>
@@ -134,6 +139,7 @@
           <th>Quantity Available</th>
           <th>Manufacture Date</th>
           <th>QuantiyPrice</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <!--Table head-->
@@ -149,6 +155,10 @@
           <td><%= products.ProductPrice %></td>
           <td><%= products.ManufactureDate %></td>
           <td><%= products.Quantity%></td>
+          <td>
+            <%- include("deleteForm",{
+            url:`/inventory/${products._id}?_method=DELETE` }) %>
+          </td>
         </tr>
         <% }) %>
       </tbody>
@@ -159,6 +169,78 @@
 </div>
 
 <!-- Modal -->
+<div
+  class="modal fade"
+  id="editInventory"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="editInventoryLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editInventoryLabel">Edit inventory</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form method="POST" action="/inventory/addInventory">
+            <div class="form-group row">
+              <label for="ProductID">ProductID</label>
+              <input type="text" class="mx-3" name="p_id" />
+            </div>
+            <div class="form-group row">
+              <label for="ProductName">ProductName</label>
+              <input type="text" class="mx-3" name="p_name" />
+            </div>
+            <div class="form-group row">
+              <label for="qty">QuantityAvailable</label>
+              <input type="number" class="mx-3" name="p_qty" />
+            </div>
+            <div class="form-group row">
+              <label for="qty">Category</label>
+              <select class="mx-2" name="category" id="inlineFormCustomSelect">
+                <option selected>Choose...</option>
+                <% category.forEach(name=>{ %>
+                <option value="<%=name.categoryName %> "
+                  ><%=name.categoryName %></option
+                >
+
+                <% }) %>
+              </select>
+            </div>
+            <div class="form-group row">
+              <label for="m_date">Manufacture date</label>
+              <input type="date" class="mx-3" name="m_date" />
+            </div>
+            <div class="form-group row">
+              <label for="p_price">Price(per piece)</label>
+              <input type="number" class="mx-3" name="p_price" />
+            </div>
+            <div class="form-group w-100">
+              <button type="submit" class="btn mx-5 btn-secondary">
+                Add to inventory
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <div
   class="modal fade"
   id="addInventory"
@@ -197,7 +279,7 @@
             </div>
             <div class="form-group row">
               <label for="qty">Category</label>
-              <select class="mx-2" name="category" id="inlineFormCustomSelect">
+              <select class="mx-2" name="category">
                 <option selected>Choose...</option>
                 <% category.forEach(name=>{ %>
                 <option value="<%=name.categoryName %> "

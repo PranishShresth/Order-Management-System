@@ -13,7 +13,7 @@ router.get("/add-to-cart/:id", function (req, res, next) {
     cart.add(product, product.id);
     req.session.cart = cart;
     console.log(req.session.cart);
-    res.redirect("/ecommerce/pendantlights");
+    res.redirect("/ecommerce");
   });
 });
 

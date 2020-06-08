@@ -26,6 +26,7 @@ router.get("/search", async (req, res) => {
         res.render("partials/order/vieworder", {
           title: "Edit order",
           orders: orders,
+          user: req.session.user,
         });
       }
     });
@@ -37,8 +38,7 @@ router.post("/", async (req, res) => {
   const order = new Order({
     id: uuidv4(),
     name: req.body.name,
-    type: req.body.type,
-    description: req.body.description,
+    productName: req.body.pname,
     status: req.body.status,
     price: req.body.price,
     customer: req.body.customer,
@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
       eventType: "Added",
     });
     await notification.save();
-    res.redirect("dashboard");
+    res.redirect("/orders/vieworder");
   } catch (err) {
     if (err) throw err;
     res.status(500).json({
@@ -68,11 +68,17 @@ router.get("/api/:orderid", async (req, res, next) => {
     const customerurl = process.env.SERVER + "customer/api/viewCustomers";
     let custresponse = await fetch(customerurl);
     let customers = await custresponse.json();
+    //product
+    const url = process.env.SERVER + "inventory/inventoryDetails";
+    let response = await fetch(url);
+    let products = await response.json();
 
     res.render("partials/order/editOrder", {
       title: "Edit order",
       order: order,
       customers: customers,
+      products: products,
+      user: req.session.user,
     });
   } catch (err) {
     if (err) throw err;
@@ -86,8 +92,8 @@ router.put("/api/:orderid", async (req, res, next) => {
   try {
     order = await Order.findById(req.params.orderid);
 
-    order.name = req.body.name;
-    order.type = req.body.type;
+    order.productName = req.body.name;
+    order.productType = req.body.type;
     order.description = req.body.description;
     order.customer = req.body.customer;
     order.status = req.body.status;
