@@ -137,7 +137,9 @@ module.exports = router;
 
 //Ecommerce pages
 
-router.get("/ecommerce/pendantlights", async (req, res, next) => {
+router.get("/ecommerce/:type", async (req, res, next) => {
+  const type = req.params.type;
+  console.log(type);
   const url = process.env.SERVER + "api/products";
   let response = await fetch(url);
   let products = await response.json();
@@ -149,6 +151,7 @@ router.get("/ecommerce/pendantlights", async (req, res, next) => {
   res.render("Epages/clusterPendant", {
     products: productchunks,
     title: "Pendant Lights",
+    type: type,
   });
 });
 
