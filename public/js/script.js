@@ -1,9 +1,10 @@
 $(document).ready(function () {
   $("#generate-report").click(function () {
-    console.log("clicked");
-    $.get(
-      "http://" + window.location.host + "/inventory/inventoryDetails",
-      function (data, status) {
+    $.ajax({
+      type: "GET",
+      contentType: "application/json",
+      url: "http://" + window.location.host + "/inventory/inventoryDetails",
+      success: function (data, status) {
         function getRandomColor() {
           var letters = "0123456789ABCDEF".split("");
           var color = "#";
@@ -32,8 +33,8 @@ $(document).ready(function () {
           },
           options: {},
         });
-      }
-    );
+      },
+    });
   });
 
   $("#subscribe").popover({
