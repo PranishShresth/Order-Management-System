@@ -7,6 +7,7 @@ const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const expressLayouts = require("express-ejs-layouts");
+const cors = require("cors");
 const expressSession = require("express-session")({
   secret: "my secret",
   resave: false,
@@ -48,6 +49,7 @@ app.set("view engine", "ejs");
 app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 app.use(expressSession);
+app.use(cors());
 
 //flash
 app.use(flash());
