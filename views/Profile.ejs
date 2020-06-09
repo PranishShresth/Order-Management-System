@@ -88,4 +88,89 @@
       </td>
     </tr>
   </table>
+
+  <hr class="mb-4"/>
+<% if(user.type = "admin"){ %> 
+<h2>Management Controls</h2>
+  <table class="table table-hover table-sm table-properties">
+    <tr>
+      <td>  <h5>Change user access level</h5>
+      </td>
+    </tr>
+<tr> 
+  <form method="POST" action="/user/access">
+  <td>
+    <div class="form-group">
+      <label for="type">Users</label>
+      <select
+        class="custom-select mr-sm-2"
+        name="id"
+        id="inlineFormCustomSelect"
+      >
+        <option selected>Choose...</option>
+        <% users.forEach(u=>{if(user.name!=u.name) {%>
+        <option value="<%=u._id %> "
+          ><%=u.name %></option
+        >
+
+        <% }}) %>
+      </select>
+    </div>
+
+  </td>
+  <td>
+    <div class="form-group">
+      <label for="type">Access Level</label>
+      <select
+        class="custom-select mr-sm-2"
+        name="access"
+        id="inlineFormCustomSelect"
+      >
+        <option selected>Choose...</option>
+       <option value="admin">
+         admin
+       </option>
+       <option value="ServiceUser">
+       ServiceUser
+      </option>
+       <option value="ordermgmtU">
+        ordermgmtU
+      </option>
+      <option value="logisticmgmtU">
+        logisticmgmtU
+      </option>
+      </select>
+    </div>
+  </td>
+  <td>
+    <div class="form-group">
+
+    <label for="type">Update Access Level</label>
+    <button type="submit" class="btn btn-warning form-control">Update</button>
+    </div>
+  </td>
+</tr>
+
+</form>
+<tr>
+  <td>
+   <h5> Generate Logistic Report</h5>
+  </td>
+</tr>
+
+<tr>
+
+  <td> <button id="generate-report" class="btn btn-warning form-control">Generate</button></td>
+</tr>
+  </table>
+  <div class="row">
+   
+        <canvas class="my-4 w-100 chartjs-render-monitor" id="product-profile" width="1053" height="443" style="display: block; height: 355px; width: 843px;"></canvas>
+      
+      
+  </div>
+  <% } %> 
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+

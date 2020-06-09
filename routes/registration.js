@@ -101,7 +101,7 @@ router.post(
 
         try {
           const newUser = await user.save();
-          await sendEmail(req.body.email, req.body.user);
+          await sendEmail(req.body.email, req.body.username);
           res.redirect("/");
         } catch (err) {
           if (err) throw err;

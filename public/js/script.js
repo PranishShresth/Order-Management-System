@@ -1,4 +1,41 @@
 $(document).ready(function () {
+  $("#generate-report").click(function () {
+    console.log("clicked");
+    $.get(
+      "http://" + window.location.host + "/inventory/inventoryDetails",
+      function (data, status) {
+        function getRandomColor() {
+          var letters = "0123456789ABCDEF".split("");
+          var color = "#";
+          for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+          return color;
+        }
+        const productname = data.map((product) => product.ProductName);
+        const quantity = data.map((product) => product.Quantity);
+
+        let canvasProfile = document
+          .getElementById("product-profile")
+          .getContext("2d");
+        let profileLineChart = new Chart(canvasProfile, {
+          type: "pie",
+          data: {
+            labels: productname,
+            datasets: [
+              {
+                data: quantity,
+                fillColor: getRandomColor(),
+                backgroundColor: getRandomColor(),
+              },
+            ],
+          },
+          options: {},
+        });
+      }
+    );
+  });
+
   $("#subscribe").popover({
     title: "<h4>Create a Category</h4>",
     container: "body",

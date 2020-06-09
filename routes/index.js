@@ -112,9 +112,12 @@ router.get("/registration/resetPassword", (req, res, next) => {
 });
 
 //profile page
-router.get("/profile", loginRequired, (req, res) => {
+router.get("/profile", loginRequired, async (req, res) => {
+  const resp = await fetch(process.env.SERVER + "user");
+  const users = await resp.json();
   res.render("Profile", {
     user: req.session.user,
+    users: users,
     title: "Profile",
   });
 });
@@ -238,6 +241,9 @@ router.get("/product/viewlater", loginRequired, async (req, res) => {
 //Resource section
 router.get("/resource", loginRequired, async (req, res) => {
   const user = await User.find({});
+  const produrl = process.env.SERVER + "orders/api/viewOrder";
+  let prodresponse = await fetch(produrl);
+  let orders = await prodresponse.json();
   const url = process.env.SERVER + "customer/api/viewCustomers";
   const response = await fetch(url);
   const cust = await response.json();
@@ -246,5 +252,6 @@ router.get("/resource", loginRequired, async (req, res) => {
     title: "Resource",
     cust: cust,
     user: req.session.user,
+    orders: orders,
   });
 });
