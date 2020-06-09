@@ -144,7 +144,7 @@ const sendEmail = (touser) => {
   const msg = {
     to: touser,
     from: "ordermanagementsystem2@gmail.com",
-    subject: "User registration",
+    subject: "Confirming your order",
     html: `
     <p>Thank you for ordering with Revenant Dawn - Order Management System<p>
   <p>Your order has been confirmed. When it ships, we will let you know<p>

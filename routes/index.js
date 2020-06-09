@@ -43,10 +43,24 @@ router.get("/dashboard", loginRequired, async (req, res) => {
   const notification = await notifications
     .splice(notifications.length - 5)
     .reverse();
+  const customerurl = process.env.SERVER + "customer/api/viewCustomers";
+  let custresponse = await fetch(customerurl);
+  let customers = await custresponse.json();
+
+  const produrl = process.env.SERVER + "api/products";
+  let prodresponse = await fetch(produrl);
+  let products = await prodresponse.json();
+
+  const inventoryurl = process.env.SERVER + "inventory/inventoryDetails";
+  let inventoryresponse = await fetch(inventoryurl);
+  let inventory = await inventoryresponse.json();
   res.render("Dashboards", {
     user: req.session.user,
     notifications: notification,
     title: "Dashboard",
+    customer: customers,
+    products: products,
+    inventory: inventory,
   });
 });
 
