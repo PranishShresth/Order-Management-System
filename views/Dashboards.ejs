@@ -33,9 +33,9 @@
       </div>
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
         <div class="card dashboard-card orange">
-          <div class="title">Budget</div>
+          <div class="title">SalesOrder</div>
           <i class="fas fa-money-bill"></i>
-          <div class="value">$80,990</div>
+          <div class="value"><%= orders.length %></div>
           <div class="stat"><b>13</b>% decrease</div>
         </div>
       </div>
@@ -82,56 +82,95 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
   <script>
+    function getRandomColor() {
+      var letters = "0123456789ABCDEF".split("");
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    async function getInventory() {
+      const fetchinventory = await fetch(
+        "http://" + window.location.host + "/inventory/inventoryCategory"
+      );
+      const resp = await fetchinventory.json();
+      return resp;
+    }
     let mychart = document.getElementById("first-grid").getContext("2d");
-    let mybarchart = new Chart(mychart, {
-      type: "bar",
-      data: {
-        labels: ["Bulbs", "Chandelier", "Led Lights", "Solar Light"],
-        datasets: [
-          {
-            label: "Sales",
-            barPercentage: 0.5,
-            barThickness: 6,
-            maxBarThickness: 8,
-            minBarLength: 2,
-            labels: "Price",
-            data: [100, 20, 12, 12, 43, 12, 60],
-            backgroundColor: [
-              "rgba(255,99,132,0.6)",
-              "rgba(255,99,132,0.6)",
-              "rgba(255,99,132,0.6)",
-              "rgba(255,99,132,0.6)",
-            ],
-          },
-        ],
-      },
-      options: {},
+
+    getInventory().then((data) => {
+      const Category = data.map((product) => {
+        return product._id;
+      });
+      const Quantity = data.map((product) => {
+        return product.Quantity;
+      });
+
+      let mybarchart = new Chart(mychart, {
+        type: "pie",
+        data: {
+          labels: Category,
+
+          datasets: [
+            {
+              label: "Quantity per category",
+
+              data: Quantity,
+              backgroundColor: [
+                getRandomColor(),
+                getRandomColor(),
+                getRandomColor(),
+                getRandomColor(),
+                getRandomColor(),
+              ],
+            },
+          ],
+        },
+        options: {},
+      });
     });
 
     let mysecondchart = document.getElementById("second-grid").getContext("2d");
-    let mylinechart = new Chart(mysecondchart, {
-      type: "line",
-      data: {
-        labels: ["Bulbs", "Chandelier", "Led Lights", "Solar Light"],
-        datasets: [
-          {
-            label: "Lights",
-            barPercentage: 0.5,
-            barThickness: 6,
-            maxBarThickness: 8,
-            minBarLength: 2,
-            labels: "Price",
-            data: [100, 20, 12, 12, 43, 12, 60],
-            backgroundColor: [
-              "rgba(255,99,132,0.6)",
-              "rgba(255,99,132,0.6)",
-              "rgba(255,99,132,0.6)",
-              "rgba(255,99,132,0.6)",
-            ],
-          },
-        ],
-      },
-      options: {},
+    async function getOrderStatus() {
+      const fetchstatus = await fetch(
+        "http://" + window.location.host + "/orders/api/orderLine"
+      );
+      const resp = await fetchstatus.json();
+      return resp;
+    }
+    getOrderStatus().then((data) => {
+      const status = data.map((s) => {
+        return s._id;
+      });
+      const count = data.map((c) => {
+        return c.count;
+      });
+      let mylinechart = new Chart(mysecondchart, {
+        type: "bar",
+        data: {
+          labels: status,
+          datasets: [
+            {
+              label: "Order Status",
+              barPercentage: 0.5,
+              barThickness: 6,
+              maxBarThickness: 8,
+              minBarLength: 2,
+              labels: "Price",
+              data: count,
+              backgroundColor: [
+                getRandomColor(),
+                getRandomColor(),
+                getRandomColor(),
+                getRandomColor(),
+                getRandomColor(),
+              ],
+            },
+          ],
+        },
+        options: {},
+      });
     });
   </script>
 </div>

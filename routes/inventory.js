@@ -6,14 +6,26 @@ router.get("/inventoryDetails", async (req, res, next) => {
   const inventory = await Inventory.find();
   res.json(inventory);
 });
+
+router.get("/inventoryCategory", async (req, res, next) => {
+  const inventory = await Inventory.aggregate([
+    {
+      $group: {
+        _id: "$Category",
+        Quantity: { $sum: "$Quantity" },
+      },
+    },
+  ]);
+  res.json(inventory);
+});
 router.post("/addInventory", async (req, res, next) => {
   const inventory = new Inventory({
     ProductID: req.body.p_id,
-    ProductName: req.body.p_name,
+    ProductName: req.body.p_name.trim(),
     Quantity: req.body.p_qty,
     ManufactureDate: req.body.m_date,
-    ProductPrice: req.body.p_price,
-    Category: req.body.category,
+    ProductPrice: req.body.p_price.trim(),
+    Category: req.body.category.trim(),
   });
   try {
     await inventory.save();

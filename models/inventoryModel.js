@@ -9,12 +9,14 @@ const inventorySchema = mongoose.Schema({
   },
   Quantity: {
     type: Number,
+    trim: true,
   },
   ManufactureDate: {
     type: String,
   },
   Category: {
     type: String,
+    trim: true,
   },
   ProductPrice: {
     type: Number,

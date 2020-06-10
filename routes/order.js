@@ -14,6 +14,18 @@ router.get("/api/viewOrder", async (req, res) => {
   res.json(orders);
 });
 
+router.get("/api/orderLine", async (req, res) => {
+  const orders = await Order.aggregate([
+    {
+      $group: {
+        _id: "$status",
+        count: { $sum: 1 },
+      },
+    },
+  ]);
+  res.json(orders);
+});
+
 //Searching order
 router.get("/search", async (req, res) => {
   if (req.query.search) {
@@ -92,11 +104,11 @@ router.put("/api/:orderid", async (req, res, next) => {
   try {
     order = await Order.findById(req.params.orderid);
 
-    order.productName = req.body.name;
-    order.productType = req.body.type;
-    order.description = req.body.description;
-    order.customer = req.body.customer;
-    order.status = req.body.status;
+    order.productName = req.body.name.trim();
+    order.productType = req.body.type.trim();
+    order.description = req.body.description.trim();
+    order.customer = req.body.customer.trim();
+    order.status = req.body.status.trim();
     order.price = req.body.price;
     order.totalAmount = req.body.amount;
     await order.save();

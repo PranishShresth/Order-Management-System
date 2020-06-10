@@ -18,11 +18,6 @@
   }
 </style>
 <div class="container">
-  <form action="">
-    <h1><%if(user.type === "admin"){ %></h1>
-    <button type="submit" id="edit-order">Edit order</button>
-  </form>
-  <%} %>
   <h1>Add <span>Order</span></h1>
   <form action="/orders" method="POST">
     <div class="form-group">
@@ -68,8 +63,7 @@
         type="number"
         class="form-control"
         id="orderprice"
-        placeholder="Please enter a
-      price"
+        placeholder="Please enter a price"
         name="price"
       />
     </div>

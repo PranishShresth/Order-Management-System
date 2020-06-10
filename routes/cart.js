@@ -37,6 +37,7 @@ router.post("/promocode", countMiddleware, function (req, res, next) {
       "Paras",
       "Kanchan",
       "Ahmed",
+      "Nellai",
     ];
     const filter = promocodes.filter((name) => {
       return name == promo;

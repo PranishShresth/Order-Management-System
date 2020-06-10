@@ -55,6 +55,8 @@ router.post("/login", async (req, res, next) => {
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
       if (err) throw err;
       if (isMatch) {
+        delete user.password;
+        Object.freeze(user);
         req.session.user = user;
         req.session.WatchList = [];
 
@@ -94,8 +96,8 @@ router.post(
     bcrypt.genSalt(10, function (err, salt) {
       bcrypt.hash(req.body.password, salt, async function (err, hash) {
         const user = new User({
-          email: req.body.email,
-          name: req.body.username,
+          email: req.body.email.trim(),
+          name: req.body.username.trim(),
           password: hash,
         });
 

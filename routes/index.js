@@ -1,15 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const fetch = require("node-fetch");
 const { loginRequired, StayLoggedin } = require("../config/auth");
 const User = require("./../models/userModel");
 const Cart = require("./../models/cartModel");
+const {
+  getCategory,
+  getCustomer,
+  getInventory,
+  getNotifications,
+  getProducts,
+  getOrders,
+  getUsers,
+} = require("./utils/helper");
 
 //View the customer
 router.get("/customer/viewCustomers", loginRequired, async (req, res) => {
-  const url = process.env.SERVER + "customer/api/viewCustomers";
-  let response = await fetch(url);
-  let customers = await response.json();
+  const customers = await getCustomer();
   res.render("partials/customer/viewCustomers", {
     customers: customers,
     title: "View Customer",
@@ -38,26 +44,16 @@ router.get("/", StayLoggedin, (req, res) => {
 
 //Dashboard page
 router.get("/dashboard", loginRequired, async (req, res) => {
-  const response = await fetch(process.env.SERVER + "api/notification");
-  const notifications = await response.json();
-  const notification = await notifications
-    .splice(notifications.length - 5)
-    .reverse();
-  const customerurl = process.env.SERVER + "customer/api/viewCustomers";
-  let custresponse = await fetch(customerurl);
-  let customers = await custresponse.json();
-
-  const produrl = process.env.SERVER + "api/products";
-  let prodresponse = await fetch(produrl);
-  let products = await prodresponse.json();
-
-  const inventoryurl = process.env.SERVER + "inventory/inventoryDetails";
-  let inventoryresponse = await fetch(inventoryurl);
-  let inventory = await inventoryresponse.json();
+  const customers = await getCustomer();
+  const notification = await getNotifications();
+  const inventory = await getInventory();
+  const products = await getProducts();
+  const orders = await getOrders();
   res.render("Dashboards", {
     user: req.session.user,
     notifications: notification,
     title: "Dashboard",
+    orders: orders,
     customer: customers,
     products: products,
     inventory: inventory,
@@ -66,28 +62,20 @@ router.get("/dashboard", loginRequired, async (req, res) => {
 
 //Add order page
 router.get("/orders/addorder", loginRequired, async (req, res) => {
-  const customerurl = process.env.SERVER + "customer/api/viewCustomers";
-  let custresponse = await fetch(customerurl);
-  let customers = await custresponse.json();
-
-  //product
-  const url = process.env.SERVER + "inventory/inventoryDetails";
-  let response = await fetch(url);
-  let products = await response.json();
+  const customers = await getCustomer();
+  const inventoryproducts = await getInventory();
   res.render("partials/order/addorder", {
     user: req.session.user,
     title: "Add Order",
     customers: customers,
-    products: products,
+    products: inventoryproducts,
     user: req.session.user,
   });
 });
 
 //View the order
 router.get("/orders/vieworder", loginRequired, async (req, res) => {
-  const url = process.env.SERVER + "orders/api/viewOrder";
-  let response = await fetch(url);
-  let orders = await response.json();
+  const orders = await getOrders();
   res.render("partials/order/vieworder", {
     orders: orders,
     title: "View Order",
@@ -97,18 +85,17 @@ router.get("/orders/vieworder", loginRequired, async (req, res) => {
 
 //Get inventory
 router.get("/inventory", loginRequired, async (req, res) => {
-  const url = process.env.SERVER + "inventory/inventoryDetails";
-  let response = await fetch(url);
-  let inventory = await response.json();
-
-  const categoryurl = process.env.SERVER + "category/getCategory";
-  let categoryresponse = await fetch(categoryurl);
-  let categories = await categoryresponse.json();
+  const inventory = await getInventory();
+  const customers = await getCustomer();
+  const categories = await getCategory();
+  const orders = await getOrders();
   res.render("partials/inventory", {
     user: req.session.user,
     title: "Inventory",
     inventory: inventory,
     category: categories,
+    customer: customers,
+    orders: orders,
   });
 });
 
@@ -127,8 +114,7 @@ router.get("/registration/resetPassword", (req, res, next) => {
 
 //profile page
 router.get("/profile", loginRequired, async (req, res) => {
-  const resp = await fetch(process.env.SERVER + "user");
-  const users = await resp.json();
+  const users = await getUsers();
   res.render("Profile", {
     user: req.session.user,
     users: users,
@@ -138,9 +124,7 @@ router.get("/profile", loginRequired, async (req, res) => {
 
 //product
 router.get("/products/addProduct", loginRequired, async (req, res) => {
-  const url = process.env.SERVER + "category/getCategory";
-  let response = await fetch(url);
-  let categories = await response.json();
+  const categories = await getCategory();
   res.render("partials/product/addProduct", {
     user: req.session.user,
     title: "Add product",
@@ -168,10 +152,8 @@ module.exports = router;
 
 router.get("/ecommerce/:type", async (req, res, next) => {
   const type = req.params.type;
-  console.log(type);
-  const url = process.env.SERVER + "api/products";
-  let response = await fetch(url);
-  let products = await response.json();
+
+  let products = await getProducts();
   let productchunks = [];
   let chunksize = 999999;
   for (let i = 0; i < products.length; i += chunksize) {
@@ -254,13 +236,9 @@ router.get("/product/viewlater", loginRequired, async (req, res) => {
 
 //Resource section
 router.get("/resource", loginRequired, async (req, res) => {
-  const user = await User.find({});
-  const produrl = process.env.SERVER + "orders/api/viewOrder";
-  let prodresponse = await fetch(produrl);
-  let orders = await prodresponse.json();
-  const url = process.env.SERVER + "customer/api/viewCustomers";
-  const response = await fetch(url);
-  const cust = await response.json();
+  const user = await getUsers();
+  const orders = await getOrders();
+  const cust = await getCustomer();
   await res.render("partials/resource/resource", {
     onlineAccounts: user.length,
     title: "Resource",

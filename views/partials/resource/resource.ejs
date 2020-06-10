@@ -1,4 +1,3 @@
-<style></style>
 <div class="container mb-5">
   <div class="row">
     <div class="col-xs-12 col-sm-4">
@@ -39,7 +38,6 @@
       </div>
     </div>
     <% if(user.type=="admin"){ %>
-
     <div class="col-xs-12 col-sm-4">
       <div class="resource-box alert-success">
         <div class="card-block">
@@ -49,8 +47,8 @@
         </div>
       </div>
     </div>
-    <% } %> <% if(user.type=="admin"||user.type=="ordermgmtU"){ %>
-
+    <% } %> <%console.log(user.type.trim()==="admin");
+    if(user.type.trim()==="admin"){ %>
     <div class="col-xs-12 col-sm-4">
       <div class="resource-box alert-success">
         <div class="card-block">
@@ -65,27 +63,10 @@
           </button>
         </div>
       </div>
-    </div>
-    <% } %> <% if(user.type=="admin"||user.type=="logisticmgmtU"){ %>
-
-    <div class="col-xs-12 col-sm-4">
-      <div class="resource-box alert-success">
-        <div class="card-block">
-          <button
-            id="resource-category"
-            type="button"
-            class="btn btn-primary btn-default"
-            data-toggle="modal"
-            data-target="#recall-modal"
-          >
-            Recall an order
-          </button>
-        </div>
-      </div>
       <% } %>
 
-      <!-- Recall modal -->
-      <div id="recall-modal" class="modal fade" role="dialog">
+      <!-- Category Modal -->
+      <div id="category-modal" class="modal fade" role="dialog">
         <div class="modal-dialog">
           <!-- Modal content-->
           <div class="modal-content">
@@ -93,22 +74,18 @@
               <button type="button" class="close" data-dismiss="modal">
                 &times;
               </button>
-              <h4 class="modal-title">Recall an order</h4>
+              <h4 class="modal-title">Create a category</h4>
             </div>
             <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="text">Order</label>
-
-                  <select name[]="recall" id="recall">
-                    <% orders.forEach(option=>{%>
-
-                    <option value="<%=option.name%>"><%=option.name%></option>
-                    <%})%>
-                  </select>
-                </div>
+              <form method="POST" action="/category/add">
+                <input
+                  class="form-control mb-2"
+                  type="text"
+                  name="category"
+                  placeholder="Create a category"
+                />
                 <button type="submit" class="btn btn-warning mt-2">
-                  Recall
+                  Create
                 </button>
               </form>
             </div>
@@ -123,207 +100,168 @@
             </div>
           </div>
         </div>
-
-        <!-- Category Modal -->
-        <div id="category-modal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                  &times;
-                </button>
-                <h4 class="modal-title">Create a category</h4>
-              </div>
-              <div class="modal-body">
-                <form method="POST" action="/category/add">
-                  <input
-                    class="form-control mb-2"
-                    type="text"
-                    name="category"
-                    placeholder="Create a category"
-                  />
-                  <button type="submit" class="btn btn-warning mt-2">
-                    Create
-                  </button>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Refund</h5>
             </div>
-          </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="text">Customer</label>
 
-          <!-- Modal -->
-          <div
-            class="modal fade"
-            id="exampleModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Refund</h5>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="form-group">
-                      <label for="text">Customer</label>
-
-                      <select name[]="cust" id="cust">
-                        <% cust.forEach(option=>{%>
-
-                        <option value="<%=option.CustomerName%>"
-                          ><%=option.CustomerName%></option
-                        >
-                        <%})%>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="pwd">Refund amount:</label>
-                      <input
-                        type="number"
-                        name="refundAmt"
-                        class="form-control"
-                        id="pwd"
-                      />
-                    </div>
-
-                    <button
-                      class="btn btn-secondary"
-                      type="submit"
-                      class="btn btn-default"
+                  <select name[]="cust" id="cust">
+                    <% cust.forEach(option=>{%>
+                    <option value="<%=option.CustomerName%>"
+                      ><%=option.CustomerName%></option
                     >
-                      Submit
-                    </button>
-                  </form>
+                    <%})%>
+                  </select>
                 </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
+                <div class="form-group">
+                  <label for="pwd">Refund amount:</label>
+                  <input
+                    type="number"
+                    name="refundAmt"
+                    class="form-control"
+                    id="pwd"
+                  />
                 </div>
-              </div>
+
+                <button
+                  class="btn btn-secondary"
+                  type="submit"
+                  class="btn btn-default"
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- Feeback Modal -->
+      <!-- Feeback Modal -->
 
-          <div
-            class="modal fade"
-            id="feedback-modal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="feedback-modalTitle"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">
-                    Feedback form
-                  </h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <section>
-                    <div>
+      <div
+        class="modal fade"
+        id="feedback-modal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="feedback-modalTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">
+                Feedback form
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <section>
+                <div>
+                  <div class="row">
+                    <div class="col-sm-12">
                       <div class="row">
-                        <div class="col-sm-12">
-                          <div class="row">
-                            <div class="col-sm-8 col-sm-offset-2">
-                              <div>
-                                <h2>CONTACT US</h2>
-                              </div>
-                              <form
-                                method="post"
-                                action="/resource/feedback"
-                                data-form-title="CONTACT US"
-                              >
-                                <div class="form-group">
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    name="name"
-                                    required=""
-                                    placeholder="Name*"
-                                    data-form-field="Name"
-                                  />
-                                </div>
-                                <div class="form-group">
-                                  <input
-                                    type="email"
-                                    class="form-control"
-                                    name="email"
-                                    required=""
-                                    placeholder="Email*"
-                                    data-form-field="Email"
-                                  />
-                                </div>
-                                <div class="form-group">
-                                  <input
-                                    type="tel"
-                                    class="form-control"
-                                    name="phone"
-                                    placeholder="Phone"
-                                    data-form-field="Phone"
-                                  />
-                                </div>
-                                <div class="form-group">
-                                  <textarea
-                                    class="form-control"
-                                    name="message"
-                                    placeholder="Message"
-                                    rows="7"
-                                    data-form-field="Message"
-                                  ></textarea>
-                                </div>
-                                <div>
-                                  <button
-                                    type="submit"
-                                    class="btn btn-lg btn-danger"
-                                  >
-                                    CONTACT US
-                                  </button>
-                                </div>
-                              </form>
-                            </div>
+                        <div class="col-sm-8 col-sm-offset-2">
+                          <div>
+                            <h2>CONTACT US</h2>
                           </div>
+                          <form
+                            method="post"
+                            action="/resource/feedback"
+                            data-form-title="CONTACT US"
+                          >
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                name="name"
+                                required=""
+                                placeholder="Name*"
+                                data-form-field="Name"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <input
+                                type="email"
+                                class="form-control"
+                                name="email"
+                                required=""
+                                placeholder="Email*"
+                                data-form-field="Email"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <input
+                                type="tel"
+                                class="form-control"
+                                name="phone"
+                                placeholder="Phone"
+                                data-form-field="Phone"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <textarea
+                                class="form-control"
+                                name="message"
+                                placeholder="Message"
+                                rows="7"
+                                data-form-field="Message"
+                              ></textarea>
+                            </div>
+                            <div>
+                              <button
+                                type="submit"
+                                class="btn btn-lg btn-danger"
+                              >
+                                CONTACT US
+                              </button>
+                            </div>
+                          </form>
                         </div>
                       </div>
                     </div>
-                  </section>
+                  </div>
                 </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
+              </section>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
