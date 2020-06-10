@@ -13,6 +13,10 @@ $(document).ready(function () {
           }
           return color;
         }
+        const randomcolors = [];
+        for (var i = 0; i <= data.length; i++) {
+          randomcolors.push(getRandomColor());
+        }
         const productname = data.map((product) => product.ProductName);
         const quantity = data.map((product) => product.Quantity);
 
@@ -26,8 +30,7 @@ $(document).ready(function () {
             datasets: [
               {
                 data: quantity,
-                fillColor: getRandomColor(),
-                backgroundColor: getRandomColor(),
+                backgroundColor: randomcolors,
               },
             ],
           },

@@ -104,16 +104,7 @@
           Add
         </button>
       </div>
-      <div class="button-controls">
-        <button
-          type="submit"
-          data-toggle="modal"
-          data-target="#editInventory"
-          class="btn btn-sm mx-2 btn-outline-secondary"
-        >
-          Edit
-        </button>
-      </div>
+
       <div class="button-controls">
         <form method="GET" action="">
           <button type="submit" class="btn btn-sm btn-outline-secondary">
@@ -156,8 +147,17 @@
           <td><%= products.ManufactureDate %></td>
           <td><%= products.Quantity%></td>
           <td>
-            <%- include("deleteForm",{
-            url:`/inventory/${products._id}?_method=DELETE` }) %>
+            <div class="d-flex">
+              <%- include("deleteForm",{
+              url:`/inventory/${products._id}?_method=DELETE` }) %>
+              <a
+                data-toggle="modal"
+                class="edit-inventory"
+                data-target="#editInventory"
+              >
+                <i class="fas fa-edit mt-3"></i>
+              </a>
+            </div>
           </td>
         </tr>
         <% }) %>
@@ -168,7 +168,7 @@
   </div>
 </div>
 
-<!-- Modal -->
+<!-- edit inventory Modal -->
 <div
   class="modal fade"
   id="editInventory"
@@ -195,19 +195,24 @@
           <form method="POST" action="/inventory/addInventory">
             <div class="form-group row">
               <label for="ProductID">ProductID</label>
-              <input type="text" class="mx-3" name="p_id" />
+              <input type="text" id="ep_id" class="mx-3" name="p_id" />
             </div>
             <div class="form-group row">
               <label for="ProductName">ProductName</label>
-              <input type="text" class="mx-3" name="p_name" />
+              <input type="text" id="ep_name" class="mx-3" name="p_name" />
             </div>
             <div class="form-group row">
               <label for="qty">QuantityAvailable</label>
-              <input type="number" class="mx-3" name="p_qty" />
+              <input type="number" id="ep_qty" class="mx-3" name="p_qty" />
             </div>
             <div class="form-group row">
               <label for="qty">Category</label>
-              <select class="mx-2" name="category" id="inlineFormCustomSelect">
+              <select
+                id="ep_cat"
+                class="mx-2"
+                name="category"
+                id="inlineFormCustomSelect"
+              >
                 <option selected>Choose...</option>
                 <% category.forEach(name=>{ %>
                 <option value="<%=name.categoryName %> "
@@ -219,15 +224,19 @@
             </div>
             <div class="form-group row">
               <label for="m_date">Manufacture date</label>
-              <input type="date" class="mx-3" name="m_date" />
+              <input type="date" id="e_date" class="mx-3" name="m_date" />
             </div>
             <div class="form-group row">
               <label for="p_price">Price(per piece)</label>
-              <input type="number" class="mx-3" name="p_price" />
+              <input type="number" id="ep_price" class="mx-3" name="p_price" />
             </div>
             <div class="form-group w-100">
-              <button type="submit" class="btn mx-5 btn-secondary">
-                Add to inventory
+              <button
+                type="submit"
+                id="e_submit"
+                class="btn mx-5 btn-secondary"
+              >
+                Update
               </button>
             </div>
           </form>
@@ -313,3 +322,24 @@
     </div>
   </div>
 </div>
+<script>
+  window.onload = () => {
+    let edit = document.querySelectorAll(".edit-inventory");
+    edit.forEach((x) =>
+      x.addEventListener("click", function (ev) {
+        var tr = ev.target.closest("tr");
+        document.getElementById("ep_id").value = tr.childNodes[2].textContent;
+
+        document.getElementById("ep_name").value = tr.childNodes[1].textContent;
+        document.getElementById("ep_cat").value = tr.childNodes[2].textContent;
+
+        document.getElementById("ep_qty").value = tr.childNodes[3].textContent;
+
+        document.getElementById("e_date").value = tr.childNodes[4].textContent;
+        console.log(tr.childNodes[2]);
+        document.getElementById("ep_price").value =
+          tr.childNodes[5].textContent;
+      })
+    );
+  };
+</script>
