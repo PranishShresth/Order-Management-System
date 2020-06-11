@@ -103,10 +103,8 @@ router.put("/api/:orderid", async (req, res, next) => {
   let order;
   try {
     order = await Order.findById(req.params.orderid);
-
-    order.productName = req.body.name.trim();
-    order.productType = req.body.type.trim();
-    order.description = req.body.description.trim();
+    order.name = req.body.name.trim();
+    order.productName = req.body.pname.trim();
     order.customer = req.body.customer.trim();
     order.status = req.body.status.trim();
     order.price = req.body.price;
