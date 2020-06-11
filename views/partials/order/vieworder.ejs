@@ -64,7 +64,7 @@
           <% if(user.type=="admin"||user.type=="ordermgmtU"){ %>
           <td>
             <%- include("../Editform",{ url:
-            `/orders/api/${order._id}/?_method=GET` }) %>
+            `/orders/api/${order._id}?_method=GET` }) %>
           </td>
           <td>
             <%- include("../deleteForm",{ url:
