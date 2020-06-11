@@ -35,6 +35,24 @@ router.post("/addInventory", async (req, res, next) => {
   }
 });
 
+router.post("/editInventory", async (req, res, next) => {
+  const { p_name, p_id, category, p_qty, p_price, m_date } = req.body;
+  let product;
+  try {
+    product = await Inventory.findOne({ ProductID: p_id });
+    product.ProductName = p_name;
+    product.Quantity = p_qty;
+    product.ProductPrice = p_price;
+    product.Category = category;
+    product.ManufactureDate = m_date;
+    await product.save();
+    res.redirect("/inventory");
+  } catch {
+    if (product === null) {
+      throw new Error("Product is null");
+    }
+  }
+});
 router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
   await Inventory.findByIdAndDelete(id);

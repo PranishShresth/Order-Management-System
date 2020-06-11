@@ -105,7 +105,7 @@
         </button>
       </div>
 
-      <div class="button-controls">
+      <div class="button-controls mx-2">
         <form method="GET" action="">
           <button type="submit" class="btn btn-sm btn-outline-secondary">
             Export
@@ -129,7 +129,7 @@
           <th>Category</th>
           <th>Quantity Available</th>
           <th>Manufacture Date</th>
-          <th>QuantiyPrice</th>
+          <th>Price (per piece)</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -192,17 +192,17 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-          <form method="POST" action="/inventory/addInventory">
+          <form method="POST" action="/inventory/editInventory">
             <div class="form-group row">
               <label for="ProductID">ProductID</label>
-              <input type="text" id="ep_id" class="mx-3" name="p_id" />
+              <input type="text" id="ep_id" class="mx-3" name="p_id" readonly />
             </div>
             <div class="form-group row">
               <label for="ProductName">ProductName</label>
               <input type="text" id="ep_name" class="mx-3" name="p_name" />
             </div>
             <div class="form-group row">
-              <label for="qty">QuantityAvailable</label>
+              <label for="qty">Quantity Available</label>
               <input type="number" id="ep_qty" class="mx-3" name="p_qty" />
             </div>
             <div class="form-group row">
@@ -213,7 +213,7 @@
                 name="category"
                 id="inlineFormCustomSelect"
               >
-                <option selected>Choose...</option>
+                <option id="op_cat" selected>Choose...</option>
                 <% category.forEach(name=>{ %>
                 <option value="<%=name.categoryName %> "
                   ><%=name.categoryName %></option
@@ -283,7 +283,7 @@
               <input type="text" class="mx-3" name="p_name" />
             </div>
             <div class="form-group row">
-              <label for="qty">QuantityAvailable</label>
+              <label for="qty">Quantity Available</label>
               <input type="number" class="mx-3" name="p_qty" />
             </div>
             <div class="form-group row">
@@ -328,17 +328,16 @@
     edit.forEach((x) =>
       x.addEventListener("click", function (ev) {
         var tr = ev.target.closest("tr");
-        document.getElementById("ep_id").value = tr.childNodes[2].textContent;
-
-        document.getElementById("ep_name").value = tr.childNodes[1].textContent;
-        document.getElementById("ep_cat").value = tr.childNodes[2].textContent;
-
-        document.getElementById("ep_qty").value = tr.childNodes[3].textContent;
-
-        document.getElementById("e_date").value = tr.childNodes[4].textContent;
-        console.log(tr.childNodes[2]);
-        document.getElementById("ep_price").value =
+        document.getElementById("ep_id").value = tr.childNodes[1].innerText;
+        console.log(tr.childNodes);
+        document.getElementById("ep_name").value = tr.childNodes[3].innerText;
+        document.getElementById("op_cat").textContent =
           tr.childNodes[5].textContent;
+        document.getElementById("ep_qty").value = tr.childNodes[7].textContent;
+        console.log(tr);
+        document.getElementById("e_date").value = tr.childNodes[9].textContent;
+        document.getElementById("ep_price").value =
+          tr.childNodes[11].textContent;
       })
     );
   };
