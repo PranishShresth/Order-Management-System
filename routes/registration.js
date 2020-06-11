@@ -12,34 +12,48 @@ router.post("/reset", async (req, res, next) => {
     return res.render("resetPassword", {
       layout: "layouts/registration-layout",
       user: user,
+      error: req.flash("error"),
     });
   } else {
-    req.session.reseterrors = {
-      message: "Error. Such user doesn't exist",
-    };
+    req.flash("error", "Error. Such user doesn't exist");
     res.redirect("/registration/resetPassword");
   }
 });
 router.put("/reset/:user", async (req, res, next) => {
-  if (req.body.newPassword.length >= 6) {
-    bcrypt.genSalt(10, function (err, salt) {
-      bcrypt.hash(req.body.newPassword, salt, async function (err, hash) {
-        let user;
-        try {
-          user = await User.findById(req.params.user);
-          user.password = hash;
-          await user.save();
-          res.redirect("/");
-        } catch (err) {
-          if (err) throw err;
-        }
+  const { newPassword, confirmPassword, id } = req.body;
+
+  const users = await User.findOne({ _id: id });
+
+  if (newPassword.trim() === confirmPassword.trim()) {
+    if (req.body.newPassword.length >= 6) {
+      bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(req.body.newPassword, salt, async function (err, hash) {
+          let user;
+          try {
+            user = await User.findById(req.params.user);
+            user.password = hash;
+            await user.save();
+            res.redirect("/");
+          } catch (err) {
+            if (err) throw err;
+          }
+        });
       });
-    });
+    } else {
+      req.flash("error", "Password must be more than 5 character");
+      res.render("resetPassword", {
+        error: req.flash("error"),
+        user: users,
+        layout: "layouts/registration-layout",
+      });
+    }
   } else {
-    req.session.reseterrors = {
-      message: "Password must be more than 5 chars",
-    };
-    res.redirect("/registration/resetPassword");
+    req.flash("error", "Both password must match");
+    res.render("resetPassword", {
+      error: req.flash("error"),
+      user: users,
+      layout: "layouts/registration-layout",
+    });
   }
 });
 
@@ -49,7 +63,8 @@ router.post("/login", async (req, res, next) => {
     name: req.body.username,
   }).then((user) => {
     if (!user) {
-      console.log("error");
+      req.flash("error", "No such user");
+      res.redirect("/");
     }
     // Match password
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
@@ -62,7 +77,8 @@ router.post("/login", async (req, res, next) => {
 
         res.redirect("/dashboard");
       } else if (!isMatch) {
-        res.send("Username or password error");
+        req.flash("error", "Password not correct");
+        res.redirect("/");
       }
     });
   });
@@ -87,30 +103,36 @@ router.post(
 
     if (!errors.isEmpty()) {
       var validationerror = errors.array();
-      console.log(validationerror);
-      req.session.errors = validationerror;
+      req.flash("validation", validationerror);
       res.redirect("/");
 
       return;
     }
-    bcrypt.genSalt(10, function (err, salt) {
-      bcrypt.hash(req.body.password, salt, async function (err, hash) {
-        const user = new User({
-          email: req.body.email.trim(),
-          name: req.body.username.trim(),
-          password: hash,
-        });
+    const emailExists = await User.find({ email: req.body.email });
+    if (emailExists.length === 0) {
+      bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(req.body.password, salt, async function (err, hash) {
+          const user = new User({
+            email: req.body.email.trim(),
+            name: req.body.username.trim(),
+            password: hash,
+          });
 
-        try {
-          const newUser = await user.save();
-          await sendEmail(req.body.email, req.body.username);
-          res.redirect("/");
-        } catch (err) {
-          if (err) throw err;
-          return;
-        }
+          try {
+            const newUser = await user.save();
+            await sendEmail(req.body.email, req.body.username);
+            res.redirect("/");
+          } catch (err) {
+            if (err) throw err;
+            return;
+          }
+        });
       });
-    });
+    } else {
+      req.flash("signuperror", "Email already exists");
+
+      res.redirect("/");
+    }
   }
 );
 const sendEmail = (touser, user) => {

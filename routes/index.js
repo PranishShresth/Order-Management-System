@@ -39,6 +39,9 @@ router.get("/", StayLoggedin, (req, res) => {
   res.render("registration", {
     layout: "layouts/registration-layout",
     errors: req.session.errors,
+    loginerror: req.flash("error"),
+    signuperror: req.flash("signuperror"),
+    validation: req.flash("validation"),
   });
 });
 
@@ -109,6 +112,7 @@ router.get("/registration/resetPassword", (req, res, next) => {
   res.render("resetPasswordf", {
     layout: "layouts/registration-layout",
     errors: req.session.reseterrors,
+    error: req.flash("error"),
   });
 });
 

@@ -105,6 +105,13 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash("error");
   next();
 });
+
+//creating a 404 page on all routes that doesn't exist
+app.use(function (req, res, next) {
+  if ((req.status = 404)) {
+    res.render("404page", { layout: "layouts/blank" });
+  }
+});
 //creating a server
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on ${process.env.PORT}`);

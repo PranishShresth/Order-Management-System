@@ -17,106 +17,107 @@
     />
   </head>
   <body>
-    <div class="body-container">
-      <div class="main-container">
-        <div class="tab-container">
-          <ul class="nav nav-pills">
-            <li class="nav-item">
-              <a class="nav-link active" data-toggle="pill" href="#login"
-                >Login</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="pill" href="#signup">Sign up</a>
-            </li>
-          </ul>
-        </div>
-        <div class="registration-container">
-          <% if(locals.failure_msg) {%> <%= failure_msg %><% } %>
-          <div class="tab-content">
-            <!-- Login form -->
-            <div id="login" class="tab-pane active">
-              <form method="POST" action="/registration/login">
-                <legend>Login</legend>
-                <div class="form-group">
-                  <label for="login-username">Username</label>
-                  <input
-                    type="text"
-                    name="username"
-                    class="form-control login-content"
-                    id="login-username"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="login-password">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    class="form-control login-content"
-                    id="login-password"
-                    required
-                  />
-                </div>
-
-                <div class="login-button">
-                  <button type="submit" class="btn btn-success">Login</button>
-                </div>
-                <br />
-              </form>
-              <div style="width: 100%; text-align: center;">
-                <a href="/registration/resetPassword">Forgot your password?</a>
+    <div class="main-container">
+      <div class="tab-container">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="pill" href="#login"
+              >Login</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="pill" href="#signup">Sign up</a>
+          </li>
+        </ul>
+      </div>
+      <div class="registration-container">
+        <% if(loginerror.length>0) {%>
+        <div class="alert alert-danger"><%=loginerror[0]%></div>
+        <% } %>
+        <div class="tab-content">
+          <!-- Login form -->
+          <div id="login" class="tab-pane active">
+            <form method="POST" action="/registration/login">
+              <legend>Login</legend>
+              <div class="form-group">
+                <label for="login-username">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  class="form-control login-content"
+                  id="login-username"
+                  required
+                />
               </div>
+              <div class="form-group">
+                <label for="login-password">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control login-content"
+                  id="login-password"
+                  required
+                />
+              </div>
+
+              <div class="login-button">
+                <button type="submit" class="btn btn-success">Login</button>
+              </div>
+              <br />
+            </form>
+            <div style="width: 100%; text-align: center;">
+              <a href="/registration/resetPassword">Forgot your password?</a>
             </div>
+          </div>
 
-            <!-- sign up form -->
-            <div id="signup" class="tab-pane fade in">
-              <form method="POST" action="/registration/signup">
-                <legend>Sign up</legend>
-                <div class="form-group">
-                  <% if (errors !== undefined){ %> <% for (const error of
-                  errors){ %>
-                  <div class="alert alert-danger"><%=error.msg %></div>
-                  <% } %> <% } %>
-                  <label for="signup-email">Email</label>
+          <!-- sign up form -->
+          <div id="signup" class="tab-pane fade in">
+            <% if(validation.length>0) {%>
+            <span class="alert-danger"><%=validation[0].msg%></span>
+            <% } %> <% if(signuperror.length>0) {%>
+            <span class="alert-danger"><%=signuperror[0]%></span>
+            <% } %>
+            <form method="POST" action="/registration/signup">
+              <legend>Sign up</legend>
+              <div class="form-group">
+                <label for="signup-email">Email </label>
+                <input
+                  type="email"
+                  class="form-control login-content"
+                  id="signup-email"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="signup-username">Username</label>
+                <input
+                  type="text"
+                  class="form-control login-content"
+                  id="signup-username"
+                  name="username"
+                />
+              </div>
 
-                  <input
-                    type="email"
-                    class="form-control login-content"
-                    id="signup-email"
-                    name="email"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="signup-username">Username</label>
-                  <input
-                    type="text"
-                    class="form-control login-content"
-                    id="signup-username"
-                    name="username"
-                  />
-                </div>
+              <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input
+                  type="password"
+                  class="form-control login-content"
+                  id="signup-password"
+                  name="password"
+                />
+              </div>
 
-                <div class="form-group">
-                  <label for="signup-password">Password</label>
-                  <input
-                    type="password"
-                    class="form-control login-content"
-                    id="signup-password"
-                    name="password"
-                  />
-                </div>
-
-                <div class="login-button">
-                  <button type="submit" class="btn btn-success">Sign up</button>
-                </div>
-              </form>
-            </div>
+              <div class="login-button">
+                <button type="submit" class="btn btn-success">Sign up</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
+
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

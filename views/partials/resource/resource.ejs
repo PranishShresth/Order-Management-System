@@ -1,12 +1,13 @@
 <div class="container mb-5">
   <div class="row">
+    <% if(user.type.trim()==="admin"){ %>
     <div class="col-xs-12 col-sm-4">
       <div class="resource-box alert-success">
         <h5>List of Active accounts</h5>
         <h2><%=onlineAccounts %></h2>
       </div>
     </div>
-
+    <% } %>
     <div class="col-xs-12 col-sm-4">
       <div class="resource-box alert-success">
         <div class="card-block">
@@ -47,8 +48,7 @@
         </div>
       </div>
     </div>
-    <% } %> <%console.log(user.type.trim()==="admin");
-    if(user.type.trim()==="admin"){ %>
+    <% } %> <% if(user.type.trim()==="admin"){ %>
     <div class="col-xs-12 col-sm-4">
       <div class="resource-box alert-success">
         <div class="card-block">
