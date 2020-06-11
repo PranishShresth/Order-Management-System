@@ -104,13 +104,15 @@
           Add
         </button>
       </div>
-
       <div class="button-controls mx-2">
-        <form method="GET" action="">
+        <%if(user.type.trim()=="admin" ||user.type.trim()==="ordermgmtU"){ %>
+
+        <form method="GET" action="/api/inventory/backup">
           <button type="submit" class="btn btn-sm btn-outline-secondary">
             Export
           </button>
         </form>
+        <% } %>
       </div>
     </div>
   </div>
@@ -130,7 +132,10 @@
           <th>Quantity Available</th>
           <th>Manufacture Date</th>
           <th>Price (per piece)</th>
+          <%if(user.type.trim()=="admin" ||user.type.trim()==="ordermgmtU"){ %>
+
           <th>Actions</th>
+          <% } %>
         </tr>
       </thead>
       <!--Table head-->
@@ -146,6 +151,8 @@
           <td><%= products.ProductPrice %></td>
           <td><%= products.ManufactureDate %></td>
           <td><%= products.Quantity%></td>
+          <%if(user.type.trim()=="admin" ||user.type.trim()==="ordermgmtU"){ %>
+
           <td>
             <div class="d-flex">
               <%- include("deleteForm",{
@@ -159,6 +166,7 @@
               </a>
             </div>
           </td>
+          <% } %>
         </tr>
         <% }) %>
       </tbody>

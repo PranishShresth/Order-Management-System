@@ -20,12 +20,16 @@
           </div>
         </div>
       </form>
-      <div class="btn-group mb-4 px-2"></div>
-      <form method="GET" action="/api/orders/backup">
-        <button type="submit" class="btn btn-sm btn-outline-secondary">
-          Export
-        </button>
-      </form>
+      <div class="btn-group mb-4 px-2">
+        <% if(user.type.trim()==="admin"||user.type.trim()==="ordermgmtU"){ %>
+
+        <form method="GET" action="/api/orders/backup">
+          <button type="submit" class="btn btn-sm btn-outline-secondary">
+            Export
+          </button>
+        </form>
+        <% } %>
+      </div>
     </div>
   </div>
   <div class="row mt-5">
@@ -39,11 +43,11 @@
           <th scope="col">Price</th>
           <th scope="col">Amount</th>
           <th scope="col">Order Status</th>
-          <% if(user.type=="admin"||user.type=="ordermgmtU"){ %>
+          <% if(user.type.trim()==="admin"||user.type.trim()==="ordermgmtU"){ %>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
-          <% } %>
           <th scope="col">Approve</th>
+          <% } %>
         </tr>
       </thead>
 
@@ -66,7 +70,6 @@
             <%- include("../deleteForm",{ url:
             `/orders/api/${order._id}/?_method=DELETE` }) %>
           </td>
-          <% } %>
           <td>
             <button
               type="button"
@@ -76,6 +79,7 @@
             >
               Approve
             </button>
+            <% } %>
 
             <!-- Modal -->
             <div

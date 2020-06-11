@@ -222,12 +222,16 @@ router.get("/product/viewlater/:name&:id&:price", async (req, res) => {
       price: price,
     };
     await wishList.push(viewitlater);
-    await res.redirect("/ecommerce/pendantlights");
+    await res.redirect("/ecommerce");
   } else {
-    res.redirect("/ecommerce/pendantlights");
+    res.redirect("/ecommerce");
   }
 });
 
+router.get("/wishlist/clear", loginRequired, async (req, res) => {
+  req.session.WatchList = [];
+  res.redirect("/product/viewlater");
+});
 router.get("/product/viewlater", loginRequired, async (req, res) => {
   const wishList = req.session.WatchList;
 

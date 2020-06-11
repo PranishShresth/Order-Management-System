@@ -48,7 +48,8 @@
         </div>
       </div>
     </div>
-    <% } %> <% if(user.type.trim()==="admin"){ %>
+    <% } %> <% if(user.type.trim()==="admin"||user.type.trim()==="ordermgmtU"){
+    %>
     <div class="col-xs-12 col-sm-4">
       <div class="resource-box alert-success">
         <div class="card-block">
@@ -222,11 +223,11 @@
                             </div>
                             <div class="form-group">
                               <input
-                                type="tel"
+                                type="text"
                                 class="form-control"
-                                name="phone"
-                                placeholder="Phone"
-                                data-form-field="Phone"
+                                name="subject"
+                                placeholder="Subject"
+                                data-form-field="Subject"
                               />
                             </div>
                             <div class="form-group">

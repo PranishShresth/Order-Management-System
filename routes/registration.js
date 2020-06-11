@@ -93,8 +93,8 @@ router.post(
 
     check("username", "Username must not be empty").notEmpty(),
     // password must be at least 5 chars long
-    check("password", "Password must be atleast 5 character long").isLength({
-      min: 5,
+    check("password", "Password must be atleast 6 character long").isLength({
+      min: 6,
     }),
   ],
   async (req, res, next) => {

@@ -21,10 +21,12 @@
         </div>
       </form>
       <div class="btn-group mb-4 px-2"></div>
+      <% if(user.type.trim()==="admin"||user.type.trim()==="ordermgmtU"){ %>
       <form method="GET" action="/api/customers/backup">
         <button type="submit" class="btn btn-sm btn-outline-secondary">
           Export
         </button>
+        <%}%>
       </form>
     </div>
   </div>
