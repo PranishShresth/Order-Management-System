@@ -25,6 +25,7 @@ function countMiddleware(req, res, next) {
   if (next) next();
 }
 
+//cart
 router.post("/promocode", countMiddleware, function (req, res, next) {
   if (count < 2) {
     const { promo } = req.body;
