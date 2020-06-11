@@ -71,13 +71,14 @@
           </div>
 
           <!-- sign up form -->
-          <% if(validation.length>0) {%>
-          <span class="alert-danger"><%=validation[0].msg%></span>
-          <% } %> <% if(signuperror.length>0) {%>
-          <span class="alert-danger"><%=signuperror[0]%></span>
-          <% } %>
+
           <div id="signup" class="tab-pane fade in">
             <form method="POST" action="/registration/signup">
+              <% if(validation.length>0) {%>
+              <span class="alert-danger"><%=validation[0].msg%></span>
+              <% } %> <% if(signuperror.length>0) {%>
+              <span class="alert-danger"><%=signuperror[0]%></span>
+              <% } %>
               <legend>Sign up</legend>
               <div class="form-group">
                 <label for="signup-email">Email </label>
